@@ -3,7 +3,7 @@ import React from 'react';
 const page = () => {
   return (
     <div>
-      page nè
+      Quản lý bình luận
     </div>
   );
 };
