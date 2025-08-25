@@ -2,10 +2,11 @@ import { menuItems } from "@/constants";
 import { TMenuItem } from "@/types";
 import { ActiveLink } from "../common";
 import { UserButton } from "@clerk/nextjs";
+import { ModeToggle } from "../common/ModeToggle";
 
 const Sidebar = () => {
   return (
-    <div className="p-5 border-r border-r-gray-200 bg-white flex flex-col">
+    <div className="p-5 border-r border-r-gray-200 bg-white flex flex-col dark:bg-grayDarker dark:border-opacity-10">
       <a href="/" className="font-bold text-3xl inline-block mb-5">
         <span className="text-primary">U</span>
         cademy
@@ -20,8 +21,9 @@ const Sidebar = () => {
           ></MenuItem>
         ))}
       </ul>
-      <div className="mt-auto">
+      <div className="mt-auto flex items-center gap-5">
         <UserButton />
+        <ModeToggle />
       </div>
     </div>
   );

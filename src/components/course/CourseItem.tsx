@@ -20,7 +20,7 @@ const CourseItem = () => {
     },
   ];
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-5">
+    <div className="bg-white dark:bg-grayDarker dark:border-opacity-10 border border-gray-200 rounded-2xl p-5">
       <Link href="/" className="block h-[180px] relative">
         <Image
           src="https://images.unsplash.com/photo-1755417146741-8aafab9ec528?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -43,7 +43,7 @@ const CourseItem = () => {
         <div className="flex items-center justify-between gap-5 mb-5">
           <div className="flex gap-4 text-xs font-semibold">
             {courseInfo.map((item, index) => (
-              <div className="flex items-center gap-2" key={index}>
+              <div className="flex items-center gap-2 dark:text-grayDark" key={index}>
                 {item.icon}
                 <span>{item.title}</span>
               </div>
