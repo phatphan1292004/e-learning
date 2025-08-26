@@ -1,8 +1,7 @@
+"use client"
 import { menuItems } from "@/constants";
 import { TMenuItem } from "@/types";
 import { ActiveLink } from "../common";
-import { UserButton } from "@clerk/nextjs";
-import { ModeToggle } from "../common/ModeToggle";
 
 const Sidebar = () => {
   return (
@@ -21,10 +20,6 @@ const Sidebar = () => {
           ></MenuItem>
         ))}
       </ul>
-      <div className="mt-auto flex items-center gap-5">
-        <UserButton />
-        <ModeToggle />
-      </div>
     </div>
   );
 };
