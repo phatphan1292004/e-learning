@@ -5,6 +5,11 @@
 @layer base {
   body {
     @apply bg-gray-100 dark:bg-grayDarkest dark:text-white;
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 }
 
@@ -15,7 +20,7 @@
     animation: dash 2s linear forwards;
   }
   @keyframes dash {
-    to {  
+    to {
       stroke-dashoffset: 0;
     }
   }

@@ -3,15 +3,16 @@ import Link from "next/link";
 import React from "react";
 import { FaRegStar, FaEye } from "react-icons/fa";
 import { CiTimer } from "react-icons/ci";
+import { ICourse } from "@/database/course.model";
 
-const CourseItem = () => {
+const CourseItem = ({ data }: { data: ICourse }) => {
   const courseInfo = [
     {
-      title: "3000",
+      title: data.views,
       icon: <FaEye className="text-gray-500" />,
     },
     {
-      title: "5.0",
+      title: data.rating[0],
       icon: <FaRegStar className="text-gray-500" />,
     },
     {
@@ -21,7 +22,7 @@ const CourseItem = () => {
   ];
   return (
     <div className="bg-white dark:bg-grayDarker dark:border-opacity-10 border border-gray-200 rounded-2xl p-5">
-      <Link href="/" className="block h-[180px] relative">
+      <Link href={`/course/${data.slug}`} className="block h-[180px] relative">
         <Image
           src="https://images.unsplash.com/photo-1755417146741-8aafab9ec528?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Course Image"
@@ -36,14 +37,15 @@ const CourseItem = () => {
       </Link>
 
       <div className="mt-4">
-        <h3 className="font-bold text-lg mb-3">
-          Khóa học NextJs Pro 2025 - Xây dựng E-Learning System hoàn chỉnh
-        </h3>
+        <h3 className="font-bold text-lg mb-3">{data.title}</h3>
 
         <div className="flex items-center justify-between gap-5 mb-5">
           <div className="flex gap-4 text-xs font-semibold">
             {courseInfo.map((item, index) => (
-              <div className="flex items-center gap-2 dark:text-grayDark" key={index}>
+              <div
+                className="flex items-center gap-2 dark:text-grayDark"
+                key={index}
+              >
                 {item.icon}
                 <span>{item.title}</span>
               </div>
@@ -51,11 +53,11 @@ const CourseItem = () => {
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="font-bold text-lg text-primary">799.000</span>
+            <span className="font-bold text-lg text-primary">{data.price}</span>
           </div>
         </div>
         <Link
-          href="#"
+          href={`/course/${data.slug}`}
           className="w-full flex items-center justify-center rounded-lg text-white font-bold h-12 mt-10 bg-primary"
         >
           Xem chi tiết
