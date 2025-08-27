@@ -7,9 +7,8 @@ import Link from 'next/link';
 const Header = () => {
   const { userId } = useAuth();
   return (
-    <div className='w-full dark:bg-grayDarker bg-white px-5 py-3 border-b border-b-gray-200 flex justify-end items-center dark:border-opacity-10'>
+    <div className='z-10 w-full fixed top-0 right-0 dark:bg-grayDarker bg-white px-5 py-3 border-b border-b-gray-200 flex justify-end items-center dark:border-opacity-10'>
       <div className="mt-auto flex items-center gap-5">
-        
         <ModeToggle />
         {!userId ? (
           <Link

@@ -4,11 +4,12 @@ import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="wrapper grid grid-cols-[300px,minmax(0,1fr)] h-screen">
+    <div className="wrapper grid lg:grid-cols-[300px,minmax(0,1fr)] h-screen w-full">
       <Sidebar />
+      <div></div>
       <div>
         <Header />
-        <main className="p-5">{children}</main>
+        <main className="p-5 mt-20">{children}</main>
       </div>
     </div>
   );

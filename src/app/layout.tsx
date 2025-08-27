@@ -25,7 +25,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <div className="flex items-center justify-center h-screen w-full">{children}</div>
             <ToastContainer
               autoClose={2000}
               className="text-sm font-medium"

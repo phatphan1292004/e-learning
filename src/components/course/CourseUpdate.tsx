@@ -20,6 +20,18 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Textarea } from "../ui/textarea";
 import { updateCourse } from "@/lib/actions/course.action";
+import { useImmer } from "use-immer";
+import { MdAdd } from "react-icons/md";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { courseLevels, courseStatus } from "@/constants";
+import { UploadButton } from "@/utils/uploadthing";
+import Image from "next/image";
 
 const formSchema = z.object({
   title: z.string().min(10, "Tên khóa học phải có ít nhất 10 ký tự"),
@@ -55,6 +67,11 @@ const formSchema = z.object({
 const CourseUpdate = ({ data }: { data: ICourse }) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [courseInfo, setCourseInfo] = useImmer({
+    requirements: data.info.requirements || [],
+    benefits: data.info.benefits || [],
+    qa: data.info.qa || [],
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,6 +85,11 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
       status: data.status,
       level: data.level,
       views: data.views,
+      info: {
+        requirements: courseInfo.requirements,
+        benefits: courseInfo.benefits,
+        qa: courseInfo.qa,
+      },
     },
   });
 
@@ -85,6 +107,14 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
           intro_url: values.intro_url,
           desc: values.desc,
           views: values.views,
+          info: {
+            requirements: courseInfo.requirements,
+            benefits: courseInfo.benefits,
+            qa: courseInfo.qa,
+          },
+          status: values.status,
+          level: values.level,
+          image: values.image,
         },
       });
       if (values.slug) {
@@ -99,6 +129,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
       setIsSubmitting(false);
     }
   }
+  const imageWatch = form.watch("image");
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
@@ -175,7 +206,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                   <Textarea
                     placeholder="Nhập mô tả..."
                     {...field}
-                    className="h-[200px]"
+                    className="h-[300px]"
                   />
                 </FormControl>
                 <FormMessage />
@@ -189,7 +220,29 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
               <FormItem>
                 <FormLabel>Ảnh đại diện</FormLabel>
                 <FormControl>
-                  <div className="h-[200px] bg-white rounded-md border border-gray-200"></div>
+                  <>
+                    <div className="h-[300px] bg-white rounded-md border border-gray-200 flex items-center justify-center relative">
+                      {!imageWatch ? (
+                        <UploadButton
+                          endpoint="imageUploader"
+                          onClientUploadComplete={(res) => {
+                            form.setValue("image", res[0]?.ufsUrl || "");
+                          }}
+                          onUploadError={(error: Error) => {
+                            // Do something with the error.
+                            console.error(`ERROR! ${error.message}`);
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          src={imageWatch}
+                          alt="Uploaded Image"
+                          fill
+                          className="object-cover w-full h-full"
+                        />
+                      )}
+                    </div>
+                  </>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -232,7 +285,23 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Trạng thái</FormLabel>
-                <FormControl></FormControl>
+                <FormControl>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Trạng thái" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white dark:bg-grayDarker outline-none">
+                      {courseStatus.map((s) => (
+                        <SelectItem key={s.value} value={s.value}>
+                          {s.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -243,7 +312,23 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Trình độ</FormLabel>
-                <FormControl></FormControl>
+                <FormControl>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Trình độ" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white dark:bg-grayDarker outline-none">
+                      {courseLevels.map((l) => (
+                        <SelectItem key={l.value} value={l.value}>
+                          {l.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -253,8 +338,36 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
             name="info.requirements"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Yêu cầu</FormLabel>
-                <FormControl></FormControl>
+                <FormLabel className="flex items-center justify-between gap-5">
+                  <span>Yêu cầu</span>
+                  <button
+                    type="button"
+                    className="text-primary bg-primary/10 rounded-full p-2 hover:bg-primary/20 transition"
+                    onClick={() => {
+                      setCourseInfo((draft) => {
+                        draft.requirements.push("");
+                      });
+                    }}
+                  >
+                    <MdAdd />
+                  </button>
+                </FormLabel>
+                <FormControl>
+                  <>
+                    {courseInfo.requirements.map((r, index) => (
+                      <Input
+                        key={index}
+                        placeholder={`Yêu cầu số ${index + 1}`}
+                        value={r}
+                        onChange={(e) => {
+                          setCourseInfo((draft) => {
+                            draft.requirements[index] = e.target.value;
+                          });
+                        }}
+                      />
+                    ))}
+                  </>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -264,8 +377,36 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
             name="info.benefits"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Lợi ích</FormLabel>
-                <FormControl></FormControl>
+                <FormLabel className="flex items-center justify-between gap-5">
+                  <span>Lợi ích</span>
+                  <button
+                    type="button"
+                    className="text-primary bg-primary/10 rounded-full p-2 hover:bg-primary/20 transition"
+                    onClick={() => {
+                      setCourseInfo((draft) => {
+                        draft.benefits.push("");
+                      });
+                    }}
+                  >
+                    <MdAdd />
+                  </button>
+                </FormLabel>
+                <FormControl>
+                  <>
+                    {courseInfo.benefits.map((r, index) => (
+                      <Input
+                        key={index}
+                        placeholder={`Lợi ích số ${index + 1}`}
+                        value={r}
+                        onChange={(e) => {
+                          setCourseInfo((draft) => {
+                            draft.benefits[index] = e.target.value;
+                          });
+                        }}
+                      />
+                    ))}
+                  </>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -274,9 +415,47 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
             control={form.control}
             name="info.qa"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Question/Answer</FormLabel>
-                <FormControl></FormControl>
+              <FormItem className="col-start-1 col-end-3">
+                <FormLabel className="flex items-center justify-between gap-5">
+                  <span>Q/A</span>
+                  <button
+                    type="button"
+                    className="text-primary bg-primary/10 rounded-full p-2 hover:bg-primary/20 transition"
+                    onClick={() => {
+                      setCourseInfo((draft) => {
+                        draft.qa.push({ question: "", answer: "" });
+                      });
+                    }}
+                  >
+                    <MdAdd />
+                  </button>
+                </FormLabel>
+                <FormControl>
+                  <>
+                    {courseInfo.qa.map((r, index) => (
+                      <div className="grid grid-cols-2 gap-5" key={index}>
+                        <Input
+                          placeholder={`Câu hỏi ${index + 1}`}
+                          value={r.question}
+                          onChange={(e) => {
+                            setCourseInfo((draft) => {
+                              draft.qa[index].question = e.target.value;
+                            });
+                          }}
+                        />
+                        <Input
+                          placeholder={`Trả lời ${index + 1}`}
+                          value={r.answer}
+                          onChange={(e) => {
+                            setCourseInfo((draft) => {
+                              draft.qa[index].answer = e.target.value;
+                            });
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

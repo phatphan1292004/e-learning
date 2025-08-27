@@ -14,7 +14,7 @@ export async function getAllCourses(): Promise<ICourse[] | undefined> {
     }
 }
 
-export async function getCourseBySlug({ slug }: { slug: string }) {
+export async function getCourseBySlug({ slug }: { slug: string }): Promise<ICourse | null | undefined> {
     try {
     connectDB();
     const course = await Course.findOne({slug});
