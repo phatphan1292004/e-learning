@@ -117,8 +117,8 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
           image: values.image,
         },
       });
-      if (values.slug) {
-        router.replace(`/manage/course/update?slug=${values.slug}`);
+      if (values.slug !== data.slug) {
+        router.push(`/manage/course/update?slug=${values.slug}`);
       }
       if (res?.success) {
         toast.success(res.message);

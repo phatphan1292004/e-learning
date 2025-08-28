@@ -17,7 +17,7 @@
   .svg-animate {
     stroke-dashoffset: 100;
     stroke-dasharray: 100;
-    animation: dash 2s linear forwards;
+    animation: dash 1.2s linear forwards;
   }
   @keyframes dash {
     to {
@@ -35,5 +35,15 @@
   }
   .animate-marquee {
     animation: marquee 10s linear infinite;
+  }
+}
+
+@layer utilities {
+  .bgDarkMode{
+    @apply bg-white dark:bg-grayDarker;
+  }
+
+  .borderDarkMode{
+    @apply border-gray-200 dark:border-opacity-10;
   }
 }

@@ -34,18 +34,22 @@ export const menuItems: TMenuItem[] = [
 export const courseStatus:{
   title: string;
   value: ECourseStatus;
+  className?: string;
 }[] = [
   {
     title: "Đã duyệt",
-    value: ECourseStatus.APPROVED
+    value: ECourseStatus.APPROVED,
+    className: "text-green-500 bg-green-500"
   },
   {
     title: "Chờ duyệt",
-    value: ECourseStatus.PENDING
+    value: ECourseStatus.PENDING,
+    className: "text-orange-500 bg-orange-500"
   },
   {
     title: "Từ chối",
-    value: ECourseStatus.REJECTED
+    value: ECourseStatus.REJECTED,
+    className: "text-red-500 bg-red-500"
   }
 ]
 
@@ -73,3 +77,7 @@ export const courseLevelTitle: Record<ECourseLevel, string> = {
   [ECourseLevel.ADVANCED]: "Khó"  
 }
 
+export const commonClassName = {
+  status: "bg-opacity-10 border border-current rounded-md font-medium px-3 py-1 text-xs",
+  acction: "size-8 rounded-md border borderDarkMode flex items-center justify-center p-2 bg-gray-100 text-gray-500 hover:bg-white dark:bg-transparent dark:hover:border-opacity-15",
+}

@@ -24,7 +24,7 @@ const CourseItem = ({ data }: { data: ICourse }) => {
     <div className="bg-white dark:bg-grayDarker dark:border-opacity-10 border border-gray-200 rounded-2xl p-5">
       <Link href={`/course/${data.slug}`} className="block h-[180px] relative">
         <Image
-          src="https://images.unsplash.com/photo-1755417146741-8aafab9ec528?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={data.image}
           alt="Course Image"
           width={300}
           height={200}
@@ -53,7 +53,10 @@ const CourseItem = ({ data }: { data: ICourse }) => {
           </div>
 
           <div className="flex items-center justify-between">
-            <span className="font-bold text-lg text-primary">{data.price}</span>
+            <span className="font-bold text-lg text-primary">{data.price.toLocaleString("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            })}</span>
           </div>
         </div>
         <Link

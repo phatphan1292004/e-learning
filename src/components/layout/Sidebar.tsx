@@ -5,7 +5,7 @@ import { ActiveLink } from "../common";
 
 const Sidebar = () => {
   return (
-    <div className="z-[100] hidden p-5 border-r border-r-gray-200 bg-white lg:flex flex-col dark:bg-grayDarker dark:border-opacity-10 fixed top-0 left-0 h-full w-[300px]">
+    <div className="z-[100] hidden p-5 border-r borderDarkMode bgDarkMode lg:flex flex-col  fixed top-0 left-0 h-full w-[300px]">
       <a href="/" className="font-bold text-3xl inline-block mb-5">
         <span className="text-primary">U</span>
         cademy
