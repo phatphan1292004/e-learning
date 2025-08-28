@@ -20,6 +20,7 @@ import {
   HiOutlineBookOpen,
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
+  HiOutlinePlusSm 
 } from "react-icons/hi";
 import Link from "next/link";
 import { ICourse } from "@/database/course.model";
@@ -89,13 +90,16 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-10">
+      <Link href="/manage/course/new" className="size-10 rounded-full bg-primary bg-opacity-10 text-primary flexCenter fixed right-5 bottom-5 z-10 animate-pulse">
+        <HiOutlinePlusSm />
+      </Link>
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-10">
         <Heading>Quản lý khóa học</Heading>
-        <div className="w-[300px]">
+        <div className="w-full lg:w-[300px]">
           <Input placeholder="Tìm kiếm khóa học" />
         </div>
       </div>
-      <Table>
+      <Table className="table-responsive">
         <TableHeader>
           <TableRow>
             <TableHead>Thông tin</TableHead>
@@ -118,7 +122,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
                       className="flex-shrink-0 size-20 rounded-lg object-cover"
                     />
                     <div className="flex flex-col gap-1">
-                      <h3 className="font-bold text-base">{item.title}</h3>
+                      <h3 className="font-bold text-sm lg:text-base whitespace-nowrap">{item.title}</h3>
                       <h4 className="text-sm text-slate-500 font-semibold">
                         {new Date(item.created_at).toLocaleDateString("vi-VN")}
                       </h4>
@@ -126,7 +130,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="font-bold text-base">
+                  <span className="font-bold text-sm lg:text-base">
                     {item.price.toLocaleString("vi-VN", {
                       style: "currency",
                       currency: "VND",

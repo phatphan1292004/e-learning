@@ -6,6 +6,12 @@ import { FaCheck } from "react-icons/fa6";
 import Image from "next/image";
 import { courseLevelTitle } from "@/constants";
 import PageNotFound from "@/app/not-found";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const page = async ({
   params,
@@ -18,7 +24,7 @@ const page = async ({
     slug: params.slug,
   });
   if (!data) return null;
-  if(data.status !== "APPROVED") return <PageNotFound></PageNotFound>;
+  if (data.status !== "APPROVED") return <PageNotFound></PageNotFound>;
   const videoId = data.intro_url?.split("v=")[1] || "";
   return (
     <div className="grid lg:grid-cols-[2fr,1fr] gap-10 min-h-screen">
@@ -84,10 +90,12 @@ const page = async ({
         </BoxSection>
         <BoxSection title="Q.A">
           {data.info.qa.map((qa, index) => (
-            <div key={index}>
-              <div>{qa.question}</div>
-              <div>{qa.answer}</div>
-            </div>
+            <Accordion type="single" collapsible key={index} >
+              <AccordionItem value={qa.question}>
+                <AccordionTrigger>{qa.question}</AccordionTrigger>
+                <AccordionContent>{qa.answer}</AccordionContent>
+              </AccordionItem>
+            </Accordion>
           ))}
         </BoxSection>
       </div>

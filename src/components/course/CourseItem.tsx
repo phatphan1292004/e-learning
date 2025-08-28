@@ -39,11 +39,11 @@ const CourseItem = ({ data }: { data: ICourse }) => {
       <div className="mt-4">
         <h3 className="font-bold text-lg mb-3">{data.title}</h3>
 
-        <div className="flex items-center justify-between gap-5 mb-5">
-          <div className="flex gap-4 text-xs font-semibold">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-2 gap-x-5 mb-5">
+          <div className="flex gap-3 text-xs font-semibold">
             {courseInfo.map((item, index) => (
               <div
-                className="flex items-center gap-2 dark:text-grayDark"
+                className="flex items-center gap-1 dark:text-grayDark"
                 key={index}
               >
                 {item.icon}
@@ -52,11 +52,13 @@ const CourseItem = ({ data }: { data: ICourse }) => {
             ))}
           </div>
 
-          <div className="flex items-center justify-between">
-            <span className="font-bold text-lg text-primary">{data.price.toLocaleString("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            })}</span>
+          <div className="flex items-center justify-between mt-2 md:mt-0">
+            <span className="font-bold text-lg text-primary">
+              {data.price.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </span>
           </div>
         </div>
         <Link

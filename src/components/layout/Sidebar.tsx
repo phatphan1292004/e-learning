@@ -24,7 +24,7 @@ const Sidebar = () => {
   );
 };
 
-function MenuItem({ url = "/", title = "", icon }: TMenuItem) {
+export function MenuItem({ url = "/", title = "", icon }: TMenuItem) {
   return (
     <li>
       <ActiveLink url={url}>
