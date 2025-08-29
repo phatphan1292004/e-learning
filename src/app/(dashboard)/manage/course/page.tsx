@@ -1,5 +1,5 @@
 import CourseManage from '@/components/course/CourseManage';
-import { getAllCourses } from '@/lib/actions/course.action';
+import { getAllCourses,  } from '@/lib/actions/course.action';
 import React from 'react';
 
 const page = async () => {

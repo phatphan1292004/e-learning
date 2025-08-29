@@ -12,7 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ILecture } from "@/database/lecture.model";
+import { TUpdateCourseLecture } from "@/types";
 
 const page = async ({
   params,
@@ -66,7 +66,7 @@ const page = async ({
         </BoxSection>
         <BoxSection title="Nội dung khóa học">
           {lectures.length > 0 &&
-            lectures.map((lecture: ILecture) => (
+            lectures.map((lecture: TUpdateCourseLecture) => (
               <Accordion type="single" collapsible key={lecture._id}>
                 <AccordionItem value={lecture._id} className="mt-5">
                   <AccordionTrigger>
