@@ -12,6 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ILecture } from "@/database/lecture.model";
 
 const page = async ({
   params,
@@ -25,6 +26,7 @@ const page = async ({
   });
   if (!data) return null;
   if (data.status !== "APPROVED") return <PageNotFound></PageNotFound>;
+  const lectures = data.lectures || [];
   const videoId = data.intro_url?.split("v=")[1] || "";
   return (
     <div className="grid lg:grid-cols-[2fr,1fr] gap-10 min-h-screen">
@@ -62,6 +64,23 @@ const page = async ({
             <BoxInfo title="Thời lượng">100</BoxInfo>
           </div>
         </BoxSection>
+        <BoxSection title="Nội dung khóa học">
+          {lectures.length > 0 &&
+            lectures.map((lecture: ILecture) => (
+              <Accordion type="single" collapsible key={lecture._id}>
+                <AccordionItem value={lecture._id} className="mt-5">
+                  <AccordionTrigger>
+                    <div className="flex items-center justify-between gap-3 w-full">
+                        <>
+                          <div>{lecture.title}</div>
+                        </>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>{/* Nội dung chương */}</AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ))}
+        </BoxSection>
         <BoxSection title="Yêu cầu">
           {data.info.requirements.map((r, index) => (
             <div
@@ -90,7 +109,7 @@ const page = async ({
         </BoxSection>
         <BoxSection title="Q.A">
           {data.info.qa.map((qa, index) => (
-            <Accordion type="single" collapsible key={index} >
+            <Accordion type="single" collapsible key={index}>
               <AccordionItem value={qa.question}>
                 <AccordionTrigger>{qa.question}</AccordionTrigger>
                 <AccordionContent>{qa.answer}</AccordionContent>
