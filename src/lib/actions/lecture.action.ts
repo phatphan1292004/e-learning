@@ -5,6 +5,7 @@ import { connectDB } from "../mongoose";
 import Course from "@/database/course.model";
 import Lecture from "@/database/lecture.model";
 import { revalidatePath } from "next/cache";
+import Lesson from "@/database/lesson.model";
 
 export async function createLecture(params: TCreateLectureParams) {
   try {
@@ -34,3 +35,5 @@ export async function updateLecture(params: TUpdateLectureParams) {
     };
   } catch (error) {}
 }
+
+

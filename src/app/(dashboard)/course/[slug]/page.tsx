@@ -13,6 +13,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { TUpdateCourseLecture } from "@/types";
+import { HiArrowNarrowRight } from "react-icons/hi";
+import LessonItem from "@/components/lesson/LessonItem";
 
 const page = async ({
   params,
@@ -65,21 +67,32 @@ const page = async ({
           </div>
         </BoxSection>
         <BoxSection title="Nội dung khóa học">
-          {lectures.length > 0 &&
-            lectures.map((lecture: TUpdateCourseLecture) => (
-              <Accordion type="single" collapsible key={lecture._id}>
-                <AccordionItem value={lecture._id} className="mt-5">
-                  <AccordionTrigger>
-                    <div className="flex items-center justify-between gap-3 w-full">
+          <div className="flex flex-col">
+            {lectures.length > 0 &&
+              lectures.map((lecture: TUpdateCourseLecture) => (
+                <Accordion type="single" collapsible key={lecture._id}>
+                  <AccordionItem
+                    value={lecture._id.toString()}
+                    className="mt-5"
+                  >
+                    <AccordionTrigger>
+                      <div className="flex items-center justify-between gap-3 w-full">
                         <>
                           <div>{lecture.title}</div>
                         </>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>{/* Nội dung chương */}</AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            ))}
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="!bg-transparent border-0 mt-5">
+                      <div className="flex flex-col gap-3">
+                        {lecture.lessons.map((lesson) => (
+                          <LessonItem key={lesson._id} lesson={lesson} />
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              ))}
+          </div>
         </BoxSection>
         <BoxSection title="Yêu cầu">
           {data.info.requirements.map((r, index) => (

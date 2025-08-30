@@ -1,6 +1,6 @@
 "use client";
 import { ILesson } from "@/database/lesson.model";
-import React, { use } from "react";
+import React, { use, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,6 +18,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { updateLesson } from "@/lib/actions/lesson.action";
 import { toast } from "react-toastify";
+import { Editor } from "@tinymce/tinymce-react";
+import { editorOptions } from "@/constants";
+import { useTheme } from "next-themes";
 
 const formSchema = z.object({
   slug: z.string().optional(),
@@ -27,11 +30,12 @@ const formSchema = z.object({
 });
 
 const LessonItemUpdate = ({ lesson }: { lesson: ILesson }) => {
+  const editorRef = useRef<any>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       slug: lesson.slug ?? "",
-      duration: lesson.duration ?? 0, 
+      duration: lesson.duration ?? 0,
       video_url: lesson.video_url ?? "",
       content: lesson.content ?? "",
     },
@@ -49,6 +53,8 @@ const LessonItemUpdate = ({ lesson }: { lesson: ILesson }) => {
       }
     } catch (error) {}
   }
+
+  const { theme } = useTheme();
   return (
     <Form {...form}>
       <form
@@ -100,25 +106,35 @@ const LessonItemUpdate = ({ lesson }: { lesson: ILesson }) => {
             </FormItem>
           )}
         />
+        <div></div>
         <FormField
           control={form.control}
           name="content"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-start-1 col-end-3">
               <FormLabel>Nội dung</FormLabel>
               <FormControl>
-                <Input placeholder="Nội dung bài học" {...field} />
+                <Editor
+                  apiKey={process.env.NEXT_PUBLIC_TINY_MCE_API_KEY}
+                  onInit={(_evt:any, editor:any) => {
+                    (editorRef.current = editor).setContent(
+                      lesson.content || ""
+                    );
+                  }}
+                  value={field.value}
+                  {...editorOptions(field, theme)}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-      <div className="flex justify-end gap-5 items-center mt-3">
-        <Button type="submit" className="text-white">
-          Cập nhật
-        </Button>
-        <Link href="/">Xem trước</Link>
-      </div>
+        <div className="flex gap-5 items-center mt-3 ">
+          <Button type="submit" className="text-white">
+            Cập nhật
+          </Button>
+          <Link href="/">Xem trước</Link>
+        </div>
       </form>
     </Form>
   );

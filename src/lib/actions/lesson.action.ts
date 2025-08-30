@@ -3,7 +3,7 @@ import { TCreateLessonParams, TUpdateLessonParams } from "@/types";
 import { connectDB } from "../mongoose";
 import Course from "@/database/course.model";
 import Lecture from "@/database/lecture.model";
-import Lesson from "@/database/lesson.model";
+import Lesson, { ILesson } from "@/database/lesson.model";
 import { revalidatePath } from "next/cache";
 
 
@@ -33,5 +33,28 @@ export async function updateLesson(params: TUpdateLessonParams) {
     return {success: true};
   } catch (error) {
     
+  }
+}
+
+export async function getLessonBySlug({slug, course} : {slug: string, course: string}): Promise<ILesson | null | undefined> {
+  try {
+    connectDB();
+    const findLesson = await Lesson.findOne({
+      slug,
+      course
+    });
+    return findLesson;
+  } catch (error) {}
+}
+
+export async function getAllLessons({course} : {course: string}): Promise<ILesson[] | null | undefined> {
+  try {
+    connectDB();
+    const findLessons = await Lesson.find({
+      course
+    });
+    return findLessons;
+  } catch (error) {
+    console.log(error)
   }
 }
