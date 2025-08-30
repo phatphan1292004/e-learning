@@ -59,7 +59,7 @@ const LessonItemUpdate = ({ lesson }: { lesson: ILesson }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid grid-cols-2 gap-8"
+        className="grid grid-cols-2 gap-8 p-5"
       >
         <FormField
           control={form.control}

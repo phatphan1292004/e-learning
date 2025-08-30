@@ -36,6 +36,22 @@
   .animate-marquee {
     animation: marquee 10s linear infinite;
   }
+
+  @keyframes gradient-move {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .progress-bar-animated {
+    background: linear-gradient(135deg, #f9ad6a 0%, #43978d 100%);
+    background-size: 200% 200%;
+    animation: gradient-move 2s linear alternate infinite;
+    transition: width 0.7s;
+  }
 }
 
 @layer utilities {
@@ -78,10 +94,43 @@
 
 .table-responsive {
   @media screen and (max-width: 1023px) {
-    th, td {
+    th,
+    td {
       &:not(:first-child) {
         padding-left: 100px;
       }
     }
+  }
+}
+
+.entry-content {
+  font-size: 15px;
+  line-height: 2;
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  ul,
+  ol,
+  figure {
+    @apply mb-5;
+  }
+  ol {
+    list-style: decimal;
+  }
+  ul {
+    list-style: disc;
+  }
+
+  ol,
+  ul {
+    @apply pl-5;
+  }
+
+  a {
+    @apply underline text-primary;
   }
 }

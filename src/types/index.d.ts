@@ -78,6 +78,13 @@ export type TUpdateLessonParams = {
     duration?: number;
     video_url?: string;
     content?: string;
-  }
+  };
   path?: string;
-}
+};
+
+export type TCreateHistoryParams = {
+  course: string;
+  lesson: string;
+  checked: boolean | string;
+  path: string;
+};

@@ -3,14 +3,8 @@ import { getAllLessons, getLessonBySlug } from "@/lib/actions/lesson.action";
 import React from "react";
 import LessonNavigation from "./LessonNavigation";
 import { TUpdateCourseLecture } from "@/types";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import LessonItem from "@/components/lesson/LessonItem";
-import next from "next";
+import LessonContent from "@/components/lesson/LessonContent";
+import { getHistory } from "@/lib/actions/history.action";
 
 const page = async ({
   params,
@@ -37,8 +31,12 @@ const page = async ({
   const nextLesson = listLesson[currentLessonIndex + 1] || null;
   const previousLesson = listLesson[currentLessonIndex - 1] || null;
   const lectures = findCourse.lectures || [];
+  const histories = await getHistory({ course: courseId });
+  const completePercent = Math.floor(
+    ((histories?.length || 0) / (listLesson?.length || 1)) * 100
+  );
   return (
-    <div className="grid lg:grid-cols-[2fr,1fr] gap-10 min-h-screen">
+    <div className="grid xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-10 min-h-screen items-start">
       <div>
         <div className="relative mb-5 aspect-video">
           <iframe
@@ -48,32 +46,45 @@ const page = async ({
           ></iframe>
         </div>
         <LessonNavigation
-          nextLesson={!nextLesson ? "" : `/${course}/lesson?slug=${nextLesson?.slug}`}
-          previousLesson={!previousLesson ? "" : `/${course}/lesson?slug=${previousLesson?.slug}`}
+          nextLesson={
+            !nextLesson ? "" : `/${course}/lesson?slug=${nextLesson?.slug}`
+          }
+          previousLesson={
+            !previousLesson
+              ? ""
+              : `/${course}/lesson?slug=${previousLesson?.slug}`
+          }
         />
+
+        <h1 className="text-2xl">{lessonDetails.title}</h1>
+        {lessonDetails.content && (
+          <div className="p-5 rounded-lg border borderDarkMode bgDarkMode entry-content mt-12">
+            <div
+              dangerouslySetInnerHTML={{
+                __html:
+                  typeof lessonDetails.content === "string"
+                    ? lessonDetails.content
+                    : "",
+              }}
+            ></div>
+          </div>
+        )}
       </div>
-      <div className="flex flex-col">
-        {lectures.length > 0 &&
-          lectures.map((lecture: TUpdateCourseLecture) => (
-            <Accordion type="single" collapsible key={lecture._id.toString()}>
-              <AccordionItem value={lecture._id.toString()} className="mt-5">
-                <AccordionTrigger>
-                  <div className="flex items-center justify-between gap-3 w-full">
-                    <>
-                      <div>{lecture.title}</div>
-                    </>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="!bg-transparent border-0 mt-5">
-                  <div className="flex flex-col gap-3">
-                    {lecture.lessons.map((lesson) => (
-                      <LessonItem key={lesson._id.toString()} lesson={lesson} url={`/${course}/lesson?slug=${lesson.slug}`} />
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          ))}
+      <div className="sticky top-[100px] right-0">
+        <div className="h-3 w-full rounded-full border borderDarkMode bgDarkMode mb-2">
+          <div className="h-3 w-full rounded-full border borderDarkMode bgDarkMode mb-2">
+            <div
+              className="h-full rounded-full progress-bar-animated"
+              style={{ width: `${completePercent}%` }}
+            ></div>
+          </div>
+        </div>
+        <LessonContent
+          lectures={lectures}
+          course={course}
+          slug={slug}
+          histories={histories ? JSON.parse(JSON.stringify(histories)) : []}
+        />
       </div>
     </div>
   );
