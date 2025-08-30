@@ -18,7 +18,7 @@ const LessonContent = ({
   lectures: TUpdateCourseLecture[];
   course: string;
   slug: string;
-  histories: IHistory[];
+  histories?: IHistory[];
 }) => {
   return (
     <div className="flex flex-col gap-5">
@@ -41,7 +41,7 @@ const LessonContent = ({
                         !course ? "" : `/${course}/lesson?slug=${lesson.slug}`
                       }
                       isActive={!slug ? false : lesson.slug === slug}
-                      isChecked={histories.some(
+                      isChecked={histories?.some(
                         (el) =>
                           el.lesson.toString() ===
                           (lesson._id.toString())
