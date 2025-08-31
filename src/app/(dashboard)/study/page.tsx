@@ -1,18 +1,15 @@
-import { CourseGrid } from "@/components/common";
-import CourseItem from "@/components/course/CourseItem";
 import Heading from "@/components/typography/Heading";
-import { getAllCourses } from "@/lib/actions/course.action";
+import { getUserCourse } from "@/lib/actions/user.actions";
 import React from "react";
+import StudyCourse from "./StudyCourse";
 
 const page = async () => {
-  const courses = (await getAllCourses()) || [];
+  const courses = await getUserCourse() || [];
+  console.log(courses);
   return (
     <div>
-      <Heading>Khám phá</Heading>
-      <CourseGrid>
-        {courses?.length > 0 &&
-          courses.map((item) => <CourseItem key={item.slug} data={item} />)}
-      </CourseGrid>
+      <Heading>Khu vực học tập</Heading>
+      <StudyCourse courses={courses ? JSON.parse(JSON.stringify(courses)) : []} />
     </div>
   );
 };

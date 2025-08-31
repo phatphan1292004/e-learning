@@ -238,7 +238,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                           src={imageWatch}
                           alt="Uploaded Image"
                           fill
-                          className="object-cover w-full h-full"
+                          className="object-cover w-full h-full rounded-md"
                         />
                       )}
                     </div>

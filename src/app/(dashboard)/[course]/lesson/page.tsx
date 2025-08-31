@@ -5,6 +5,10 @@ import LessonNavigation from "./LessonNavigation";
 import { TUpdateCourseLecture } from "@/types";
 import LessonContent from "@/components/lesson/LessonContent";
 import { getHistory } from "@/lib/actions/history.action";
+import { auth } from "@clerk/nextjs/server";
+import { getUserInfo } from "@/lib/actions/user.actions";
+import PageNotFound from "@/app/not-found";
+import LessonSaveUrl from "@/components/lesson/LessonSaveUrl";
 
 const page = async ({
   params,
@@ -13,11 +17,17 @@ const page = async ({
   params: { course: string };
   searchParams: { slug: string };
 }) => {
+  const { userId } = auth();
+  if (!userId) return <PageNotFound />;
+  const findUser = await getUserInfo({ userId });
+  if(!findUser) return <PageNotFound />;
   const course = params.course;
   const slug = searchParams.slug;
   const findCourse = await getCourseBySlug({ slug: course });
   if (!findCourse) return null;
   const courseId = findCourse._id.toString() || "";
+  console.log(findUser)
+  if (!findUser.courses.includes(courseId as any)) return <PageNotFound />;
   const lessonDetails = await getLessonBySlug({
     slug,
     course: courseId,
@@ -37,6 +47,7 @@ const page = async ({
   );
   return (
     <div className="grid xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-10 min-h-screen items-start">
+      <LessonSaveUrl course={course} url={`/${course}/lesson?slug=${slug}`} />
       <div>
         <div className="relative mb-5 aspect-video">
           <iframe
