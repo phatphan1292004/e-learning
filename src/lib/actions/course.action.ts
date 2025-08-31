@@ -28,17 +28,19 @@ export async function getCourseBySlug({
 }): Promise<TCourseUpdateParams | null | undefined> {
   try {
     connectDB();
-    const course = await Course.findOne({ slug }).populate({
-      path: "lectures",
-      select: "_id title",
-      match: { _destroy: false },
-      model: Lecture,
-      populate: {
-        path: "lessons",
-        model: Lesson,
+    const course = await Course.findOne({ slug })
+      .select("_id slug lectures")
+      .populate({
+        path: "lectures",
+        select: "_id title",
         match: { _destroy: false },
-      }
-    });
+        model: Lecture,
+        populate: {
+          path: "lessons",
+          model: Lesson,
+          match: { _destroy: false },
+        },
+      });
     return course;
   } catch (error) {
     console.log(error);
