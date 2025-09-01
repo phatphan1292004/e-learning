@@ -12,9 +12,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { TUpdateCourseLecture } from "@/types";
-import { HiArrowNarrowRight } from "react-icons/hi";
-import LessonItem from "@/components/lesson/LessonItem";
 import LessonContent from "@/components/lesson/LessonContent";
 
 const page = async ({
@@ -28,6 +25,7 @@ const page = async ({
     slug: params.slug,
   });
   if (!data) return null;
+  console.log("data", data);
   if (data.status !== "APPROVED") return <PageNotFound></PageNotFound>;
   const lectures = data.lectures || [];
   const videoId = data.intro_url?.split("v=")[1] || "";

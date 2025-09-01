@@ -5,7 +5,7 @@ import { FaRegStar, FaEye } from "react-icons/fa";
 import { CiTimer } from "react-icons/ci";
 import { ICourse } from "@/database/course.model";
 
-const CourseItem = ({ data, cta, url="/" }: { data: ICourse; cta?: string; url?: string }) => {
+const CourseItem = ({ data, cta, url }: { data: ICourse; cta?: string; url?: string }) => {
   const courseInfo = [
     {
       title: data.views,

@@ -3,7 +3,6 @@
 import User, { IUser } from "@/database/user.model";
 import { connectDB } from "../mongoose";
 import { TCreateUserParams } from "@/types";
-import { auth } from "@clerk/nextjs/server";
 import { ICourse } from "@/database/course.model";
 
 export async function createUser(params: TCreateUserParams) {
@@ -29,10 +28,9 @@ export async function getUserInfo({
   }
 }
 
-export async function getUserCourse(): Promise<ICourse[] | null | undefined> {
+export async function getUserCourse(userId: string): Promise<ICourse[] | null | undefined> {
   try {
     connectDB();
-    const { userId } = auth();
     const findUser = await User.findOne({ clerkId: userId }).populate(
       "courses"
     );
