@@ -11,7 +11,7 @@ const page = async () => {
   return (
     <div>
       <Heading>Khu vực học tập</Heading>
-      <StudyCourse courses={courses} />
+      <StudyCourse courses={JSON.parse(JSON.stringify(courses))} />
     </div>
   );
 };

@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -20,7 +19,7 @@ import {
   HiOutlineBookOpen,
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
-  HiOutlinePlusSm 
+  HiOutlinePlusSm,
 } from "react-icons/hi";
 import Link from "next/link";
 import { ICourse } from "@/database/course.model";
@@ -29,8 +28,35 @@ import { updateCourse } from "@/lib/actions/course.action";
 import { ECourseStatus } from "@/types/enums";
 import { toast } from "react-toastify";
 import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import path from "path";
+import { debounce } from "lodash";
 
 const CourseManage = ({ course }: { course: ICourse[] }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Get a new searchParams string by merging the current
+  // searchParams with a provided key/value pair
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
   const handleChangeStatus = async (
     slug: string,
     currentStatus: ECourseStatus
@@ -41,8 +67,6 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
         confirmButtonText: "Yes, update it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -58,6 +82,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
             path: "/manage/course",
           });
           toast.success("Cập nhật trạng thái thành công!");
+          router.push(`${pathname}?${createQueryString("status", "")}`);
         }
       });
     } catch (error) {
@@ -88,15 +113,64 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
     });
   };
 
+  const handleSearchCourse = debounce(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      router.push(`${pathname}?${createQueryString("search", e.target.value)}`);
+    },
+    500
+  );
+
+  const handleSelectStatus = debounce((value: ECourseStatus) => {
+    router.push(`${pathname}?${createQueryString("status", value)}`);
+  }, 500);
+
+  const [page, setPage] = useState(1);
+  const handleChangePage = (type: "prev" | "next") => {
+    if (type === "prev" && page === 1) return;
+    if (type === "prev") setPage(page - 1);
+    if (type === "next") setPage(page + 1);
+  };
+
+  useEffect(() => {
+    router.push(`${pathname}?${createQueryString("page", page.toString())}`);
+  }, [page]);
   return (
     <div>
-      <Link href="/manage/course/new" className="size-10 rounded-full bg-primary bg-opacity-10 text-primary flexCenter fixed right-5 bottom-5 z-10 animate-pulse">
+      <Link
+        href="/manage/course/new"
+        className="size-10 rounded-full bg-primary bg-opacity-10 text-primary flexCenter fixed right-5 bottom-5 z-10 animate-pulse"
+      >
         <HiOutlinePlusSm />
       </Link>
       <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-10">
         <Heading>Quản lý khóa học</Heading>
-        <div className="w-full lg:w-[300px]">
-          <Input placeholder="Tìm kiếm khóa học" />
+        <div className="flex items-center gap-3 h-12">
+          <div className="w-full lg:w-[300px]">
+            <Input
+              placeholder="Tìm kiếm khóa học"
+              onChange={(e) => handleSearchCourse(e)}
+            />
+          </div>
+          <div className="h-full">
+            <Select
+              onValueChange={(value) =>
+                handleSelectStatus(value as ECourseStatus)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Chọn trạng thái" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {courseStatus.map((status) => (
+                    <SelectItem key={status.value} value={status.value}>
+                      {status.title}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
       <Table className="table-responsive">
@@ -122,7 +196,9 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
                       className="flex-shrink-0 size-20 rounded-lg object-cover"
                     />
                     <div className="flex flex-col gap-1">
-                      <h3 className="font-bold text-sm lg:text-base whitespace-nowrap">{item.title}</h3>
+                      <h3 className="font-bold text-sm lg:text-base whitespace-nowrap">
+                        {item.title}
+                      </h3>
                       <h4 className="text-sm text-slate-500 font-semibold">
                         {new Date(item.created_at).toLocaleDateString("vi-VN")}
                       </h4>
@@ -194,10 +270,16 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
       </Table>
 
       <div className="flex justify-end gap-3 mt-10">
-        <button className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center">
+        <button
+          className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
+          onClick={() => handleChangePage("prev")}
+        >
           <HiOutlineArrowNarrowLeft size={18} />
         </button>
-        <button className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center">
+        <button
+          className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
+          onClick={() => handleChangePage("next")}
+        >
           <HiOutlineArrowNarrowRight size={18} />
         </button>
       </div>

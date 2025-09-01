@@ -4,6 +4,7 @@ import User, { IUser } from "@/database/user.model";
 import { connectDB } from "../mongoose";
 import { TCreateUserParams } from "@/types";
 import { ICourse } from "@/database/course.model";
+import { ECourseStatus } from "@/types/enums";
 
 export async function createUser(params: TCreateUserParams) {
   try {
@@ -28,12 +29,18 @@ export async function getUserInfo({
   }
 }
 
-export async function getUserCourse(userId: string): Promise<ICourse[] | null | undefined> {
+export async function getUserCourse(
+  userId: string
+): Promise<ICourse[] | null | undefined> {
   try {
     connectDB();
-    const findUser = await User.findOne({ clerkId: userId }).populate(
-      "courses"
-    );
+    const findUser = await User.findOne({ clerkId: userId }).populate({
+      path: "courses",
+      model: "Course",
+      match: {
+        status: ECourseStatus.APPROVED,
+      },
+    });
     if (!findUser) return null;
     return findUser.courses;
   } catch (error) {

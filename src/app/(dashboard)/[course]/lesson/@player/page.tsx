@@ -3,6 +3,7 @@ import { getCourseBySlug } from "@/lib/actions/course.action";
 import { getAllLessons } from "@/lib/actions/lesson.action";
 import React from "react";
 import LessonNavigation from "../LessonNavigation";
+import VideoPlayer from "./VideoPlayer";
 
 const page = async ({
   params,
@@ -24,18 +25,13 @@ const page = async ({
     listLesson?.findIndex((el: any) => el.slug === slug) || 0;
   const nextLesson = listLesson[currentLessonIndex + 1] || null;
   const previousLesson = listLesson[currentLessonIndex - 1] || null;
+  console.log("videoId", videoId);
   return (
-    <div>
+    <div className="mb-10">
       <LessonSaveUrl course={course} url={`/${course}/lesson?slug=${slug}`} />
       <div>
-        <div className="relative mb-5 aspect-video">
-          <iframe
-            className="w-full h-full object-fill rounded-lg"
-            src={`https://www.youtube.com/embed/${videoId}`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          ></iframe>
-        </div>
-        <LessonNavigation
+        <VideoPlayer
+          videoId={videoId}
           nextLesson={
             !nextLesson ? "" : `/${course}/lesson?slug=${nextLesson?.slug}`
           }
@@ -45,8 +41,7 @@ const page = async ({
               : `/${course}/lesson?slug=${previousLesson?.slug}`
           }
         />
-
-        <h1 className="text-2xl">{lessonDetails.title}</h1>
+        <h1 className="text-2xl font-bold">{lessonDetails.title}</h1>
         {lessonDetails.content && (
           <div className="p-5 rounded-lg border borderDarkMode bgDarkMode entry-content mt-12">
             <div

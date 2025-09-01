@@ -32,6 +32,13 @@ export type TUpdateCourseParams = {
   path?: string;
 };
 
+export type TGetAllCourseParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  status?: string;
+};
+
 export type TCreateLectureParams = {
   course: string;
   title?: string;
