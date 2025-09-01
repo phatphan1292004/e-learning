@@ -2,13 +2,20 @@
 import { CourseGrid } from "@/components/common";
 import CourseItem from "@/components/course/CourseItem";
 import { ICourse } from "@/database/course.model";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const StudyCourse = ({ courses }: {
   courses: ICourse[] | null | undefined;
 }) => {
+  const [lastLesson, setLastLesson] = useState<any[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("lastLesson");
+    if (stored) {
+      setLastLesson(JSON.parse(stored));
+    }
+  }, []);
   if(!courses || courses.length === 0) return null;
-  const lastLesson = JSON.parse(localStorage.getItem("lastLesson") || "null");
   return (
     <div>
       <CourseGrid>
