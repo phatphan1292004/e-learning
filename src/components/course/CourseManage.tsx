@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -38,25 +38,14 @@ import {
 } from "@/components/ui/select";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import path from "path";
 import { debounce } from "lodash";
+import useQueryString from "@/hooks/useQueryString";
 
 const CourseManage = ({ course }: { course: ICourse[] }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  // Get a new searchParams string by merging the current
-  // searchParams with a provided key/value pair
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
+  const { createQueryString } = useQueryString();
   const handleChangeStatus = async (
     slug: string,
     currentStatus: ECourseStatus

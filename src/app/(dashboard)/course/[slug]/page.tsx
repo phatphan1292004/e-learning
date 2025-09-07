@@ -13,6 +13,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import LessonContent from "@/components/lesson/LessonContent";
+import { auth } from "@clerk/nextjs/server";
+import { getUserInfo } from "@/lib/actions/user.actions";
+import ButtonBuy from "./ButtonBuy";
 
 const page = async ({
   params,
@@ -21,6 +24,8 @@ const page = async ({
     slug: string;
   };
 }) => {
+  const { userId } = auth();
+  const user = await getUserInfo({ userId: userId || "" });
   const data = await getCourseBySlug({
     slug: params.slug,
   });
@@ -29,6 +34,7 @@ const page = async ({
   if (data.status !== "APPROVED") return <PageNotFound></PageNotFound>;
   const lectures = data.lectures || [];
   const videoId = data.intro_url?.split("v=")[1] || "";
+
   return (
     <div className="grid lg:grid-cols-[2fr,1fr] gap-10 min-h-screen">
       <div>
@@ -109,10 +115,10 @@ const page = async ({
         <div className="bg-white rounded-lg p-5">
           <div className="flex items-center gap-2 mb-3">
             <strong className="text-primary text-xl font-bold">
-              {data.price}
+              {data.price.toLocaleString("en-EN")}
             </strong>
             <span className="text-slate-400 line-through text-sm">
-              {data.sale_price}
+              {data.sale_price.toLocaleString("en-EN")}
             </span>
             <span className="ml-auto inline-block px-3 py-1 rounded-lg bg-primary text-primary bg-opacity-10 font-semibold text-sm">
               {Math.floor((data.price / data.sale_price) * 100)}%
@@ -137,9 +143,11 @@ const page = async ({
               <span>Tài liệu kèm theo</span>
             </li>
           </ul>
-          <Button variant="primary" className="w-full">
-            Mua khóa học
-          </Button>
+          <ButtonBuy
+            user={JSON.parse(JSON.stringify(user))}
+            courseId={JSON.parse(JSON.stringify(data._id))  }
+            amount={data.price}
+          ></ButtonBuy>
         </div>
       </div>
     </div>

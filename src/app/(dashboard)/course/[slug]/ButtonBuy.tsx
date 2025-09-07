@@ -1,0 +1,38 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import { IUser } from "@/database/user.model";
+import { createOrder } from "@/lib/actions/order.action";
+import { createOrderCode } from "@/utils";
+import React from "react";
+import { toast } from "react-toastify";
+
+const ButtonBuy = ({
+  user,
+  courseId,
+  amount,
+}: {
+  user: IUser | null | undefined;
+  courseId: string;
+  amount: number;
+}) => {
+  const handleBuyCourse = async () => {
+    if (!user?.name) {
+      toast.error("Vui lòng đăng nhập để mua khóa học");
+      return;
+    }
+    const newOrder = await createOrder({
+      code: createOrderCode(),
+      user: user._id,
+      course: courseId,
+      total: amount,
+      amount: amount,
+    });
+  };
+  return (
+    <Button variant="primary" className="w-full" onClick={handleBuyCourse}>
+      Mua khóa học
+    </Button>
+  );
+};
+
+export default ButtonBuy;
