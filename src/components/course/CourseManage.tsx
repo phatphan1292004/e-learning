@@ -12,11 +12,7 @@ import Heading from "../common/Heading";
 import Image from "next/image";
 import { commonClassName, courseStatus } from "@/constants";
 import { cn } from "@/lib/utils";
-import { FiEdit } from "react-icons/fi";
-import { FaEye } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
 import {
-  HiOutlineBookOpen,
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
   HiOutlinePlusSm,
@@ -36,10 +32,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { debounce } from "lodash";
 import useQueryString from "@/hooks/useQueryString";
+import { TableAction, TableActionItem } from "../common";
 
 const CourseManage = ({ course }: { course: ICourse[] }) => {
   const router = useRouter();
@@ -220,38 +217,26 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
                     }
                   </button>
                 </TableCell>
+
                 <TableCell>
-                  <div className="flex gap-3">
-                    <Link
-                      href={`/manage/course/update?slug=${item.slug}`}
-                      target="_blank"
-                      className={commonClassName.acction}
-                    >
-                      <FiEdit size={18} />
-                    </Link>
-
-                    <Link
-                      href={`/course/${item.slug}`}
-                      target="_blank"
-                      className={commonClassName.acction}
-                    >
-                      <FaEye size={18} />
-                    </Link>
-
-                    <button
+                  <TableAction>
+                    <TableActionItem
+                      type="study"
+                      url={`/manage/course/update-content?slug=${item.slug}`}
+                    ></TableActionItem>
+                    <TableActionItem
+                      type="view"
+                      url={`/course/${item.slug}`}
+                    ></TableActionItem>
+                    <TableActionItem
+                      type="edit"
+                      url={`/manage/course/update?slug=${item.slug}`}
+                    ></TableActionItem>
+                    <TableActionItem
+                      type="delete"
                       onClick={() => handleDeleteCourse(item.slug)}
-                      className={commonClassName.acction}
-                    >
-                      <MdDelete size={18} />
-                    </button>
-
-                    <Link
-                      href={`/manage/course/update-content?slug=${item.slug}`}
-                      className={commonClassName.acction}
-                    >
-                      <HiOutlineBookOpen size={18} />
-                    </Link>
-                  </div>
+                    ></TableActionItem>
+                  </TableAction>
                 </TableCell>
               </TableRow>
             ))}
