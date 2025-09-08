@@ -27,7 +27,10 @@ import { EOrderStatus } from "@/types/enums";
 import { debounce } from "lodash";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import Swal from "sweetalert2";
+import { updateOrder } from "@/lib/actions/order.action";
+import { toast } from "react-toastify";
 interface IOrderManageProps {
+  _id: string;
   code: string;
   total: number;
   amount: number;
@@ -41,20 +44,34 @@ interface IOrderManageProps {
   };
 }
 const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
-  const handleCancelOrder = () => {
-    Swal.fire({
-      title: "Bạn có chắc muốn hủy đơn hàng không?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Đồng ý",
-      cancelButtonText: "Thoát",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
+  const handleUpdateOrder = async ({
+    orderId,
+    status,
+  }: {
+    orderId: string;
+    status: EOrderStatus;
+  }) => {
+    if (status === EOrderStatus.CANCELLED) {
+      Swal.fire({
+        title: "Bạn có chắc muốn hủy đơn hàng không?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Đồng ý",
+        cancelButtonText: "Thoát",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await updateOrder({ orderId, status });
+        }
+      });
+    }
+    if (status === EOrderStatus.COMPLETED) {
+      const res = await updateOrder({ orderId, status });
+      if (res?.success) {
+        toast.success("Cập nhật đơn hàng thành công");
       }
-    });
+    }
   };
   const { createQueryString, router, pathname } = useQueryString();
-  const handleCompleteOrder = () => {};
   const handleSelectStatus = (status: EOrderStatus) => {
     router.push(`${pathname}?${createQueryString("status", status)}`);
   };
@@ -145,20 +162,36 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-3">
-                      <button
-                        type="button"
-                        className={commonClassName.acction}
-                        onClick={handleCompleteOrder}
-                      >
-                        <HiOutlineCheck />
-                      </button>
-                      <button
-                        type="button"
-                        className={commonClassName.acction}
-                        onClick={handleCancelOrder}
-                      >
-                        <HiOutlineX />
-                      </button>
+                      {order.status !== EOrderStatus.CANCELLED && (
+                        <>
+                          {order.status === EOrderStatus.PENDING && (
+                            <button
+                              type="button"
+                              className={commonClassName.acction}
+                              onClick={() =>
+                                handleUpdateOrder({
+                                  orderId: order._id,
+                                  status: EOrderStatus.COMPLETED,
+                                })
+                              }
+                            >
+                              <HiOutlineCheck />
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            className={commonClassName.acction}
+                            onClick={() =>
+                              handleUpdateOrder({
+                                orderId: order._id,
+                                status: EOrderStatus.CANCELLED,
+                              })
+                            }
+                          >
+                            <HiOutlineX />
+                          </button>
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
