@@ -28,4 +28,10 @@ enum EOrderStatus {
   COMPLETED = "COMPLETED",
   CANCELLED = "CANCELLED",
 }
-export { ECourseLevel, ECourseStatus, ELessonType, EUserRole, EUserStatus, EOrderStatus };
+
+enum ECouponType {
+  PERCENT = "PERCENT",
+  AMOUNT = "AMOUNT",
+}
+
+export { ECourseLevel, ECourseStatus, ELessonType, EUserRole, EUserStatus, EOrderStatus, ECouponType };

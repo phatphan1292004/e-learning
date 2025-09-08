@@ -15,7 +15,8 @@ import {
 import LessonContent from "@/components/lesson/LessonContent";
 import { auth } from "@clerk/nextjs/server";
 import { getUserInfo } from "@/lib/actions/user.actions";
-import ButtonBuy from "./ButtonBuy";
+import CourseWidget from "./CourseWidget";
+import AlreadyBuy from "./AlreadyBuy";
 
 const page = async ({
   params,
@@ -26,6 +27,8 @@ const page = async ({
 }) => {
   const { userId } = auth();
   const user = await getUserInfo({ userId: userId || "" });
+  const userCourses = user?.courses.map((c) => c.toString());
+  console.log("userCourses", userCourses);
   const data = await getCourseBySlug({
     slug: params.slug,
   });
@@ -112,43 +115,14 @@ const page = async ({
         </BoxSection>
       </div>
       <div>
-        <div className="bg-white rounded-lg p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <strong className="text-primary text-xl font-bold">
-              {data.price.toLocaleString("en-EN")}
-            </strong>
-            <span className="text-slate-400 line-through text-sm">
-              {data.sale_price.toLocaleString("en-EN")}
-            </span>
-            <span className="ml-auto inline-block px-3 py-1 rounded-lg bg-primary text-primary bg-opacity-10 font-semibold text-sm">
-              {Math.floor((data.price / data.sale_price) * 100)}%
-            </span>
-          </div>
-          <h3 className="font-bold mb-3 text-sm">Khóa học gồm có:</h3>
-          <ul className="mb-5 flex flex-col gap-2 text-sm text-slate-500">
-            <li className="flex items-center gap-2">
-              <IconPlay className="size-4" />
-              <span>30h học</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <IconPlay className="size-4" />
-              <span>Video Full HD</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <IconUsers className="size-4" />
-              <span>Có nhóm hỗ trợ</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <IconStudy className="size-4" />
-              <span>Tài liệu kèm theo</span>
-            </li>
-          </ul>
-          <ButtonBuy
-            user={JSON.parse(JSON.stringify(user))}
-            courseId={JSON.parse(JSON.stringify(data._id))  }
-            amount={data.price}
-          ></ButtonBuy>
-        </div>
+        {userCourses?.includes(data._id.toString()) ? (
+          <AlreadyBuy />
+        ) : (
+          <CourseWidget
+            data={data ? JSON.parse(JSON.stringify(data)) : null}
+            user={user ? JSON.parse(JSON.stringify(user)) : null}
+          />
+        )}
       </div>
     </div>
   );
