@@ -2,7 +2,6 @@ import Heading from "@/components/common/Heading";
 import {
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
-  HiOutlinePlusSm,
 } from "react-icons/hi";
 import { Input } from "@/components/ui/input";
 import {
@@ -16,10 +15,10 @@ import {
 import { BouncedLink, StatusBadge, TableAction, TableActionItem } from "@/components/common";
 import { getCoupons } from "@/lib/actions/coupon.action";
 import { ECouponType } from "@/types/enums";
+import ActionDeleteCoupon from "./ActionDeleteCoupon";
 
 const page = async () => {
   const coupons = await getCoupons({});
-  console.log(coupons);
   return (
     <div>
       <BouncedLink url="/manage/coupon/new"></BouncedLink>
@@ -66,7 +65,7 @@ const page = async () => {
                     <StatusBadge
                       item={{
                         title: "Đang hoạt động",
-                        className: "text-green-500",
+                        className: "text-green-500 bg-green-100",
                       }}
                     ></StatusBadge>
                   ) : (
@@ -84,7 +83,7 @@ const page = async () => {
                       type="edit"
                       url={`/manage/coupon/update?code=${coupon.code}`}
                     ></TableActionItem>
-                    <TableActionItem type="delete"></TableActionItem>
+                    <ActionDeleteCoupon code={coupon.code}></ActionDeleteCoupon>
                   </TableAction>
                 </TableCell>
               </TableRow>

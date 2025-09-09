@@ -13,7 +13,7 @@ const StatusBadge = ({
 }) => {
   return (
     <span
-      className={cn(commonClassName.status, item?.className, "bg-opacity-10")}
+      className={cn(commonClassName.status, item?.className,)}
       onClick={onClick}
     >
       {item?.title}

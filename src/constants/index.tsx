@@ -138,17 +138,17 @@ export const orderStatus: {
   {
     title: "Đã duyệt",
     value: EOrderStatus.COMPLETED,
-    className: "text-green-500 bg-green-500",
+    className: "text-green-600 bg-green-200",
   },
   {
     title: "Chờ duyệt",
     value: EOrderStatus.PENDING,
-    className: "text-orange-500 bg-orange-500",
+    className: "text-orange-600 bg-orange-200",
   },
   {
     title: "Đã hủy",
     value: EOrderStatus.CANCELLED,
-    className: "text-red-500 bg-red-500",
+    className: "text-red-600 bg-red-200",
   },
 ];
 

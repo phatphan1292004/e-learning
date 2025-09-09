@@ -2,7 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -14,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import InputFormatCurrency from "@/components/ui/input-format";
 import { Label } from "@/components/ui/label";
 import {
   Popover,
@@ -23,7 +23,6 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { couponTypes } from "@/constants";
-
 import { ECouponType } from "@/types/enums";
 import { format } from "date-fns";
 import { redirect } from "next/navigation";
@@ -31,6 +30,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { createCoupon } from "@/lib/actions/coupon.action";
 import { HiOutlineCalendar } from "react-icons/hi";
+
 const formSchema = z.object({
   title: z.string({
     message: "Tiêu đề không được để trống",
@@ -54,7 +54,9 @@ const UpdateCouponForm = () => {
   const [endDate, setEndDate] = useState<Date>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {},
+    defaultValues: {
+      type: ECouponType.PERCENT,
+    },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -176,7 +178,7 @@ const UpdateCouponForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Loại coupon</FormLabel>
-                <FormControl>
+                <FormControl className="h-12">
                   <RadioGroup
                     defaultValue={ECouponType.PERCENT}
                     className="flex gap-5"
@@ -204,12 +206,23 @@ const UpdateCouponForm = () => {
               <FormItem>
                 <FormLabel>Giá trị</FormLabel>
                 <FormControl>
-                  <Input
-                    type="number"
-                    placeholder="50%"
-                    {...field}
-                    onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                  />
+                  <>
+                    {couponTypeWatch === ECouponType.PERCENT ? (
+                      <Input
+                        type="number"
+                        placeholder="100"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    ) : (
+                      <InputFormatCurrency
+                        {...field}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value))
+                        }
+                      />
+                    )}
+                  </>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -221,8 +234,8 @@ const UpdateCouponForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Trạng thái</FormLabel>
-                <FormControl>
-                  <div>
+                <FormControl className="h-12">
+                  <div className="flex flex-col justify-center">
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
