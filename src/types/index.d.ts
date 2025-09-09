@@ -105,3 +105,25 @@ export type TCreateOrderParams = {
   discount?: number;
   coupon?: string;
 }
+
+export type TCreateCouponParams = {
+  title: string;
+  code: string;
+  type: ECouponType;
+  value?: number;
+  start_date?: Date;
+  end_date?: Date;
+  active?: boolean;
+  limit?: number;
+  courses?: string[];
+};
+export type TUpdateCouponParams = {
+  _id: string;
+  updateData: Partial<TCreateCouponParams>;
+};
+export type TCouponParams = Omit<ICoupon, "courses"> & {
+  courses: {
+    _id: string;
+    title: string;
+  }[];
+};

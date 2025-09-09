@@ -1,7 +1,7 @@
 import { CourseGrid } from "@/components/common";
 import CourseItem from "@/components/course/CourseItem";
 import Heading from "@/components/typography/Heading";
-import { getAllCourses, getAllCoursesPublic } from "@/lib/actions/course.action";
+import {getAllCoursesPublic } from "@/lib/actions/course.action";
 import { ECourseStatus } from "@/types/enums";
 import React from "react";
 

@@ -54,6 +54,7 @@ const page = async () => {
                 </TableCell>
                 <TableCell>
                   {coupon.type === ECouponType.AMOUNT ? (
+                    console.log(coupon.type),
                     <>{coupon.value.toLocaleString("us-US")}</>
                   ) : (
                     <>{coupon.value}%</>
