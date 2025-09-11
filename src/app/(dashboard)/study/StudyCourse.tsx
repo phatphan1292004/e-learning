@@ -1,14 +1,13 @@
 "use client"
 import { CourseGrid } from "@/components/common";
 import CourseItem from "@/components/course/CourseItem";
-import { ICourse } from "@/database/course.model";
+import { StudyCourseProps } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const StudyCourse = ({ courses }: {
-  courses: ICourse[] | null | undefined;
+  courses: StudyCourseProps[] | null | undefined;
 }) => {
   const [lastLesson, setLastLesson] = useState<any[]>([]);
-
   useEffect(() => {
     const stored = localStorage.getItem("lastLesson");
     if (stored) {
@@ -21,13 +20,14 @@ const StudyCourse = ({ courses }: {
       <CourseGrid>
         {courses?.length > 0 &&
           courses.map((item) => {
-            const url = lastLesson.find((el: any) => el.course === item.slug)?.lesson || [];
+            const firstLessonUrl = item.lectures[0].lessons[0]?.slug || "";
+            const url = lastLesson.find((el: any) => el.course === item.slug)?.lesson || "";
             return (
             <CourseItem
               key={item.slug}
               data={item}
               cta="Tiếp tục học"
-              url={url}
+              url={url || `/${item.slug}/lesson?slug=${firstLessonUrl}`}
             />
           )}
         )}

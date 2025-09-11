@@ -4,7 +4,7 @@ import ButtonBuy from "./ButtonBuy";
 import { IconPlay, IconStudy, IconUsers } from "@/components/icons";
 import CouponForm from "./CouponForm";
 
-const CourseWidget = ({ data, user }: { data: any; user: any }) => {
+const CourseWidget = ({ data, user, duration }: { data: any; user: any; duration: string }) => {
   const [price, setPrice] = useState(data.price);
   const [coupon, setCoupon] = useState("");
 
@@ -25,7 +25,7 @@ const CourseWidget = ({ data, user }: { data: any; user: any }) => {
       <ul className="mb-5 flex flex-col gap-2 text-sm text-slate-500">
         <li className="flex items-center gap-2">
           <IconPlay className="size-4" />
-          <span>30h học</span>
+          <span>{duration} học</span>
         </li>
         <li className="flex items-center gap-2">
           <IconPlay className="size-4" />

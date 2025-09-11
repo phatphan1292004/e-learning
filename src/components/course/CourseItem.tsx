@@ -3,12 +3,24 @@ import Link from "next/link";
 import React from "react";
 import { FaRegStar, FaEye } from "react-icons/fa";
 import { CiTimer } from "react-icons/ci";
-import { ICourse } from "@/database/course.model";
+import { StudyCourseProps } from "@/types";
+import { formatMinutesToHours, formatViewstoK } from "@/utils";
+import { getCourseLessonsInfo } from "@/lib/actions/course.action";
 
-const CourseItem = ({ data, cta, url }: { data: ICourse; cta?: string; url?: string }) => {
+const CourseItem = async ({
+  data,
+  cta,
+  url,
+}: {
+  data: StudyCourseProps;
+  cta?: string;
+  url?: string;
+}) => {
+  const { duration }: any =
+    (await getCourseLessonsInfo({ slug: data.slug })) || 0;
   const courseInfo = [
     {
-      title: data.views,
+      title: formatViewstoK(data.views),
       icon: <FaEye className="text-gray-500" />,
     },
     {
@@ -16,7 +28,7 @@ const CourseItem = ({ data, cta, url }: { data: ICourse; cta?: string; url?: str
       icon: <FaRegStar className="text-gray-500" />,
     },
     {
-      title: "30h25p",
+      title: formatMinutesToHours(duration),
       icon: <CiTimer className="text-gray-500" />,
     },
   ];

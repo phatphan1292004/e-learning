@@ -127,3 +127,13 @@ export type TCouponParams = Omit<ICoupon, "courses"> & {
     title: string;
   }[];
 };
+
+export interface StudyCourseProps extends Omit<ICourse, "lectures"> {
+  slug: string;
+  lectures: {
+    slug: string;
+    lessons: {
+      slug: string;
+    }[];
+  }[];
+}

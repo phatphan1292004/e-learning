@@ -5,6 +5,8 @@ import { connectDB } from "../mongoose";
 import { TCreateUserParams } from "@/types";
 import { ICourse } from "@/database/course.model";
 import { ECourseStatus } from "@/types/enums";
+import Lecture from "@/database/lecture.model";
+import Lesson from "@/database/lesson.model";
 
 export async function createUser(params: TCreateUserParams) {
   try {
@@ -39,6 +41,16 @@ export async function getUserCourse(
       model: "Course",
       match: {
         status: ECourseStatus.APPROVED,
+      },
+      populate: {
+        path: "lectures",
+        model: Lecture,
+        select: "lessons",
+        populate: {
+          path: "lessons",
+          model: Lesson,
+          select: "slug",
+        },
       },
     });
     if (!findUser) return null;

@@ -10,7 +10,6 @@ import Lecture from "@/database/lecture.model";
 import Course, { ICourse } from "@/database/course.model";
 import { revalidatePath } from "next/cache";
 import Lesson from "@/database/lesson.model";
-import { match } from "assert";
 import { FilterQuery } from "mongoose";
 import { ECourseStatus } from "@/types/enums";
 
@@ -121,4 +120,47 @@ export async function updateCourse(params: TUpdateCourseParams) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function updateCourseView({ slug }: { slug: string }) {
+  try {
+    connectDB();
+    await Course.findOneAndUpdate(
+      { slug },
+      {
+        $inc: { views: 1 },
+      }
+    );
+  } catch (error) {}
+}
+
+export async function getCourseLessonsInfo({ slug }: { slug: string }): Promise<
+  | {
+      duration: number;
+      lessons: number;
+    }
+  | undefined
+> {
+  try {
+    connectDB();
+    const course = await Course.findOne({ slug })
+      .select("lectures")
+      .populate({
+        path: "lectures",
+        select: "lessons",
+        populate: {
+          path: "lessons",
+          select: "duration",
+        },
+      });
+    const lessons = course?.lectures.map((l: any) => l.lessons).flat();
+    const duration = lessons.reduce(
+      (acc: number, cur: any) => acc + cur.duration,
+      0
+    );
+    return {
+      duration,
+      lessons: lessons.length,
+    };
+  } catch (error) {}
 }

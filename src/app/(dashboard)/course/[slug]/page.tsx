@@ -1,8 +1,5 @@
-import { IconPlay, IconStudy, IconUsers } from "@/components/icons";
-import { Button } from "@/components/ui/button";
-import { getCourseBySlug } from "@/lib/actions/course.action";
+import { getCourseBySlug, getCourseLessonsInfo, updateCourseView } from "@/lib/actions/course.action";
 import { FaCheck } from "react-icons/fa6";
-
 import Image from "next/image";
 import { courseLevelTitle } from "@/constants";
 import PageNotFound from "@/app/not-found";
@@ -17,6 +14,7 @@ import { auth } from "@clerk/nextjs/server";
 import { getUserInfo } from "@/lib/actions/user.actions";
 import CourseWidget from "./CourseWidget";
 import AlreadyBuy from "./AlreadyBuy";
+import { formatMinutesToHours } from "@/utils";
 
 const page = async ({
   params,
@@ -25,6 +23,7 @@ const page = async ({
     slug: string;
   };
 }) => {
+  await updateCourseView({ slug: params.slug });
   const { userId } = auth();
   const user = await getUserInfo({ userId: userId || "" });
   const userCourses = user?.courses.map((c) => c.toString());
@@ -33,10 +32,11 @@ const page = async ({
     slug: params.slug,
   });
   if (!data) return null;
-  console.log("data", data);
   if (data.status !== "APPROVED") return <PageNotFound></PageNotFound>;
   const lectures = data.lectures || [];
   const videoId = data.intro_url?.split("v=")[1] || "";
+  const { duration, lessons }: any =
+    (await getCourseLessonsInfo({ slug: data.slug })) || 0;
 
   return (
     <div className="grid lg:grid-cols-[2fr,1fr] gap-10 min-h-screen">
@@ -68,10 +68,10 @@ const page = async ({
         </BoxSection>
         <BoxSection title="Thông tin">
           <div className="grid grid-cols-4 gap-5 mb-10">
-            <BoxInfo title="Bài học">100</BoxInfo>
+            <BoxInfo title="Bài học">{lessons}</BoxInfo>
             <BoxInfo title="Lượt xem">{data.views}</BoxInfo>
             <BoxInfo title="Trình độ">{courseLevelTitle[data.level]}</BoxInfo>
-            <BoxInfo title="Thời lượng">100</BoxInfo>
+            <BoxInfo title="Thời lượng">{formatMinutesToHours(duration)}</BoxInfo>
           </div>
         </BoxSection>
         <BoxSection title="Nội dung khóa học">
@@ -121,6 +121,7 @@ const page = async ({
           <CourseWidget
             data={data ? JSON.parse(JSON.stringify(data)) : null}
             user={user ? JSON.parse(JSON.stringify(user)) : null}
+            duration={formatMinutesToHours(duration)}
           />
         )}
       </div>
