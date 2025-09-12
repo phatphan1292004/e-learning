@@ -1,5 +1,6 @@
 "use server";
 import {
+  StudyCourseProps,
   TCourseUpdateParams,
   TCreateCourseParams,
   TGetAllCourseParams,
@@ -39,7 +40,7 @@ export async function getAllCourses(
 
 export async function getAllCoursesPublic(
   params: TGetAllCourseParams
-): Promise<ICourse[] | undefined> {
+): Promise<StudyCourseProps[] | undefined> {
   try {
     connectDB();
     const { page = 1, limit = 10, search } = params;
