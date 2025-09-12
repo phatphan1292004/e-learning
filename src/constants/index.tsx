@@ -53,6 +53,12 @@ export const menuItems: TMenuItem[] = [
     title: "Quản lý mã giảm giá",
     icon: <IconTicket className="size-5" />,
   },
+
+    {
+    url: "/manage/rating",
+    title: "Quản lý đánh giá",
+    icon: <IconTicket className="size-5" />,
+  },
 ];
 
 export const courseStatus: {

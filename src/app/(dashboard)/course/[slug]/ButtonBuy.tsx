@@ -24,14 +24,18 @@ const ButtonBuy = ({
       toast.error("Vui lòng đăng nhập để mua khóa học");
       return;
     }
-    const newOrder = await createOrder({
+    const orderParams: any = {
       code: createOrderCode(),
       user: user._id,
       course: courseId,
       total: amount,
       amount: amount,
-      coupon,
-    });
+    };
+    if (coupon && coupon.trim() !== "") {
+      orderParams.coupon = coupon;
+    }
+    const newOrder = await createOrder(orderParams);
+    console.log(newOrder);
     if (newOrder && newOrder.code) {
       router.push(`/order/${newOrder.code}`);
     } else {

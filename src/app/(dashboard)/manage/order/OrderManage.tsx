@@ -84,6 +84,7 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
     },
     500
   );
+  
   return (
     <div>
       <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10">

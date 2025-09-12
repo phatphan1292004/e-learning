@@ -24,7 +24,7 @@ const CourseItem = async ({
       icon: <FaEye className="text-gray-500" />,
     },
     {
-      title: data.rating[0],
+      title: 5,
       icon: <FaRegStar className="text-gray-500" />,
     },
     {

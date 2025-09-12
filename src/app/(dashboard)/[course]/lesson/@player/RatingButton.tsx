@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +13,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { createRating, getRatingByUserId } from "@/lib/actions/rating.action";
+import { toast } from "react-toastify";
 const RatingButton = ({
   courseId,
   userId,
@@ -22,9 +24,29 @@ const RatingButton = ({
 }) => {
   const [ratingValue, setRatingValue] = useState(-1);
   const [ratingContent, setRatingContent] = useState("");
+  const [isAlreadyRating, setIsAlreadyRating] = useState(false);
+
+  const handleRatingCourse = async () => {
+    const isAlreadyCreated = await getRatingByUserId(userId);
+    if(isAlreadyCreated) {
+      toast.warning("Bạn đã đánh giá khóa học này rôi.");
+      return; 
+    }
+    const res = await createRating({
+      rate: ratingValue,
+      content: ratingContent,
+      user: userId,
+      course: courseId,
+    });
+    if (res) {
+      toast.success("Cảm ơn bạn đã đánh giá khóa học!");
+      setRatingContent("");
+      setRatingValue(-1);
+    }
+  };
   return (
     <Dialog>
-      <DialogTrigger className="flex items-center gap-3 rounded-lg h-12 text-sm font-semibold px-5 bg-primary">
+      <DialogTrigger className="disabled:cursor-not-allowed flex items-center gap-3 rounded-lg h-12 text-sm font-semibold px-5 bg-primary">
         <FaStar className="text-yellow-400" />
         <span>Đánh giá khóa học</span>
       </DialogTrigger>
@@ -61,7 +83,11 @@ const RatingButton = ({
               className="h-[200px] resize-none mt-10"
               onChange={(e) => setRatingContent(e.target.value)}
             />
-            <Button variant="primary" className="w-full mt-5">
+            <Button
+              variant="primary"
+              className="w-full mt-5"
+              onClick={handleRatingCourse}
+            >
               Gửi đánh giá
             </Button>
           </DialogDescription>

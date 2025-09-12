@@ -12,7 +12,8 @@ import Course, { ICourse } from "@/database/course.model";
 import { revalidatePath } from "next/cache";
 import Lesson from "@/database/lesson.model";
 import { FilterQuery } from "mongoose";
-import { ECourseStatus } from "@/types/enums";
+import { ECourseStatus, ERatingStatus } from "@/types/enums";
+import Rating from "@/database/rating.model";
 
 export async function getAllCourses(
   params: TGetAllCourseParams
@@ -68,17 +69,26 @@ export async function getCourseBySlug({
 }): Promise<TCourseUpdateParams | null | undefined> {
   try {
     connectDB();
-    const course = await Course.findOne({ slug }).populate({
-      path: "lectures",
-      select: "_id title",
-      match: { _destroy: false },
-      model: Lecture,
-      populate: {
-        path: "lessons",
-        model: Lesson,
+    const course = await Course.findOne({ slug })
+      .populate({
+        path: "lectures",
+        select: "_id title",
         match: { _destroy: false },
-      },
-    });
+        model: Lecture,
+        populate: {
+          path: "lessons",
+          model: Lesson,
+          match: { _destroy: false },
+        },
+      })
+      .populate({
+        path: "rating",
+        model: Rating,
+        select: "content",
+        match: {
+          status: ERatingStatus.ACTIVE,
+        },
+      });
     return course;
   } catch (error) {
     console.log(error);

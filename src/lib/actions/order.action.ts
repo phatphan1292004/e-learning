@@ -46,13 +46,16 @@ export async function createOrder(params: TCreateOrderParams) {
   try {
     connectDB();
     const newOrder = await Order.create(params);
-    if(params.coupon) {
+    if (params.coupon) {
       await Coupon.findByIdAndUpdate(params.coupon, {
         $inc: { used: 1 }
       });
     }
     return JSON.parse(JSON.stringify(newOrder));
-  } catch (error) {}
+  } catch (error) {
+    console.error("Create order error:", error);
+    return null; 
+  }
 }
 
 export async function updateOrder({

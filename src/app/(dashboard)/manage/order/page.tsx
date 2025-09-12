@@ -17,7 +17,7 @@ const page = async ({
     search: searchParams.search,
     status: searchParams.status,
   });
-
+  console.log("orders", orders);
   return <OrderManage orders={orders}></OrderManage>;
 };
 
