@@ -137,3 +137,5 @@ export interface StudyCourseProps extends Omit<ICourse, "lectures"> {
     }[];
   }[];
 }
+
+export type TRatingIcon = "awesome" | "good" | "meh" | "bad" | "terrible";

@@ -2,8 +2,9 @@ import LessonSaveUrl from "@/components/lesson/LessonSaveUrl";
 import { getCourseBySlug } from "@/lib/actions/course.action";
 import { getAllLessons } from "@/lib/actions/lesson.action";
 import React from "react";
-import LessonNavigation from "../LessonNavigation";
 import VideoPlayer from "./VideoPlayer";
+import { auth } from "@clerk/nextjs/server";
+import { getUserInfo } from "@/lib/actions/user.actions";
 
 const page = async ({
   params,
@@ -12,6 +13,8 @@ const page = async ({
   params: { course: string };
   searchParams: { slug: string };
 }) => {
+  const { userId } = auth();
+  const user = await getUserInfo({ userId: userId! });
   const course = params.course;
   const slug = searchParams.slug;
   const findCourse = await getCourseBySlug({ slug: course });
@@ -25,7 +28,7 @@ const page = async ({
     listLesson?.findIndex((el: any) => el.slug === slug) || 0;
   const nextLesson = listLesson[currentLessonIndex + 1] || null;
   const previousLesson = listLesson[currentLessonIndex - 1] || null;
-  console.log("videoId", videoId);
+
   return (
     <div className="mb-10">
       <LessonSaveUrl course={course} url={`/${course}/lesson?slug=${slug}`} />
@@ -40,6 +43,10 @@ const page = async ({
               ? ""
               : `/${course}/lesson?slug=${previousLesson?.slug}`
           }
+          data={{
+            userId: user?._id?.toString() || "",
+            courseId: courseId,
+          }}
         />
         <h1 className="text-2xl font-bold">{lessonDetails.title}</h1>
         {lessonDetails.content && (
