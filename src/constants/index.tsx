@@ -13,6 +13,7 @@ import {
   ECourseLevel,
   ECourseStatus,
   EOrderStatus,
+  ERatingStatus,
 } from "@/types/enums";
 import z from "zod";
 export const menuItems: TMenuItem[] = [
@@ -230,5 +231,23 @@ export const ratingList: {
   {
     title: "terrible",
     value: 1,
+  },
+];
+
+
+export const ratingStatus: {
+  title: string;
+  value: ERatingStatus;
+  className?: string;
+}[] = [
+  {
+    title: "Đã duyệt",
+    value: ERatingStatus.ACTIVE,
+    className: "text-green-600 bg-green-500/30",
+  },
+  {
+    title: "Chờ duyệt",
+    value: ERatingStatus.UNACTIVE,
+    className: "text-orange-600 bg-orange-500/30",
   },
 ];

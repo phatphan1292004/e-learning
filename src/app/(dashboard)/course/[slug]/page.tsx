@@ -62,6 +62,7 @@ const page = async ({
               src={data.image}
               alt=""
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="w-full h-full object-cover rounded-lg"
             />
           )}
@@ -70,7 +71,7 @@ const page = async ({
           {ratings.map((rating, index) => (
             <div
               key={index}
-              className="p-2 text-sm font-medium rounded-md border borderDarkMode bgDarkMode"
+              className="p-2 text-sm font-medium rounded-full text-white bg-gradient-to-r from-primary to-blue-500 border borderDarkMode bgDarkMode"
             >
               {rating}
             </div>

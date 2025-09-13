@@ -1,9 +1,11 @@
-import Heading from "@/components/common/Heading";
+import RatingManage from "./RatingManage";
+import { getRatings } from "@/lib/actions/rating.action";
 
-const page = () => {
+const page = async () => {
+  const ratings = await getRatings();
   return (
     <div>
-      <Heading className="">Quản lý đánh giá</Heading>
+      <RatingManage ratings={ratings} />
     </div>
   );
 };

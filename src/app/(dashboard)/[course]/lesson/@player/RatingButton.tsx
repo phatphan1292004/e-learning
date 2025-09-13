@@ -24,24 +24,33 @@ const RatingButton = ({
 }) => {
   const [ratingValue, setRatingValue] = useState(-1);
   const [ratingContent, setRatingContent] = useState("");
-  const [isAlreadyRating, setIsAlreadyRating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRatingCourse = async () => {
-    const isAlreadyCreated = await getRatingByUserId(userId);
-    if(isAlreadyCreated) {
-      toast.warning("Bạn đã đánh giá khóa học này rôi.");
-      return; 
-    }
-    const res = await createRating({
-      rate: ratingValue,
-      content: ratingContent,
-      user: userId,
-      course: courseId,
-    });
-    if (res) {
-      toast.success("Cảm ơn bạn đã đánh giá khóa học!");
-      setRatingContent("");
-      setRatingValue(-1);
+    setIsLoading(true);
+    try {
+      const isAlreadyCreated = await getRatingByUserId(userId);
+      if (isAlreadyCreated) {
+        toast.warning("Bạn đã đánh giá khóa học này rôi.");
+        setIsLoading(false);
+        return;
+      }
+      if(ratingValue === -1 || ratingContent.trim() === "") return;
+      const res = await createRating({
+        rate: ratingValue,
+        content: ratingContent,
+        user: userId,
+        course: courseId,
+      });
+      if (res) {
+        toast.success("Cảm ơn bạn đã đánh giá khóa học!");
+        setRatingContent("");
+        setRatingValue(-1);
+      }
+    } catch (error) {
+      toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -82,11 +91,14 @@ const RatingButton = ({
               placeholder="Đánh giá của bạn"
               className="h-[200px] resize-none mt-10"
               onChange={(e) => setRatingContent(e.target.value)}
+              value={ratingContent}
             />
             <Button
               variant="primary"
               className="w-full mt-5"
               onClick={handleRatingCourse}
+              disabled={ratingValue === -1 || isLoading}
+              isLoading={isLoading}
             >
               Gửi đánh giá
             </Button>

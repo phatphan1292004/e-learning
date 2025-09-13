@@ -1,13 +1,15 @@
+"use client";
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
-import React from "react";
+import React, { useState } from "react";
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <div className="wrapper block lg:grid lg:grid-cols-[300px,minmax(0,1fr)] h-screen w-full">
-      <Sidebar />
-      <div className="hidden lg:block"></div>
-      <div>
+    <div className="wrapper flex h-screen w-full">
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <div className="flex-1 transition-all duration-300">
         <Header />
         <main className="p-5 mt-20">{children}</main>
       </div>
@@ -15,4 +17,4 @@ const layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default layout;
+export default Layout;

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { MdModeEditOutline, MdDelete  } from "react-icons/md";
 import { HiOutlineClipboard } from "react-icons/hi";
 import { FaEye } from "react-icons/fa";
-type TableActionIcon = "edit" | "delete" | "view" | "study";
+type TableActionIcon = "edit" | "delete" | "view" | "study" | "approve";
 const TableActionItem = ({
   onClick,
   type,
@@ -18,6 +18,7 @@ const TableActionItem = ({
     delete: <MdDelete />,
     view: <FaEye />,
     study: <HiOutlineClipboard />,
+    approve: <MdModeEditOutline />,
   };
   if (url)
     return (

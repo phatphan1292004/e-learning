@@ -166,3 +166,6 @@
     @apply underline text-primary;
   }
 }
+.active .active-blur {
+  opacity: 1 !important;
+}
