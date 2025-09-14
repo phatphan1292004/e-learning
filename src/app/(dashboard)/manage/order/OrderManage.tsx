@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { commonClassName, orderStatus } from "@/constants";
+import { allValue, commonClassName, orderStatus } from "@/constants";
 import useQueryString from "@/hooks/useQueryString";
 
 import { cn } from "@/lib/utils";
@@ -74,17 +74,8 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
       }
     }
   };
-  const { createQueryString, router, pathname } = useQueryString();
-  const handleSelectStatus = (status: EOrderStatus) => {
-    router.push(`${pathname}?${createQueryString("status", status)}`);
-  };
-  const handleSearchOrder = debounce(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      router.push(`${pathname}?${createQueryString("search", e.target.value)}`);
-    },
-    500
-  );
-  
+  const { handleSearchData, handleSelectStatus } = useQueryString();
+
   return (
     <div>
       <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10">
@@ -94,7 +85,7 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
             <Input
               className="h-10"
               placeholder="Tìm kiếm đơn hàng..."
-              onChange={(e) => handleSearchOrder(e)}
+              onChange={handleSearchData}
             />
           </div>
           <div className="h-full">
@@ -102,12 +93,16 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
               onValueChange={(value) =>
                 handleSelectStatus(value as EOrderStatus)
               }
+              defaultValue={allValue}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Chọn trạng thái" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
+                  <SelectItem key={allValue} value={allValue}>
+                    Tất cả
+                  </SelectItem>
                   {orderStatus.map((status) => (
                     <SelectItem value={status.value} key={status.value}>
                       {status.title}

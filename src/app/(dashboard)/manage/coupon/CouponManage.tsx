@@ -1,0 +1,141 @@
+"use client";
+import React from "react";
+import Heading from "@/components/common/Heading";
+import {
+  HiOutlineArrowNarrowLeft,
+  HiOutlineArrowNarrowRight,
+} from "react-icons/hi";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  BouncedLink,
+  StatusBadge,
+  TableAction,
+  TableActionItem,
+} from "@/components/common";
+import { ECouponType } from "@/types/enums";
+import ActionDeleteCoupon from "./ActionDeleteCoupon";
+import { TCouponItem } from "@/types";
+import useQueryString from "@/hooks/useQueryString";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { allValue } from "@/constants";
+
+const CouponManage = ({ coupons }: { coupons: TCouponItem[] | undefined }) => {
+  const { handleSearchData, handleChangePage, handleSelectStatus } =
+    useQueryString();
+  return (
+    <div>
+      <BouncedLink url="/manage/coupon/new"></BouncedLink>
+      <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10">
+        <Heading className="">Quản lý mã giảm giá</Heading>
+        <div className="flex gap-3">
+          <div className="flex gap-3">
+            <div className="w-full lg:w-[300px]">
+              <Input
+                placeholder="Tìm kiếm đánh giá..."
+                onChange={handleSearchData}
+              />
+            </div>
+            <Select defaultValue={allValue}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Chọn trạng thái" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value={allValue}>Tất cả</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+      <Table className="table-responsive">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Mã</TableHead>
+            <TableHead>Tiêu đề</TableHead>
+            <TableHead>Giảm giá</TableHead>
+            <TableHead>Sử dụng</TableHead>
+            <TableHead>Trạng thái</TableHead>
+            <TableHead>Hành động</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {coupons &&
+            coupons.length > 0 &&
+            coupons.map((coupon) => (
+              <TableRow key={coupon.code}>
+                <TableCell>
+                  <strong>{coupon.code}</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>{coupon.title}</strong>
+                </TableCell>
+                <TableCell>
+                  {coupon.type === ECouponType.AMOUNT ? (
+                    (console.log(coupon.type),
+                    (<>{coupon.value.toLocaleString("us-US")}</>))
+                  ) : (
+                    <>{coupon.value}%</>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {coupon.used} / {coupon.limit}
+                </TableCell>
+                <TableCell>
+                  {coupon.active ? (
+                    <StatusBadge
+                      item={{
+                        title: "Đang hoạt động",
+                        className: "text-green-500 bg-green-100",
+                      }}
+                    ></StatusBadge>
+                  ) : (
+                    <StatusBadge
+                      item={{
+                        title: "Chưa kích hoạt",
+                        className: "text-orange-500",
+                      }}
+                    ></StatusBadge>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <TableAction>
+                    <TableActionItem
+                      type="edit"
+                      url={`/manage/coupon/update?code=${coupon.code}`}
+                    ></TableActionItem>
+                    <ActionDeleteCoupon code={coupon.code}></ActionDeleteCoupon>
+                  </TableAction>
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+      <div className="flex justify-end gap-3 mt-10">
+        <button className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center">
+          <HiOutlineArrowNarrowLeft size={18} />
+        </button>
+        <button className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center">
+          <HiOutlineArrowNarrowRight size={18} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CouponManage;

@@ -162,3 +162,13 @@ export type TRatingItem = {
   };
   status: ERatingStatus;
 };
+
+export type TCouponItem = Omit<ICoupon, "_id" | "courses">;
+// Filter, pagination
+export type TFilterData = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  status?: string;
+  active?: boolean;
+};

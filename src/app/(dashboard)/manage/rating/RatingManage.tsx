@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ratingList, ratingStatus } from "@/constants";
+import { allValue, ratingList, ratingStatus } from "@/constants";
 import useQueryString from "@/hooks/useQueryString";
 import { deleteRating, updateRating } from "@/lib/actions/rating.action";
 import { TRatingItem } from "@/types";
@@ -35,11 +35,8 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
 const RatingManage = ({ ratings }: { ratings: any }) => {
-  const { createQueryString, router, pathname } = useQueryString();
+  const { handleSearchData, handleChangePage, handleSelectStatus } = useQueryString();
 
-  const handleSelectStatus = (status: ERatingStatus) => {
-    router.push(`${pathname}?${createQueryString("status", status)}`);
-  };
 
   const handleUpdateRating = async (id: string) => {
     try {
@@ -72,18 +69,25 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
         <Heading className="">Quản lý đánh giá</Heading>
         <div className="flex gap-3">
           <div className="w-full lg:w-[300px]">
-            <Input placeholder="Tìm kiếm đánh giá..." />
+            <Input
+              placeholder="Tìm kiếm đánh giá..."
+              onChange={handleSearchData}
+            />
           </div>
           <Select
             onValueChange={(value) =>
               handleSelectStatus(value as ERatingStatus)
             }
+            defaultValue={allValue}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Chọn trạng thái" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
+                <SelectItem value={allValue} key={allValue}>
+                  Tất cả
+                </SelectItem>
                 {ratingStatus.map((status) => (
                   <SelectItem value={status.value} key={status.value}>
                     {status.title}
@@ -158,7 +162,7 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
                       )}
                       <TableActionItem
                         type="delete"
-                        onClick={() => handleDeleteRating(rating._id)} 
+                        onClick={() => handleDeleteRating(rating._id)}
                       ></TableActionItem>
                     </TableAction>
                   </TableCell>
@@ -170,13 +174,13 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
       <div className="flex justify-end gap-3 mt-10">
         <button
           className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
-          // onClick={() => handleChangePage("prev")}
+          onClick={() => handleChangePage("prev")}
         >
           <HiOutlineArrowNarrowLeft size={18} />
         </button>
         <button
           className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
-          // onClick={() => handleChangePage("next")}
+          onClick={() => handleChangePage("next")}
         >
           <HiOutlineArrowNarrowRight size={18} />
         </button>

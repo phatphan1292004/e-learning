@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import Heading from "../common/Heading";
 import Image from "next/image";
-import { commonClassName, courseStatus } from "@/constants";
+import { allValue, commonClassName, courseStatus } from "@/constants";
 import { cn } from "@/lib/utils";
 import {
   HiOutlineArrowNarrowLeft,
@@ -34,15 +34,14 @@ import {
 } from "@/components/ui/select";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { debounce } from "lodash";
 import useQueryString from "@/hooks/useQueryString";
 import { TableAction, TableActionItem } from "../common";
 
 const CourseManage = ({ course }: { course: ICourse[] }) => {
   const router = useRouter();
   const pathname = usePathname();
-
-  const { createQueryString } = useQueryString();
+  const { handleSearchData, handleSelectStatus } =
+    useQueryString();
   const handleChangeStatus = async (
     slug: string,
     currentStatus: ECourseStatus
@@ -68,7 +67,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
             path: "/manage/course",
           });
           toast.success("Cập nhật trạng thái thành công!");
-          router.push(`${pathname}?${createQueryString("status", "")}`);
+          // router.push(`${pathname}?${createQueryString("status", "")}&${createQueryString("search", "")}`);
         }
       });
     } catch (error) {
@@ -99,17 +98,6 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
     });
   };
 
-  const handleSearchCourse = debounce(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      router.push(`${pathname}?${createQueryString("search", e.target.value)}`);
-    },
-    500
-  );
-
-  const handleSelectStatus = debounce((value: ECourseStatus) => {
-    router.push(`${pathname}?${createQueryString("status", value)}`);
-  }, 500);
-
   const [page, setPage] = useState(1);
   const handleChangePage = (type: "prev" | "next") => {
     if (type === "prev" && page === 1) return;
@@ -117,9 +105,9 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
     if (type === "next") setPage(page + 1);
   };
 
-  useEffect(() => {
-    router.push(`${pathname}?${createQueryString("page", page.toString())}`);
-  }, [page]);
+  // useEffect(() => {
+  //   router.push(`${pathname}?${createQueryString("page", page.toString())}`);
+  // }, [page]);
   return (
     <div>
       <Link
@@ -134,7 +122,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
           <div className="w-full lg:w-[300px]">
             <Input
               placeholder="Tìm kiếm khóa học"
-              onChange={(e) => handleSearchCourse(e)}
+              onChange={handleSearchData}
             />
           </div>
           <div className="h-full">
@@ -142,12 +130,16 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
               onValueChange={(value) =>
                 handleSelectStatus(value as ECourseStatus)
               }
+              defaultValue={allValue}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Chọn trạng thái" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
+                  <SelectItem key={allValue} value={allValue}>
+                    Tất cả
+                  </SelectItem>
                   {courseStatus.map((status) => (
                     <SelectItem key={status.value} value={status.value}>
                       {status.title}
@@ -243,7 +235,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
         </TableBody>
       </Table>
 
-      <div className="flex justify-end gap-3 mt-10">
+      {/* <div className="flex justify-end gap-3 mt-10">
         <button
           className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
           onClick={() => handleChangePage("prev")}
@@ -256,7 +248,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
         >
           <HiOutlineArrowNarrowRight size={18} />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

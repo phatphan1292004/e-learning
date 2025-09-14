@@ -3,6 +3,7 @@ import {
   StudyCourseProps,
   TCourseUpdateParams,
   TCreateCourseParams,
+  TFilterData,
   TGetAllCourseParams,
   TUpdateCourseParams,
 } from "@/types";
@@ -16,7 +17,7 @@ import { ECourseStatus, ERatingStatus } from "@/types/enums";
 import Rating from "@/database/rating.model";
 
 export async function getAllCourses(
-  params: TGetAllCourseParams
+  params: TFilterData
 ): Promise<ICourse[] | undefined> {
   try {
     connectDB();
