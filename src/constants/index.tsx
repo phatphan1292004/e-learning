@@ -55,7 +55,7 @@ export const menuItems: TMenuItem[] = [
     icon: <IconTicket className="size-5" />,
   },
 
-    {
+  {
     url: "/manage/rating",
     title: "Quản lý đánh giá",
     icon: <IconTicket className="size-5" />,
@@ -113,6 +113,8 @@ export const commonClassName = {
     "bg-opacity-10 border border-current text-xs rounded-md font-medium px-3 py-1 whitespace-nowrap",
   acction:
     "size-8 rounded-md border borderDarkMode flex items-center justify-center p-2 bg-gray-100 text-gray-500 hover:bg-white dark:bg-transparent dark:hover:border-opacity-15",
+  paginationButton:
+    "size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center hover:border-primary transition-all hover:text-primary p-2.5",
 };
 
 export const editorOptions = (field: any, theme: any) => ({
@@ -234,7 +236,6 @@ export const ratingList: {
   },
 ];
 
-
 export const ratingStatus: {
   title: string;
   value: ERatingStatus;
@@ -253,3 +254,4 @@ export const ratingStatus: {
 ];
 
 export const allValue = "ALL";
+export const ITEM_PER_PAGE = 5;

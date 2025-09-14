@@ -7,6 +7,7 @@ export default function useQueryString() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const currentPage = Number(searchParams.get("page")) || 1;
   const createQueryString = (name: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set(name, value);
@@ -26,8 +27,16 @@ export default function useQueryString() {
   const handleSelectStatus = <T extends string>(status: T | string) => {
     createQueryString("status", status);
   };
-  const handleChangePage = (page: string) => {
-    createQueryString("page", page);
+  const handleChangePage = (page: number) => {
+    createQueryString("page", `${page}`);
   };
-  return { createQueryString, router, pathname, handleSearchData, handleSelectStatus, handleChangePage };
+  return {
+    createQueryString,
+    router,
+    pathname,
+    handleSearchData,
+    handleSelectStatus,
+    handleChangePage,
+    currentPage
+  };
 }

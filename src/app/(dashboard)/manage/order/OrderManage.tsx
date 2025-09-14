@@ -29,6 +29,8 @@ import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import Swal from "sweetalert2";
 import { updateOrder } from "@/lib/actions/order.action";
 import { toast } from "react-toastify";
+import Pagination from "@/components/common/Pagination";
+import EmptyData from "@/components/common/EmptyData";
 interface IOrderManageProps {
   _id: string;
   code: string;
@@ -46,7 +48,13 @@ interface IOrderManageProps {
     name: string;
   };
 }
-const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
+const OrderManage = ({
+  orders = [],
+  totalPages = 1,
+}: {
+  orders: IOrderManageProps[];
+  totalPages: number;
+}) => {
   const handleUpdateOrder = async ({
     orderId,
     status,
@@ -127,6 +135,7 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
+          {orders.length === 0 && <EmptyData text="Không có đơn hàng!" />}
           {orders.length > 0 &&
             orders.map((order) => {
               const orderStatusItem = orderStatus.find(
@@ -200,6 +209,7 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
             })}
         </TableBody>
       </Table>
+      <Pagination totalPages={totalPages}></Pagination>
     </div>
   );
 };
