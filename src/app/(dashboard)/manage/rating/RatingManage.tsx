@@ -171,20 +171,6 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
             })}
         </TableBody>
       </Table>
-      <div className="flex justify-end gap-3 mt-10">
-        <button
-          className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
-          onClick={() => handleChangePage("prev")}
-        >
-          <HiOutlineArrowNarrowLeft size={18} />
-        </button>
-        <button
-          className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
-          onClick={() => handleChangePage("next")}
-        >
-          <HiOutlineArrowNarrowRight size={18} />
-        </button>
-      </div>
     </div>
   );
 };
