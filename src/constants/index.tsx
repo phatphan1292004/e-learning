@@ -255,3 +255,14 @@ export const ratingStatus: {
 
 export const allValue = "ALL";
 export const ITEM_PER_PAGE = 5;
+
+export const couponStatuses = [
+  {
+    title: "Đang kích hoạt",
+    value: 1,
+  },
+  {
+    title: "Chưa kích hoạt",
+    value: 0,
+  },
+];

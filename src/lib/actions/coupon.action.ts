@@ -25,9 +25,13 @@ export async function createCoupon(params: TCreateCouponParams) {
   }
 }
 
-export async function getCoupons(
-  params: TFilterData
-): Promise<TCouponItem[] | undefined> {
+export async function getCoupons(params: TFilterData): Promise<
+  | {
+      coupons: TCouponItem[] | undefined;
+      total: number;
+    }
+  | undefined
+> {
   try {
     connectDB();
     const { page = 1, limit = 10, search, active } = params;
@@ -36,6 +40,9 @@ export async function getCoupons(
     if (search) {
       query.$or = [{ code: { $regex: search, $options: "i" } }];
     }
+    if (active) {
+      query.active = Boolean(Number(active));
+    }
 
     const coupons = await Coupon.find(query)
       .sort({ created_at: -1 })
@@ -43,7 +50,11 @@ export async function getCoupons(
       .limit(limit)
       .sort({ created_at: -1 });
     revalidatePath("/manage/coupon");
-    return JSON.parse(JSON.stringify(coupons));
+    const total = await Coupon.countDocuments(query);
+    return {
+      coupons: JSON.parse(JSON.stringify(coupons)),
+      total,
+    };
   } catch (error) {
     console.log(error);
   }

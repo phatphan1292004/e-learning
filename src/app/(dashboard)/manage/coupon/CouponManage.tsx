@@ -32,11 +32,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { allValue } from "@/constants";
+import { allValue, couponStatuses } from "@/constants";
+import Pagination from "@/components/common/Pagination";
 
-const CouponManage = ({ coupons }: { coupons: TCouponItem[] | undefined }) => {
-  const { handleSearchData, handleChangePage, handleSelectStatus } =
-    useQueryString();
+const CouponManage = ({
+  coupons,
+  totalPages,
+  total,
+}: {
+  coupons: TCouponItem[] | undefined;
+  totalPages: number;
+  total: number;
+}) => {
+  const { handleSearchData, handleChangeQs } = useQueryString();
+  useQueryString();
   return (
     <div>
       <BouncedLink url="/manage/coupon/new"></BouncedLink>
@@ -50,13 +59,21 @@ const CouponManage = ({ coupons }: { coupons: TCouponItem[] | undefined }) => {
                 onChange={handleSearchData}
               />
             </div>
-            <Select defaultValue={allValue}>
+            <Select
+              defaultValue={allValue}
+              onValueChange={(value) => handleChangeQs("active", value)}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Chọn trạng thái" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectItem value={allValue}>Tất cả</SelectItem>
+                  {couponStatuses.map((item) => (
+                    <SelectItem key={item.value} value={`${item.value}`}>
+                      {item.title}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -100,7 +117,7 @@ const CouponManage = ({ coupons }: { coupons: TCouponItem[] | undefined }) => {
                   {coupon.active ? (
                     <StatusBadge
                       item={{
-                        title: "Đang hoạt động",
+                        title: "Kích hoạt",
                         className: "text-green-500 bg-green-100",
                       }}
                     ></StatusBadge>
@@ -126,14 +143,7 @@ const CouponManage = ({ coupons }: { coupons: TCouponItem[] | undefined }) => {
             ))}
         </TableBody>
       </Table>
-      <div className="flex justify-end gap-3 mt-10">
-        <button className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center">
-          <HiOutlineArrowNarrowLeft size={18} />
-        </button>
-        <button className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center">
-          <HiOutlineArrowNarrowRight size={18} />
-        </button>
-      </div>
+      <Pagination totalPages={totalPages} total={total}></Pagination>
     </div>
   );
 };
