@@ -12,7 +12,7 @@ const Sidebar = ({
 }) => {
   return (
     <div
-      className={`z-[100] hidden border-r borderDarkMode bgDarkMode lg:flex flex-col h-full transition-all duration-300 ${
+      className={`z-[50] hidden border-r borderDarkMode bgDarkMode lg:flex flex-col h-full fixed top-0 left-0 transition-all duration-300 ${
         collapsed ? "w-[70px] px-2 py-5 items-center" : "w-[300px] p-5"
       }`}
     >
