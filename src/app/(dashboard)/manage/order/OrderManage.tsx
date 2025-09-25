@@ -23,7 +23,7 @@ import { allValue, commonClassName, orderStatus } from "@/constants";
 import useQueryString from "@/hooks/useQueryString";
 
 import { cn } from "@/lib/utils";
-import { EOrderStatus } from "@/types/enums";
+import { OrderStatus } from "@/types/enums";
 import { debounce } from "lodash";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import Swal from "sweetalert2";
@@ -40,7 +40,7 @@ interface IOrderManageProps {
   coupon: {
     code: string;
   };
-  status: EOrderStatus;
+  status: OrderStatus;
   course: {
     title: string;
   };
@@ -62,9 +62,9 @@ const OrderManage = ({
     status,
   }: {
     orderId: string;
-    status: EOrderStatus;
+    status: OrderStatus;
   }) => {
-    if (status === EOrderStatus.CANCELLED) {
+    if (status === OrderStatus.CANCELLED) {
       Swal.fire({
         title: "Bạn có chắc muốn hủy đơn hàng không?",
         icon: "warning",
@@ -77,7 +77,7 @@ const OrderManage = ({
         }
       });
     }
-    if (status === EOrderStatus.COMPLETED) {
+    if (status === OrderStatus.COMPLETED) {
       const res = await updateOrder({ orderId, status });
       if (res?.success) {
         toast.success("Cập nhật đơn hàng thành công");
@@ -101,7 +101,7 @@ const OrderManage = ({
           <div className="h-full">
             <Select
               onValueChange={(value) =>
-                handleSelectStatus(value as EOrderStatus)
+                handleSelectStatus(value as OrderStatus)
               }
               defaultValue={allValue}
             >
@@ -174,16 +174,16 @@ const OrderManage = ({
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-3">
-                      {order.status !== EOrderStatus.CANCELLED && (
+                      {order.status !== OrderStatus.CANCELLED && (
                         <>
-                          {order.status === EOrderStatus.PENDING && (
+                          {order.status === OrderStatus.PENDING && (
                             <button
                               type="button"
                               className={commonClassName.acction}
                               onClick={() =>
                                 handleUpdateOrder({
                                   orderId: order._id,
-                                  status: EOrderStatus.COMPLETED,
+                                  status: OrderStatus.COMPLETED,
                                 })
                               }
                             >
@@ -196,7 +196,7 @@ const OrderManage = ({
                             onClick={() =>
                               handleUpdateOrder({
                                 orderId: order._id,
-                                status: EOrderStatus.CANCELLED,
+                                status: OrderStatus.CANCELLED,
                               })
                             }
                           >

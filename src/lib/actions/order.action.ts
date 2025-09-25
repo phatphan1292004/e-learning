@@ -5,7 +5,7 @@ import { TCreateOrderParams } from "@/types";
 import { FilterQuery } from "mongoose";
 import Course from "@/database/course.model";
 import User from "@/database/user.model";
-import { EOrderStatus } from "@/types/enums";
+import { OrderStatus } from "@/types/enums";
 import { revalidatePath } from "next/cache";
 import { find } from "lodash";
 import Coupon from "@/database/coupon.model";
@@ -68,7 +68,7 @@ export async function updateOrder({
   status,
 }: {
   orderId: string;
-  status: EOrderStatus;
+  status: OrderStatus;
 }) {
   try {
     connectDB();
@@ -82,21 +82,21 @@ export async function updateOrder({
       select:"_id",
     })
     if (!findOrder) return;
-    if (findOrder.status === EOrderStatus.CANCELLED) return;
+    if (findOrder.status === OrderStatus.CANCELLED) return;
     const findUser = await User.findById(findOrder.user._id);
 
     await Order.findByIdAndUpdate(orderId, { status });
     if (
-      status === EOrderStatus.COMPLETED &&
-      findOrder.status === EOrderStatus.PENDING
+      status === OrderStatus.COMPLETED &&
+      findOrder.status === OrderStatus.PENDING
     ) {
       findUser?.courses.push(findOrder.course._id);
       await findUser.save();
     }
 
     if (
-      status === EOrderStatus.CANCELLED &&
-      findOrder.status === EOrderStatus.COMPLETED
+      status === OrderStatus.CANCELLED &&
+      findOrder.status === OrderStatus.COMPLETED
     ) {
       findUser.courses = findUser?.courses.filter((el: any) => el.toString() !== findOrder.course._id.toString());
       await findUser.save();

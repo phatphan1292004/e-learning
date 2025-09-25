@@ -1,5 +1,5 @@
 
-import { ERatingStatus } from "@/types/enums";
+import { RatingStatus } from "@/types/enums";
 import { Document, Schema, model, models } from "mongoose";
 
 export interface IRating extends Document {
@@ -8,7 +8,7 @@ export interface IRating extends Document {
   content: string;
   user: Schema.Types.ObjectId;
   course: Schema.Types.ObjectId;
-  status: ERatingStatus;
+  status: RatingStatus;
   created_at: Date;
 }
 const ratingSchema = new Schema<IRating>({
@@ -23,8 +23,8 @@ const ratingSchema = new Schema<IRating>({
   },
   status: {
     type: String,
-    enum: Object.values(ERatingStatus),
-    default: ERatingStatus.UNACTIVE,
+    enum: Object.values(RatingStatus),
+    default: RatingStatus.UNACTIVE,
   },
   user: {
     type: Schema.Types.ObjectId,

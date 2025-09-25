@@ -21,7 +21,7 @@ import Link from "next/link";
 import { ICourse } from "@/database/course.model";
 import Swal from "sweetalert2";
 import { updateCourse } from "@/lib/actions/course.action";
-import { ECourseStatus } from "@/types/enums";
+import { CourseStatus } from "@/types/enums";
 import { toast } from "react-toastify";
 import { Input } from "../ui/input";
 import {
@@ -44,7 +44,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
     useQueryString();
   const handleChangeStatus = async (
     slug: string,
-    currentStatus: ECourseStatus
+    currentStatus: CourseStatus
   ) => {
     try {
       Swal.fire({
@@ -59,9 +59,9 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
             slug,
             updateData: {
               status:
-                currentStatus === ECourseStatus.PENDING
-                  ? ECourseStatus.APPROVED
-                  : ECourseStatus.PENDING,
+                currentStatus === CourseStatus.PENDING
+                  ? CourseStatus.APPROVED
+                  : CourseStatus.PENDING,
               _destroy: false,
             },
             path: "/manage/course",
@@ -88,7 +88,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
         await updateCourse({
           slug,
           updateData: {
-            status: ECourseStatus.PENDING,
+            status: CourseStatus.PENDING,
             _destroy: true,
           },
           path: "/manage/course",
@@ -128,7 +128,7 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
           <div className="h-full">
             <Select
               onValueChange={(value) =>
-                handleSelectStatus(value as ECourseStatus)
+                handleSelectStatus(value as CourseStatus)
               }
               defaultValue={allValue}
             >

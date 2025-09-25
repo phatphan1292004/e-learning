@@ -1,4 +1,4 @@
-import { ERatingStatus } from "@/types/enums";
+import { RatingStatus } from "@/types/enums";
 import RatingManage from "./RatingManage";
 import { getRatings } from "@/lib/actions/rating.action";
 
@@ -9,7 +9,7 @@ const page = async (
   searchParams: {
     page: number;
     search: string;
-    status: ERatingStatus;
+    status: RatingStatus;
   };
 }
 ) => {

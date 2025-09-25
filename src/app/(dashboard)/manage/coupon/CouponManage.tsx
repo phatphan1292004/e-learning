@@ -20,7 +20,7 @@ import {
   TableAction,
   TableActionItem,
 } from "@/components/common";
-import { ECouponType } from "@/types/enums";
+import { CouponType } from "@/types/enums";
 import ActionDeleteCoupon from "./ActionDeleteCoupon";
 import { TCouponItem } from "@/types";
 import useQueryString from "@/hooks/useQueryString";
@@ -103,7 +103,7 @@ const CouponManage = ({
                   <strong>{coupon.title}</strong>
                 </TableCell>
                 <TableCell>
-                  {coupon.type === ECouponType.AMOUNT ? (
+                  {coupon.type === CouponType.AMOUNT ? (
                     (console.log(coupon.type),
                     (<>{coupon.value.toLocaleString("us-US")}</>))
                   ) : (

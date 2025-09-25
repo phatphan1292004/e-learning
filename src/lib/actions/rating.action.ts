@@ -4,7 +4,7 @@ import { connectDB } from "../mongoose";
 import { TCreateRatingParams, TFilterData, TRatingItem } from "@/types";
 import Course from "@/database/course.model";
 import { revalidatePath } from "next/cache";
-import { ERatingStatus } from "@/types/enums";
+import { RatingStatus } from "@/types/enums";
 import { FilterQuery } from "mongoose";
 
 export async function createRating(
@@ -43,7 +43,7 @@ export async function getRatingByUserId(
 export async function updateRating(id: string): Promise<boolean | undefined> {
   try {
     connectDB();
-    await Rating.findByIdAndUpdate(id, { status: ERatingStatus.ACTIVE });
+    await Rating.findByIdAndUpdate(id, { status: RatingStatus.ACTIVE });
     revalidatePath("/admin/manage/rating");
     return true;
   } catch (error) {

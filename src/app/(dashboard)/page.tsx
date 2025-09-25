@@ -2,7 +2,7 @@ import { CourseGrid } from "@/components/common";
 import CourseItem from "@/components/course/CourseItem";
 import Heading from "@/components/typography/Heading";
 import {getAllCoursesPublic } from "@/lib/actions/course.action";
-import { ECourseStatus } from "@/types/enums";
+import { CourseStatus } from "@/types/enums";
 import React from "react";
 
 const page = async ({
@@ -11,7 +11,7 @@ const page = async ({
   searchParams: {
     page: number;
     search: string;
-    status: ECourseStatus;
+    status: CourseStatus;
   };
 }) => {
   const courses = (await getAllCoursesPublic({})) || [];

@@ -1,4 +1,4 @@
-import { EOrderStatus } from "@/types/enums";
+import { OrderStatus } from "@/types/enums";
 import OrderManage from "./OrderManage";
 import { fetchOrders } from "@/lib/actions/order.action";
 import { ITEM_PER_PAGE } from "@/constants";
@@ -9,7 +9,7 @@ const page = async ({
   searchParams: {
     page: number;
     search: string;
-    status: EOrderStatus;
+    status: OrderStatus;
   };
 }) => {
   const data = await fetchOrders({

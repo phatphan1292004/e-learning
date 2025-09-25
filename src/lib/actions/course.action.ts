@@ -13,7 +13,7 @@ import Course, { ICourse } from "@/database/course.model";
 import { revalidatePath } from "next/cache";
 import Lesson from "@/database/lesson.model";
 import { FilterQuery } from "mongoose";
-import { ECourseStatus, ERatingStatus } from "@/types/enums";
+import { CourseStatus, RatingStatus } from "@/types/enums";
 import Rating from "@/database/rating.model";
 
 export async function getAllCourses(
@@ -48,7 +48,7 @@ export async function getAllCoursesPublic(
     const { page = 1, limit = 10, search } = params;
     const skip = (page - 1) * limit;
     const query: FilterQuery<typeof Course> = {
-      status: ECourseStatus.APPROVED,
+      status: CourseStatus.APPROVED,
     };
     if (search) {
       query.$or = [{ title: { $regex: search, $options: "i" } }];
@@ -87,7 +87,7 @@ export async function getCourseBySlug({
         model: Rating,
         select: "content",
         match: {
-          status: ERatingStatus.ACTIVE,
+          status: RatingStatus.ACTIVE,
         },
       });
     return course;

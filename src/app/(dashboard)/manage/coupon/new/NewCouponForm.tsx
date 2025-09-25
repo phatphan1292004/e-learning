@@ -24,7 +24,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { couponFormSchema, couponTypes } from "@/constants";
-import { ECouponType } from "@/types/enums";
+import { CouponType } from "@/types/enums";
 import { format } from "date-fns";
 import { debounce } from "lodash";
 import { useState } from "react";
@@ -43,7 +43,7 @@ const NewCouponForm = () => {
     resolver: zodResolver(couponFormSchema),
     defaultValues: {
       active: true,
-      type: ECouponType.PERCENT,
+      type: CouponType.PERCENT,
       value: "0",
       limit: 0,
       title: "",
@@ -61,7 +61,7 @@ const NewCouponForm = () => {
       const couponType = values.type;
       const couponValue = Number(values.value?.replace(/,/g, ""));
       if (
-        couponType === ECouponType.PERCENT &&
+        couponType === CouponType.PERCENT &&
         couponValue &&
         (couponValue > 100 || couponValue < 0)
       ) {
@@ -217,7 +217,7 @@ const NewCouponForm = () => {
                 <FormLabel>Loại coupon</FormLabel>
                 <FormControl className="h-12">
                   <RadioGroup
-                    defaultValue={ECouponType.PERCENT}
+                    defaultValue={CouponType.PERCENT}
                     className="flex gap-5"
                     onValueChange={field.onChange}
                   >
@@ -246,7 +246,7 @@ const NewCouponForm = () => {
                 <FormLabel>Giá trị</FormLabel>
                 <FormControl>
                   <>
-                    {couponTypeWatch === ECouponType.PERCENT ? (
+                    {couponTypeWatch === CouponType.PERCENT ? (
                       <Input
                         placeholder="100"
                         {...field}

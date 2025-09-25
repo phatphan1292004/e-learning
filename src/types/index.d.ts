@@ -109,7 +109,7 @@ export type TCreateOrderParams = {
 export type TCreateCouponParams = {
   title: string;
   code: string;
-  type: ECouponType;
+  type: CouponType;
   value?: number;
   start_date?: Date;
   end_date?: Date;
@@ -160,7 +160,7 @@ export type TRatingItem = {
   user: {
     name: string;
   };
-  status: ERatingStatus;
+  status: RatingStatus;
 };
 
 export type TCouponItem = Omit<ICoupon, "_id" | "courses">;

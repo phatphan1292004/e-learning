@@ -4,7 +4,7 @@ import { ICommentItem } from "@/types";
 import { getRepliesComment, timeAgo } from "@/utils";
 import Image from "next/image";
 import CommentReply from "./CommentReply";
-import { ECommentStatus } from "@/types/enums";
+import { CommentStatus } from "@/types/enums";
 
 interface ICommentItemProps {
   comment: ICommentItem;
@@ -29,7 +29,7 @@ const CommentItem = ({
     "4": "border-red-200",
   };
 
-  const isPending = comment.status === ECommentStatus.PENDING;
+  const isPending = comment.status === CommentStatus.PENDING;
   return (
     <>
       <div

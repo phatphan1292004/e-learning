@@ -24,7 +24,7 @@ import { allValue, ratingList, ratingStatus } from "@/constants";
 import useQueryString from "@/hooks/useQueryString";
 import { deleteRating, updateRating } from "@/lib/actions/rating.action";
 import { TRatingItem } from "@/types";
-import { ERatingStatus } from "@/types/enums";
+import { RatingStatus } from "@/types/enums";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -76,7 +76,7 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
           </div>
           <Select
             onValueChange={(value) =>
-              handleSelectStatus(value as ERatingStatus)
+              handleSelectStatus(value as RatingStatus)
             }
             defaultValue={allValue}
           >
@@ -154,7 +154,7 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
                   </TableCell>
                   <TableCell>
                     <TableAction>
-                      {rating.status !== ERatingStatus.ACTIVE && (
+                      {rating.status !== RatingStatus.ACTIVE && (
                         <TableActionItem
                           type="approve"
                           onClick={() => handleUpdateRating(rating._id)}

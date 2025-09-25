@@ -1,59 +1,59 @@
-enum EUserStatus {
+enum UserStatus {
   ACTIVE = "ACTIVE",
   UNACTIVE = "UNACTIVE",
   BANNED = "BANNED",
 }
-enum EUserRole {
+enum UserRole {
   ADMIN = "ADMIN",
   USER = "USER",
   EXPERT = "EXPERT",
 }
-enum ECourseStatus {
+enum CourseStatus {
   APPROVED = "APPROVED",
   PENDING = "PENDING",
   REJECTED = "REJECTED",
 }
-enum ECourseLevel {
+enum CourseLevel {
   BEGINNER = "BEGINNER",
   INTERMEDIATE = "INTERMEDIATE",
   ADVANCED = "ADVANCED",
 }
-enum ELessonType {
+enum LessonType {
   VIDEO = "VIDEO",
   TEXT = "TEXT",
 }
 
-enum EOrderStatus {
+enum OrderStatus {
   PENDING = "PENDING",
   COMPLETED = "COMPLETED",
   CANCELLED = "CANCELLED",
 }
 
-enum ECouponType {
+enum CouponType {
   PERCENT = "PERCENT",
   AMOUNT = "AMOUNT",
 }
 
-enum ERatingStatus {
+enum RatingStatus {
   ACTIVE = "ACTIVE",
   UNACTIVE = "UNACTIVE",
 }
 
 
-enum ECommentStatus {
+enum CommentStatus {
   APPROVED = "APPROVED",
   PENDING = "PENDING",
   REJECTED = "REJECTED",
 }
 
 export {
-  ECourseLevel,
-  ECourseStatus,
-  ELessonType,
-  EUserRole,
-  EUserStatus,
-  EOrderStatus,
-  ECouponType,
-  ERatingStatus,
-  ECommentStatus
+  CourseLevel,
+  CourseStatus,
+  LessonType,
+  UserRole,
+  UserStatus,
+  OrderStatus,
+  CouponType,
+  RatingStatus,
+  CommentStatus
 };

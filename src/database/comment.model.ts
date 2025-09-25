@@ -1,4 +1,4 @@
-import { ECommentStatus } from "@/types/enums";
+import { CommentStatus } from "@/types/enums";
 import { Document, Schema, model, models } from "mongoose";
 
 export interface IComment extends Document {
@@ -6,7 +6,7 @@ export interface IComment extends Document {
   content: string;
   lesson: Schema.Types.ObjectId;
   user: Schema.Types.ObjectId;
-  status: ECommentStatus;
+  status: CommentStatus;
   created_at: Date;
   parentId?: Schema.Types.ObjectId;
   level: number;
@@ -26,8 +26,8 @@ const commentSchema = new Schema<IComment>({
   },
   status: {
     type: String,
-    default: ECommentStatus.PENDING,
-    enum: Object.values(ECommentStatus),
+    default: CommentStatus.PENDING,
+    enum: Object.values(CommentStatus),
   },
   created_at: {
     type: Date,

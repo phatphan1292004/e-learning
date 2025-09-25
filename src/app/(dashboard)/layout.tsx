@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [collapsed, setCollapsed] = useState(false);
-
+  
   return (
     <div className="wrapper flex h-screen w-full">
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />

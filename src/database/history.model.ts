@@ -1,4 +1,4 @@
-import { ECourseLevel, ECourseStatus } from "@/types/enums";
+import { CourseLevel, CourseStatus } from "@/types/enums";
 import { Document, Schema, model, models } from "mongoose";
 
 export interface IHistory extends Document {

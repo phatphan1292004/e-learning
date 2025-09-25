@@ -4,7 +4,7 @@ import User, { IUser } from "@/database/user.model";
 import { connectDB } from "../mongoose";
 import { TCreateUserParams } from "@/types";
 import { ICourse } from "@/database/course.model";
-import { ECourseStatus } from "@/types/enums";
+import { CourseStatus } from "@/types/enums";
 import Lecture from "@/database/lecture.model";
 import Lesson from "@/database/lesson.model";
 
@@ -40,7 +40,7 @@ export async function getUserCourse(
       path: "courses",
       model: "Course",
       match: {
-        status: ECourseStatus.APPROVED,
+        status: CourseStatus.APPROVED,
       },
       populate: {
         path: "lectures",

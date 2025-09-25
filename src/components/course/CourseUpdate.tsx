@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ICourse } from "@/database/course.model";
-import { ECourseLevel, ECourseStatus } from "@/types/enums";
+import { CourseLevel, CourseStatus } from "@/types/enums";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -44,16 +44,16 @@ const formSchema = z.object({
   views: z.number().int().optional(),
   status: z
     .enum([
-      ECourseStatus.APPROVED,
-      ECourseStatus.PENDING,
-      ECourseStatus.REJECTED,
+      CourseStatus.APPROVED,
+      CourseStatus.PENDING,
+      CourseStatus.REJECTED,
     ])
     .optional(),
   level: z
     .enum([
-      ECourseLevel.BEGINNER,
-      ECourseLevel.INTERMEDIATE,
-      ECourseLevel.ADVANCED,
+      CourseLevel.BEGINNER,
+      CourseLevel.INTERMEDIATE,
+      CourseLevel.ADVANCED,
     ])
     .optional(),
   info: z.object({

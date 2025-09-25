@@ -27,7 +27,7 @@ import { Switch } from "@/components/ui/switch";
 import { couponFormSchema, couponTypes } from "@/constants";
 
 import { TCouponParams } from "@/types";
-import { ECouponType } from "@/types/enums";
+import { CouponType } from "@/types/enums";
 
 import { format } from "date-fns";
 import { debounce } from "lodash";
@@ -67,7 +67,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
       const couponType = values.type;
       const couponValue = Number(values.value?.replace(/,/g, ""));
       if (
-        couponType === ECouponType.PERCENT &&
+        couponType === CouponType.PERCENT &&
         couponValue &&
         (couponValue > 100 || couponValue < 0)
       ) {
@@ -249,7 +249,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                 <FormLabel>Giá trị</FormLabel>
                 <FormControl>
                   <>
-                    {couponTypeWatch === ECouponType.PERCENT ? (
+                    {couponTypeWatch === CouponType.PERCENT ? (
                       <Input
                         placeholder="100"
                         {...field}
