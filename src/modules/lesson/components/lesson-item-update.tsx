@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,7 +18,7 @@ import Link from "next/link";
 import { updateLesson } from "@/lib/actions/lesson.action";
 import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
-import { editorOptions } from "@/constants";
+import { editorOptions } from "@/shared/constant";
 import { useTheme } from "next-themes";
 
 const formSchema = z.object({

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 
 import Image from "next/image";
-import { allValue, commonClassName, courseStatus } from "@/constants";
+import { allValue, commonClassName, courseStatus } from "@/shared/constant";
 import { cn } from "@/lib/utils";
 import {
   HiOutlineArrowNarrowLeft,
@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/select";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import useQueryString from "@/hooks/useQueryString";
+import useQueryString from "@/shared/hooks/useQueryString";
 import { Heading } from "@/shared/components";
 import { TableAction, TableActionItem } from "@/shared/common";
 

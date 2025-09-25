@@ -1,5 +1,5 @@
 "use client";
-import { allValue } from "@/constants";
+import { allValue } from "@/shared/constant";
 import { debounce } from "lodash";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 

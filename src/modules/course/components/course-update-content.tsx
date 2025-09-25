@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { commonClassName } from "@/constants";
+import { commonClassName } from "@/shared/constant";
 import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { Input } from "../../../components/ui/input";

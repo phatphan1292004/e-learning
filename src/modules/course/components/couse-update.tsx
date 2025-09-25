@@ -29,7 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { courseLevels, courseStatus } from "@/constants";
+import { courseLevels, courseStatus } from "@/shared/constant";
 import { UploadButton } from "@/utils/uploadthing";
 import Image from "next/image";
 

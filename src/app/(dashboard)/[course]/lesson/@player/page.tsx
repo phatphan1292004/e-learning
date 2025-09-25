@@ -1,10 +1,10 @@
-import LessonSaveUrl from "@/components/lesson/LessonSaveUrl";
 import { getCourseBySlug } from "@/lib/actions/course.action";
 import { getAllLessons } from "@/lib/actions/lesson.action";
 import React from "react";
 import VideoPlayer from "./VideoPlayer";
 import { auth } from "@clerk/nextjs/server";
 import { getUserInfo } from "@/lib/actions/user.actions";
+import LessonSaveUrl from "@/modules/lesson/components/lesson-save-url";
 
 const page = async ({
   params,

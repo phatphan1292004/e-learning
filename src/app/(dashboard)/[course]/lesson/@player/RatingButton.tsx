@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FaStar } from "react-icons/fa";
-import { ratingList } from "@/constants";
+import { ratingList } from "@/shared/constant";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";

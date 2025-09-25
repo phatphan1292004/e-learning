@@ -1,7 +1,11 @@
-import { getCourseBySlug, getCourseLessonsInfo, updateCourseView } from "@/lib/actions/course.action";
+import {
+  getCourseBySlug,
+  getCourseLessonsInfo,
+  updateCourseView,
+} from "@/lib/actions/course.action";
 import { FaCheck } from "react-icons/fa6";
 import Image from "next/image";
-import { courseLevelTitle } from "@/constants";
+import { courseLevelTitle } from "@/shared/constant";
 import PageNotFound from "@/app/not-found";
 import {
   Accordion,
@@ -9,12 +13,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import LessonContent from "@/components/lesson/LessonContent";
+
 import { auth } from "@clerk/nextjs/server";
 import { getUserInfo } from "@/lib/actions/user.actions";
 import CourseWidget from "./CourseWidget";
 import AlreadyBuy from "./AlreadyBuy";
 import { formatMinutesToHours } from "@/utils";
+import LessonContent from "@/modules/lesson/components/lesson-content";
 
 const page = async ({
   params,
@@ -38,10 +43,12 @@ const page = async ({
   const { duration, lessons }: any =
     (await getCourseLessonsInfo({ slug: data.slug })) || 0;
   const ratings =
-  Array.isArray(data.rating) && typeof data.rating[0] === "object" && "content" in data.rating[0]
-    ? data.rating.map((r: any) => r.content)
-    : [];
-  
+    Array.isArray(data.rating) &&
+    typeof data.rating[0] === "object" &&
+    "content" in data.rating[0]
+      ? data.rating.map((r: any) => r.content)
+      : [];
+
   return (
     <div className="grid lg:grid-cols-[2fr,1fr] gap-10 min-h-screen">
       <div>
@@ -86,7 +93,9 @@ const page = async ({
             <BoxInfo title="Bài học">{lessons}</BoxInfo>
             <BoxInfo title="Lượt xem">{data.views}</BoxInfo>
             <BoxInfo title="Trình độ">{courseLevelTitle[data.level]}</BoxInfo>
-            <BoxInfo title="Thời lượng">{formatMinutesToHours(duration)}</BoxInfo>
+            <BoxInfo title="Thời lượng">
+              {formatMinutesToHours(duration)}
+            </BoxInfo>
           </div>
         </BoxSection>
         <BoxSection title="Nội dung khóa học">

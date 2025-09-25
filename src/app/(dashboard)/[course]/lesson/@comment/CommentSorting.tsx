@@ -1,6 +1,6 @@
 "use client";
 
-import useQueryString from "@/hooks/useQueryString";
+import useQueryString from "@/shared/hooks/useQueryString";
 import { useSearchParams } from "next/navigation";
 
 const CommentSorting = () => {

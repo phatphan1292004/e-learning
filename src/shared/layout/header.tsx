@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import Link from "next/link";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
-import { menuItems } from "@/constants";
+import { menuItems } from "@/shared/constant";
 
 import { ModeToggle } from "@/shared/common/mode-toggle";
 import { MenuItem } from "./sidebar";

@@ -16,8 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { allValue, commonClassName, orderStatus } from "@/constants";
-import useQueryString from "@/hooks/useQueryString";
+import { allValue, commonClassName, orderStatus } from "@/shared/constant";
+import useQueryString from "@/shared/hooks/useQueryString";
 
 import { cn } from "@/lib/utils";
 import { OrderStatus } from "@/types/enums";

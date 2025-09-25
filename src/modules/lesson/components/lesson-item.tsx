@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { HiArrowNarrowRight } from "react-icons/hi";
-import { Checkbox } from "../ui/checkbox";
 import { createHistory } from "@/lib/actions/history.action";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const LessonItem = ({
   lesson,

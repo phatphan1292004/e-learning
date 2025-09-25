@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import ButtonBuy from "./ButtonBuy";
-import { IconPlay, IconStudy, IconUsers } from "@/components/icons";
+import { IconPlay, IconStudy, IconUsers } from "@/shared/icons";
 import CouponForm from "./CouponForm";
 
 const CourseWidget = ({ data, user, duration }: { data: any; user: any; duration: string }) => {

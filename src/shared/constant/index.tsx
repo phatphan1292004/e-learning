@@ -6,7 +6,7 @@ import {
   IconStudy,
   IconTicket,
   IconUsers,
-} from "@/components/icons";
+} from "@/shared/icons";
 import { TMenuItem, TRatingIcon } from "@/types";
 import {
   CouponType,

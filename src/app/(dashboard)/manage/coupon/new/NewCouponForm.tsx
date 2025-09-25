@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
-import { couponFormSchema, couponTypes } from "@/constants";
+import { couponFormSchema, couponTypes } from "@/shared/constant";
 import { CouponType } from "@/types/enums";
 import { format } from "date-fns";
 import { debounce } from "lodash";

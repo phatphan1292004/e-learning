@@ -14,7 +14,7 @@ import {
 import { CouponType } from "@/types/enums";
 import ActionDeleteCoupon from "./ActionDeleteCoupon";
 import { TCouponItem } from "@/types";
-import useQueryString from "@/hooks/useQueryString";
+import useQueryString from "@/shared/hooks/useQueryString";
 import {
   Select,
   SelectContent,
@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { allValue, couponStatuses } from "@/constants";
+import { allValue, couponStatuses } from "@/shared/constant";
 import {
   BouncedLink,
   StatusBadge,

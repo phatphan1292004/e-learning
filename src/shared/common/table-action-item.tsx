@@ -1,4 +1,4 @@
-import { commonClassName } from "@/constants";
+import { commonClassName } from "@/shared/constant";
 import Link from "next/link";
 import { MdModeEditOutline, MdDelete  } from "react-icons/md";
 import { HiOutlineClipboard } from "react-icons/hi";

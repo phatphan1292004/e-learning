@@ -1,4 +1,4 @@
-import { commonClassName } from "@/constants";
+import { commonClassName } from "@/shared/constant";
 import { cn } from "@/lib/utils";
 
 const StatusBadge = ({

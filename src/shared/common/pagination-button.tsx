@@ -1,4 +1,4 @@
-import { commonClassName } from "@/constants";
+import { commonClassName } from "@/shared/constant";
 import { HiArrowLongLeft, HiArrowLongRight } from "react-icons/hi2";
 
 const PaginationBtn = () => {

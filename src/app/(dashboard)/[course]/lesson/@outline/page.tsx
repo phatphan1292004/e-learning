@@ -1,7 +1,7 @@
-import LessonContent from "@/components/lesson/LessonContent";
 import { getCourseBySlug } from "@/lib/actions/course.action";
 import { getHistory } from "@/lib/actions/history.action";
 import { getAllLessons } from "@/lib/actions/lesson.action";
+import LessonContent from "@/modules/lesson/components/lesson-content";
 import React from "react";
 
 const page = async ({

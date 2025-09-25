@@ -6,8 +6,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import React from "react";
-import LessonItem from "./LessonItem";
+
 import { IHistory } from "@/database/history.model";
+import LessonItem from "./lesson-item";
 
 const LessonContent = ({
   lectures,

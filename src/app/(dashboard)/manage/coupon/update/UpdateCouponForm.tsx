@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
-import { couponFormSchema, couponTypes } from "@/constants";
+import { couponFormSchema, couponTypes } from "@/shared/constant";
 
 import { TCouponParams } from "@/types";
 import { CouponType } from "@/types/enums";
