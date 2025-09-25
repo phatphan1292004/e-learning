@@ -19,7 +19,8 @@ import { HiCheck, HiOutlineX } from "react-icons/hi";
 import { cn } from "@/lib/utils";
 import { createLesson, updateLesson } from "@/lib/actions/lesson.action";
 import slugify from "slugify";
-import LessonItemUpdate from "../../../components/lesson/LessonItemUpdate";
+import LessonItemUpdate from "@/modules/lesson/components/lesson-item-update";
+
 
 const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
   const lectures = course.lectures || [];

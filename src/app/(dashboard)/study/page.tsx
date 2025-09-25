@@ -1,8 +1,9 @@
-import Heading from "@/components/typography/Heading";
+
 import { getUserCourse } from "@/lib/actions/user.actions";
 import React from "react";
 import StudyCourse from "./StudyCourse";
 import { auth } from "@clerk/nextjs/server";
+import { Heading } from "@/shared/components";
 
 const page = async () => {
   const { userId } = auth();

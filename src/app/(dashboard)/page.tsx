@@ -1,10 +1,9 @@
-
 import CourseItem from "@/modules/course/components/course-item";
-import Heading from "@/components/typography/Heading";
-import {getAllCoursesPublic } from "@/lib/actions/course.action";
+import { getAllCoursesPublic } from "@/lib/actions/course.action";
 import { CourseStatus } from "@/types/enums";
 import React from "react";
 import { CourseGrid } from "@/shared/common";
+import { Heading } from "@/shared/components";
 
 const page = async ({
   searchParams,
