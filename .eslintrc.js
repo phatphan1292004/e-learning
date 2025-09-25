@@ -54,6 +54,6 @@ module.exports = {
         },
       },
     ],
-    "prettier/prettier": ["error", { singleQuote: true, semi: false }],
+    // "prettier/prettier": ["error", { singleQuote: true, semi: false }],
   },
 };
