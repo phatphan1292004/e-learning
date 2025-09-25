@@ -35,5 +35,3 @@ export async function updateLecture(params: TUpdateLectureParams) {
     };
   } catch (error) {}
 }
-
-
