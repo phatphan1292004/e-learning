@@ -1,24 +1,28 @@
-import CourseManage from '@/components/course/CourseManage';
-import { getAllCourses,  } from '@/lib/actions/course.action';
-import { CourseStatus } from '@/types/enums';
-import React from 'react';
+import { getAllCourses } from "@/lib/actions/course.action";
+import { CourseManage } from "@/modules/course/components";
+import { CourseStatus } from "@/types/enums";
+import React from "react";
 
-const page = async ({searchParams}: {
+const page = async ({
+  searchParams,
+}: {
   searchParams: {
     page: number;
     search: string;
-    status : CourseStatus;
-  }
+    status: CourseStatus;
+  };
 }) => {
   const courses = await getAllCourses({
     page: searchParams.page || 1,
     limit: 10,
     search: searchParams.search,
-    status: searchParams.status ,
+    status: searchParams.status,
   });
   return (
     <>
-      <CourseManage course={courses ? JSON.parse(JSON.stringify(courses)) : []} />
+      <CourseManage
+        course={courses ? JSON.parse(JSON.stringify(courses)) : []}
+      />
     </>
   );
 };

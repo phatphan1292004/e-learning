@@ -1,6 +1,7 @@
 "use client";
-import TableActionItem from "@/components/common/TableActionItem";
+
 import { deleteCoupon } from "@/lib/actions/coupon.action";
+import { TableActionItem } from "@/shared/common";
 import Swal from "sweetalert2";
 
 const ActionDeleteCoupon = ({ code }: { code: string }) => {

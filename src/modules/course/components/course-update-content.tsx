@@ -9,8 +9,8 @@ import {
 import { commonClassName } from "@/constants";
 import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "../../../components/ui/input";
+import { Button } from "../../../components/ui/button";
 import { createLecture, updateLecture } from "@/lib/actions/lecture.action";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -19,7 +19,7 @@ import { HiCheck, HiOutlineX } from "react-icons/hi";
 import { cn } from "@/lib/utils";
 import { createLesson, updateLesson } from "@/lib/actions/lesson.action";
 import slugify from "slugify";
-import LessonItemUpdate from "../lesson/LessonItemUpdate";
+import LessonItemUpdate from "../../../components/lesson/LessonItemUpdate";
 
 const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
   const lectures = course.lectures || [];

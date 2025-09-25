@@ -1,10 +1,6 @@
 "use client";
 import React from "react";
-import Heading from "@/components/common/Heading";
-import {
-  HiOutlineArrowNarrowLeft,
-  HiOutlineArrowNarrowRight,
-} from "react-icons/hi";
+
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -14,12 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  BouncedLink,
-  StatusBadge,
-  TableAction,
-  TableActionItem,
-} from "@/components/common";
+
 import { CouponType } from "@/types/enums";
 import ActionDeleteCoupon from "./ActionDeleteCoupon";
 import { TCouponItem } from "@/types";
@@ -33,7 +24,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { allValue, couponStatuses } from "@/constants";
-import Pagination from "@/components/common/Pagination";
+import {
+  BouncedLink,
+  StatusBadge,
+  TableAction,
+  TableActionItem,
+} from "@/shared/common";
+import { Heading } from "@/shared/components";
+import Pagination from "@/shared/common/pagination";
+
 
 const CouponManage = ({
   coupons,

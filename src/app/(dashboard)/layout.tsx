@@ -1,6 +1,6 @@
 "use client";
-import Header from "@/components/layout/Header";
-import Sidebar from "@/components/layout/Sidebar";
+import Header from "@/shared/layout/header";
+import Sidebar from "@/shared/layout/sidebar";
 import React, { useState } from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

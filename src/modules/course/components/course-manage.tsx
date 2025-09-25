@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Heading from "../common/Heading";
+
 import Image from "next/image";
 import { allValue, commonClassName, courseStatus } from "@/constants";
 import { cn } from "@/lib/utils";
@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import { updateCourse } from "@/lib/actions/course.action";
 import { CourseStatus } from "@/types/enums";
 import { toast } from "react-toastify";
-import { Input } from "../ui/input";
+import { Input } from "../../../components/ui/input";
 import {
   Select,
   SelectContent,
@@ -35,7 +35,9 @@ import {
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import useQueryString from "@/hooks/useQueryString";
-import { TableAction, TableActionItem } from "../common";
+import { Heading } from "@/shared/components";
+import { TableAction, TableActionItem } from "@/shared/common";
+
 
 const CourseManage = ({ course }: { course: ICourse[] }) => {
   const router = useRouter();
@@ -234,21 +236,6 @@ const CourseManage = ({ course }: { course: ICourse[] }) => {
             ))}
         </TableBody>
       </Table>
-
-      {/* <div className="flex justify-end gap-3 mt-10">
-        <button
-          className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
-          onClick={() => handleChangePage("prev")}
-        >
-          <HiOutlineArrowNarrowLeft size={18} />
-        </button>
-        <button
-          className="size-10 rounded-md borderDarkMode bgDarkMode border flex items-center justify-center"
-          onClick={() => handleChangePage("next")}
-        >
-          <HiOutlineArrowNarrowRight size={18} />
-        </button>
-      </div> */}
     </div>
   );
 };

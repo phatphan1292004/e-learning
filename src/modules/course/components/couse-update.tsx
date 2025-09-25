@@ -18,7 +18,7 @@ import { CourseLevel, CourseStatus } from "@/types/enums";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "../../../components/ui/textarea";
 import { updateCourse } from "@/lib/actions/course.action";
 import { useImmer } from "use-immer";
 import { MdAdd } from "react-icons/md";

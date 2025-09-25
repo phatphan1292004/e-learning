@@ -1,4 +1,5 @@
-import { TableCell, TableRow } from "../ui/table";
+import { TableCell, TableRow } from "@/components/ui/table";
+
 
 const EmptyData = ({ text }: { text?: string }) => {
   return (

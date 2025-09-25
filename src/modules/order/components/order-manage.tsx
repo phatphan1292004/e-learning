@@ -1,7 +1,4 @@
 "use client";
-
-import Heading from "@/components/common/Heading";
-import { StatusBadge } from "@/components/common";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -24,30 +21,18 @@ import useQueryString from "@/hooks/useQueryString";
 
 import { cn } from "@/lib/utils";
 import { OrderStatus } from "@/types/enums";
-import { debounce } from "lodash";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import Swal from "sweetalert2";
 import { updateOrder } from "@/lib/actions/order.action";
 import { toast } from "react-toastify";
-import Pagination from "@/components/common/Pagination";
-import EmptyData from "@/components/common/EmptyData";
-interface IOrderManageProps {
-  _id: string;
-  code: string;
-  total: number;
-  amount: number;
-  discount: number;
-  coupon: {
-    code: string;
-  };
-  status: OrderStatus;
-  course: {
-    title: string;
-  };
-  user: {
-    name: string;
-  };
-}
+
+import { IOrderManageProps } from "../types/order.type";
+import { Heading } from "@/shared/components";
+import EmptyData from "@/shared/common/empty-data";
+import { StatusBadge } from "@/shared/common";
+import Pagination from "@/shared/common/pagination";
+
+
 const OrderManage = ({
   orders = [],
   totalPages = 1,

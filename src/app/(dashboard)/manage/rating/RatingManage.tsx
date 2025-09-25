@@ -1,8 +1,4 @@
 "use client";
-import { StatusBadge, TableAction } from "@/components/common";
-import Heading from "@/components/common/Heading";
-
-import TableActionItem from "@/components/common/TableActionItem";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -23,6 +19,8 @@ import {
 import { allValue, ratingList, ratingStatus } from "@/constants";
 import useQueryString from "@/hooks/useQueryString";
 import { deleteRating, updateRating } from "@/lib/actions/rating.action";
+import { StatusBadge, TableAction, TableActionItem } from "@/shared/common";
+import { Heading } from "@/shared/components";
 import { TRatingItem } from "@/types";
 import { RatingStatus } from "@/types/enums";
 import Image from "next/image";

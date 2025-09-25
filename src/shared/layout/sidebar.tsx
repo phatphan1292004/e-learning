@@ -1,7 +1,8 @@
 "use client";
 import { menuItems } from "@/constants";
+import { ActiveLink } from "@/shared/common";
 import { TMenuItem } from "@/types";
-import { ActiveLink } from "../common";
+
 
 const Sidebar = ({
   collapsed,
