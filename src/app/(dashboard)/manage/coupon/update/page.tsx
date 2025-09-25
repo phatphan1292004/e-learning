@@ -1,4 +1,4 @@
-import Heading from "@/components/common/Heading";
+import { Heading } from "lucide-react";
 import UpdateCouponForm from "./UpdateCouponForm";
 import { getCouponByCode } from "@/lib/actions/coupon.action";
 
