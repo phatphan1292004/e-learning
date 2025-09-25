@@ -1,21 +1,23 @@
 "use server";
 
-
-
 import Comment from "@/database/comment.model";
 import User from "@/database/user.model";
 import { ICommentItem } from "@/types";
-import { ECommentStatus } from "@/types/enums";
 import { connectDB } from "../mongoose";
+import { revalidatePath } from "next/cache";
 
 export async function createComment(params: {
   content: string;
   lesson: string;
   user: string;
+  level: number;
+  parentId?: string;
+  path?: string;
 }): Promise<boolean | undefined> {
   try {
     connectDB();
     const newComment = await Comment.create(params);
+    revalidatePath(params.path || "/");
     if (!newComment) return false;
     return true;
   } catch (error) {
@@ -23,18 +25,20 @@ export async function createComment(params: {
   }
 }
 export async function getCommentsByLesson(
-  lessonId: string
+  lessonId: string,
+  sort: "recent" | "oldest" = "recent"
 ): Promise<ICommentItem[] | undefined> {
   try {
     connectDB();
     const comments = await Comment.find<ICommentItem>({
       lesson: lessonId,
-      status: ECommentStatus.PENDING,
-    }).populate({
-      path: "user",
-      model: User,
-      select: "name avatar",
-    });
+    })
+      .sort({ created_at: sort === "recent" ? -1 : 1 })
+      .populate({
+        path: "user",
+        model: User,
+        select: "name avatar",
+      });
     return JSON.parse(JSON.stringify(comments));
   } catch (error) {
     console.log(error);

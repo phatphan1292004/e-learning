@@ -14,7 +14,9 @@ export default function useQueryString() {
     if (value === "" || value === allValue) {
       params.delete(name);
     }
-    router.push(`${pathname}?${params ? params.toString() : ""}`);
+    router.push(`${pathname}?${params ? params.toString() : ""}`, {
+      scroll: false,
+    });
   };
 
   const handleSearchData = debounce(
@@ -31,7 +33,6 @@ export default function useQueryString() {
     createQueryString("page", `${page}`);
   };
 
-
   const handleChangeQs = (key: string, value: string) => {
     createQueryString(key, value);
   };
@@ -44,6 +45,6 @@ export default function useQueryString() {
     handleSelectStatus,
     handleChangePage,
     currentPage,
-    handleChangeQs
+    handleChangeQs,
   };
 }

@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { createComment } from "@/lib/actions/comment.action";
+import { ICommentItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -19,6 +21,9 @@ import { z } from "zod";
 interface CommentFormProps {
   lessonId: string;
   userId: string;
+  comment?: ICommentItem;
+  isReply?: boolean;
+  closeReply?: () => void;
 }
 
 const formSchema = z.object({
@@ -28,18 +33,30 @@ const formSchema = z.object({
     })
     .min(10, { message: "Comment must be at least 10 character long" }),
 });
-const CommentForm = ({ lessonId, userId }: CommentFormProps) => {
+const CommentForm = ({
+  lessonId,
+  userId,
+  comment,
+  isReply,
+  closeReply,
+}: CommentFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {},
   });
   const [isPending, startTransition] = useTransition();
+  const pathName = usePathname();
+  const slug = useSearchParams().get("slug");
+  const path = `${pathName}?slug=${slug}`;
   async function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(async () => {
       const newComment = await createComment({
         content: values.content,
         lesson: lessonId,
         user: userId,
+        level: comment && comment?.level >= 0 ? comment?.level + 1 : 0,
+        parentId: comment?._id,
+        path,
       });
       if (!newComment) {
         toast.error("Failed to post comment");
@@ -47,15 +64,17 @@ const CommentForm = ({ lessonId, userId }: CommentFormProps) => {
       }
       toast.success("Comment posted successfully");
       form.setValue("content", "");
+      closeReply?.();
     });
   }
+
   return (
     <>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           autoComplete="off"
-          className="flex flex-col gap-5 mt-10"
+          className="flex flex-col gap-5"
         >
           <FormField
             control={form.control}
@@ -80,7 +99,7 @@ const CommentForm = ({ lessonId, userId }: CommentFormProps) => {
             className="w-[140px] ml-auto"
             type="submit"
           >
-            Post comment
+            {isReply ? "Post reply" : "Post comment"}
           </Button>
         </form>
       </Form>
