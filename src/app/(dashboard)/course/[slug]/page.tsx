@@ -2,7 +2,7 @@ import {
   getCourseBySlug,
   getCourseLessonsInfo,
   updateCourseView,
-} from "@/lib/actions/course.action";
+} from "@/shared/lib/actions/course.action";
 import { FaCheck } from "react-icons/fa6";
 import Image from "next/image";
 import { courseLevelTitle } from "@/shared/constant";
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/accordion";
 
 import { auth } from "@clerk/nextjs/server";
-import { getUserInfo } from "@/lib/actions/user.actions";
+import { getUserInfo } from "@/shared/lib/actions/user.actions";
 import CourseWidget from "./CourseWidget";
 import AlreadyBuy from "./AlreadyBuy";
 import { formatMinutesToHours } from "@/utils";

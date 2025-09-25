@@ -29,8 +29,8 @@ import { format } from "date-fns";
 import { debounce } from "lodash";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { createCoupon } from "@/lib/actions/coupon.action";
-import { getAllCourses } from "@/lib/actions/course.action";
+import { createCoupon } from "@/shared/lib/actions/coupon.action";
+import { getAllCourses } from "@/shared/lib/actions/course.action";
 import { HiOutlineCalendar, HiOutlineX } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 

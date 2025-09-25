@@ -1,5 +1,5 @@
 import PageNotFound from "@/app/not-found";
-import { getUserInfo } from "@/lib/actions/user.actions";
+import { getUserInfo } from "@/shared/lib/actions/user.actions";
 import { auth } from "@clerk/nextjs/server";
 import React, { Suspense } from "react";
 import LoadingPlayer from "./@player/LoadingPlayer";

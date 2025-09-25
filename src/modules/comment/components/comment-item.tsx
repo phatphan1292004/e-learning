@@ -1,9 +1,9 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { ICommentItem } from "@/types";
 import { getRepliesComment, timeAgo } from "@/utils";
 import Image from "next/image";
-import CommentReply from "./CommentReply";
+import CommentReply from "./comment-reply";
 import { CommentStatus } from "@/types/enums";
 
 interface ICommentItemProps {

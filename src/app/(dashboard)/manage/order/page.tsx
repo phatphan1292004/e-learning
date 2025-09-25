@@ -1,5 +1,5 @@
 import OrderManage from "../../../../modules/order/components/order-manage";
-import { fetchOrders } from "@/lib/actions/order.action";
+import { fetchOrders } from "@/shared/lib/actions/order.action";
 import { ITEM_PER_PAGE } from "@/shared/constant";
 import { OrderManageParams } from "@/modules/order/types/order.type";
 

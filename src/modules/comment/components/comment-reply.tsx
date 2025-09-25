@@ -2,7 +2,7 @@
 import { ICommentItem } from "@/types";
 import { formatDate } from "@/utils";
 import { useState } from "react";
-import CommentForm from "./CommentForm";
+import CommentForm from "./comment-form";
 import { MAX_COMMENT_LEVEL } from "@/shared/constant";
 
 interface CommentReplyProps {

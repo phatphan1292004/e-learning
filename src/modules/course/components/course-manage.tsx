@@ -11,7 +11,7 @@ import {
 
 import Image from "next/image";
 import { allValue, commonClassName, courseStatus } from "@/shared/constant";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import {
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
@@ -20,7 +20,7 @@ import {
 import Link from "next/link";
 import { ICourse } from "@/database/course.model";
 import Swal from "sweetalert2";
-import { updateCourse } from "@/lib/actions/course.action";
+import { updateCourse } from "@/shared/lib/actions/course.action";
 import { CourseStatus } from "@/types/enums";
 import { toast } from "react-toastify";
 import { Input } from "../../../components/ui/input";

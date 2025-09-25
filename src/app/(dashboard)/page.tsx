@@ -1,5 +1,5 @@
 import CourseItem from "@/modules/course/components/course-item";
-import { getAllCoursesPublic } from "@/lib/actions/course.action";
+import { getAllCoursesPublic } from "@/shared/lib/actions/course.action";
 import { CourseStatus } from "@/types/enums";
 import React from "react";
 import { CourseGrid } from "@/shared/common";

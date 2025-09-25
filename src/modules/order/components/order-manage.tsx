@@ -19,11 +19,11 @@ import {
 import { allValue, commonClassName, orderStatus } from "@/shared/constant";
 import useQueryString from "@/shared/hooks/useQueryString";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { OrderStatus } from "@/types/enums";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import Swal from "sweetalert2";
-import { updateOrder } from "@/lib/actions/order.action";
+import { updateOrder } from "@/shared/lib/actions/order.action";
 import { toast } from "react-toastify";
 
 import { IOrderManageProps } from "../types/order.type";

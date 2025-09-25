@@ -1,4 +1,4 @@
-import { getAllCourses } from "@/lib/actions/course.action";
+import { getAllCourses } from "@/shared/lib/actions/course.action";
 import { CourseManage } from "@/modules/course/components";
 import { CourseStatus } from "@/types/enums";
 import React from "react";

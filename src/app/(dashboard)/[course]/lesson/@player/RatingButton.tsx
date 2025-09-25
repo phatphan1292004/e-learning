@@ -10,10 +10,10 @@ import {
 import { FaStar } from "react-icons/fa";
 import { ratingList } from "@/shared/constant";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { createRating, getRatingByUserId } from "@/lib/actions/rating.action";
+import { createRating, getRatingByUserId } from "@/shared/lib/actions/rating.action";
 import { toast } from "react-toastify";
 const RatingButton = ({
   courseId,

@@ -1,9 +1,9 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { HiArrowNarrowRight } from "react-icons/hi";
-import { createHistory } from "@/lib/actions/history.action";
+import { createHistory } from "@/shared/lib/actions/history.action";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const LessonItem = ({

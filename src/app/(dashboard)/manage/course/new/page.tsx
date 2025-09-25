@@ -1,4 +1,4 @@
-import { getUserInfo } from "@/lib/actions/user.actions";
+import { getUserInfo } from "@/shared/lib/actions/user.actions";
 import { CourseAddNew } from "@/modules/course/components";
 import { Heading } from "@/shared/components";
 import { auth } from "@clerk/nextjs/server";

@@ -15,7 +15,7 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { updateLesson } from "@/lib/actions/lesson.action";
+import { updateLesson } from "@/shared/lib/actions/lesson.action";
 import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
 import { editorOptions } from "@/shared/constant";

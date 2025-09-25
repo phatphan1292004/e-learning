@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteCoupon } from "@/lib/actions/coupon.action";
+import { deleteCoupon } from "@/shared/lib/actions/coupon.action";
 import { TableActionItem } from "@/shared/common";
 import Swal from "sweetalert2";
 

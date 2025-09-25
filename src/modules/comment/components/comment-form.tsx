@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { createComment } from "@/lib/actions/comment.action";
+import { createComment } from "@/modules/comment/services/comment.action";
 import { ICommentItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useSearchParams } from "next/navigation";

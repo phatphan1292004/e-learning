@@ -1,5 +1,5 @@
 import PageNotFound from "@/app/not-found";
-import { getOrderDetails } from "@/lib/actions/order.action";
+import { getOrderDetails } from "@/shared/lib/actions/order.action";
 
 const OrderDetails = async ({ params }: { params: { code: string } }) => {
   const orderDetails = await getOrderDetails({ code: params.code });

@@ -11,13 +11,13 @@ import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { Input } from "../../../components/ui/input";
 import { Button } from "../../../components/ui/button";
-import { createLecture, updateLecture } from "@/lib/actions/lecture.action";
+import { createLecture, updateLecture } from "@/shared/lib/actions/lecture.action";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { TCourseUpdateParams, TUpdateCourseLecture } from "@/types";
 import { HiCheck, HiOutlineX } from "react-icons/hi";
-import { cn } from "@/lib/utils";
-import { createLesson, updateLesson } from "@/lib/actions/lesson.action";
+import { cn } from "@/shared/lib/utils";
+import { createLesson, updateLesson } from "@/shared/lib/actions/lesson.action";
 import slugify from "slugify";
 import LessonItemUpdate from "@/modules/lesson/components/lesson-item-update";
 

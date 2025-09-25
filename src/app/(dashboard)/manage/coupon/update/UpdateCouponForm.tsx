@@ -33,8 +33,8 @@ import { format } from "date-fns";
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { updateCoupon } from "@/lib/actions/coupon.action";
-import { getAllCourses } from "@/lib/actions/course.action";
+import { updateCoupon } from "@/shared/lib/actions/coupon.action";
+import { getAllCourses } from "@/shared/lib/actions/course.action";
 import { HiOutlineCalendar, HiOutlineX } from "react-icons/hi";
 
 const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {

@@ -1,5 +1,5 @@
 
-import { getUserCourse } from "@/lib/actions/user.actions";
+import { getUserCourse } from "@/shared/lib/actions/user.actions";
 import React from "react";
 import StudyCourse from "./StudyCourse";
 import { auth } from "@clerk/nextjs/server";

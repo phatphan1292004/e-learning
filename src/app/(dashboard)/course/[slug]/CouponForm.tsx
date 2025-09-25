@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { getValidateCoupon } from "@/lib/actions/coupon.action";
+import { getValidateCoupon } from "@/shared/lib/actions/coupon.action";
 
 import { CouponType } from "@/types/enums";
 import { debounce } from "lodash";

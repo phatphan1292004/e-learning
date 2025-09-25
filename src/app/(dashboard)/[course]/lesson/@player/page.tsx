@@ -1,9 +1,9 @@
-import { getCourseBySlug } from "@/lib/actions/course.action";
-import { getAllLessons } from "@/lib/actions/lesson.action";
+import { getCourseBySlug } from "@/shared/lib/actions/course.action";
+import { getAllLessons } from "@/shared/lib/actions/lesson.action";
 import React from "react";
 import VideoPlayer from "./VideoPlayer";
 import { auth } from "@clerk/nextjs/server";
-import { getUserInfo } from "@/lib/actions/user.actions";
+import { getUserInfo } from "@/shared/lib/actions/user.actions";
 import LessonSaveUrl from "@/modules/lesson/components/lesson-save-url";
 
 const page = async ({

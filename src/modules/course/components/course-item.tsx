@@ -6,7 +6,7 @@ import { FaRegStar, FaEye } from "react-icons/fa";
 import { CiTimer } from "react-icons/ci";
 import { StudyCourseProps } from "@/types";
 import { formatMinutesToHours, formatViewstoK } from "@/utils";
-import { getCourseLessonsInfo } from "@/lib/actions/course.action";
+import { getCourseLessonsInfo } from "@/shared/lib/actions/course.action";
 
 const CourseItem =  ({
   data,
