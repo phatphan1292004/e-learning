@@ -291,7 +291,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                     defaultValue={field.value}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full h-12">
                       <SelectValue placeholder="Trạng thái" />
                     </SelectTrigger>
                     <SelectContent className="bg-white dark:bg-grayDarker outline-none">
@@ -318,7 +318,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                     defaultValue={field.value}
                     onValueChange={field.onChange}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full h-12">
                       <SelectValue placeholder="Trình độ" />
                     </SelectTrigger>
                     <SelectContent className="bg-white dark:bg-grayDarker outline-none">
