@@ -2,7 +2,7 @@
 import useGlobalStore from "@/app/store";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import RatingButton from "./RatingButton";
+import RatingButton from "./rating-button";
 import { LessonNavigation } from "@/modules/lesson/components";
 
 const VideoPlayer = ({

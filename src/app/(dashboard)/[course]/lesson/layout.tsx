@@ -1,8 +1,8 @@
 import PageNotFound from "@/app/not-found";
 import { auth } from "@clerk/nextjs/server";
 import React, { Suspense } from "react";
-import LoadingPlayer from "./@player/LoadingPlayer";
-import LoadingOutline from "./@outline/LoadingOutline";
+import LoadingPlayer from "./@player/loading-player";
+import LoadingOutline from "./@outline/loading-outline";
 import { LessonWrapper } from "@/modules/lesson/components";
 import { getUserInfo } from "@/modules/user/services/user.actions";
 

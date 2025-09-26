@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 
 import { CouponType } from "@/types/enums";
-import ActionDeleteCoupon from "./ActionDeleteCoupon";
+
 import { TCouponItem } from "@/types";
 import useQueryString from "@/shared/hooks/useQueryString";
 import {
@@ -32,7 +32,7 @@ import {
 } from "@/shared/common";
 import { Heading } from "@/shared/components";
 import Pagination from "@/shared/common/pagination";
-
+import ActionDeleteCoupon from "./action-delete-coupon";
 
 const CouponManage = ({
   coupons,

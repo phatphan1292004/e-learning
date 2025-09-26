@@ -1,6 +1,6 @@
 import { getAllLessons } from "@/modules/lesson/services/lesson.action";
 import React from "react";
-import VideoPlayer from "./VideoPlayer";
+import VideoPlayer from "./video-player";
 import { auth } from "@clerk/nextjs/server";
 import LessonSaveUrl from "@/modules/lesson/components/lesson-save-url";
 import { getCourseBySlug } from "@/modules/course/services/course.action";

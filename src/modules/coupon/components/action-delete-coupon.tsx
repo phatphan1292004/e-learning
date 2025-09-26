@@ -1,8 +1,9 @@
 "use client";
 
-import { deleteCoupon } from "@/modules/coupon/services/coupon.action";
+
 import { TableActionItem } from "@/shared/common";
 import Swal from "sweetalert2";
+import { deleteCoupon } from "../services/coupon.action";
 
 const ActionDeleteCoupon = ({ code }: { code: string }) => {
   const handleDeleteCoupon = async (code: string) => {
