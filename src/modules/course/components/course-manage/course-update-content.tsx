@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
@@ -16,12 +15,12 @@ import Swal from "sweetalert2";
 import { TCourseUpdateParams, TUpdateCourseLecture } from "@/types";
 import { HiCheck, HiOutlineX } from "react-icons/hi";
 import { cn } from "@/shared/lib/utils";
-import { createLesson, updateLesson } from "@/modules/lesson/services/lesson.action";
-import slugify from "slugify";
-import { LessonItemUpdate } from "@/modules/lesson/components";
-import { createLecture, updateLecture } from "@/modules/lecture/services/lecture.action";
-
-
+import { createLesson } from "@/modules/lesson/services/lesson.action";
+import {
+  createLecture,
+  updateLecture,
+} from "@/modules/lecture/services/lecture.action";
+import OutlineDraggableContent from "../outline/outline-draggable-content";
 
 const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
   const lectures = course.lectures || [];
@@ -92,6 +91,8 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
   const [lessonEdit, setLessonEdit] = useState("");
   const [lessonIdEdit, setLessonIdEdit] = useState("");
   const handleAddNewLesson = async (lectureId: string, courseId: string) => {
+    const foundLecture = lectures.find((lec) => lec._id === lectureId);
+    if (!foundLecture) return;
     try {
       const res = await createLesson({
         path: `manage/course/update-content?slug=${course.slug}`,
@@ -102,6 +103,7 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
           .getTime()
           .toString()
           .slice(-3)}`,
+        order: (foundLecture?.lessons.length || 0) + 1,
       });
 
       if (res?.success) {
@@ -113,28 +115,6 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
     } catch (error) {}
   };
 
-  const handleUpdateLesson = async (e: any, lessonId: string) => {
-    e.stopPropagation();
-    try {
-      const res = await updateLesson({
-        lessonId: lessonId,
-        updateData: {
-          title: lessonEdit,
-          slug: slugify(lessonEdit, {
-            lower: true,
-            locale: "vi",
-            remove: /[*+~.()'"!:@]/g,
-          }),
-        },
-        path: `manage/course/update-content?slug=${course.slug}`,
-      });
-      if (res?.success) {
-        toast.success("Cập nhật bài học thành công");
-        setLessonEdit("");
-        setLessonIdEdit("");
-      }
-    } catch (error) {}
-  };
   return (
     <div>
       {lectures.length > 0 &&
@@ -203,88 +183,16 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
                     )}
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="border-none !bg-transparent">
-                  <div className="flex flex-col gap-3">
-                    {lecture.lessons.map((lesson) => (
-                      <Accordion
-                        type="single"
-                        collapsible={!lessonEdit}
-                        key={lesson._id}
-                      >
-                        <AccordionItem value={lesson._id.toString()}>
-                          <AccordionTrigger>
-                            <div className="flex items-center justify-between gap-3 w-full">
-                              {lesson._id === lessonIdEdit ? (
-                                <>
-                                  <div className="w-full">
-                                    <Input
-                                      placeholder="Tên bài học"
-                                      defaultValue={lesson.title}
-                                      onChange={(e) => {
-                                        setLessonEdit(e.target.value);
-                                      }}
-                                    />
-                                  </div>
-                                  <div className="flex gap-2 pr-5">
-                                    <span
-                                      className={cn(
-                                        commonClassName.acction,
-                                        "text-green-500"
-                                      )}
-                                      onClick={(e) =>
-                                        handleUpdateLesson(e, lesson._id)
-                                      }
-                                    >
-                                      <HiCheck size={18} />
-                                    </span>
-                                    <span
-                                      className={cn(
-                                        commonClassName.acction,
-                                        "text-red-500"
-                                      )}
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        setLessonIdEdit("");
-                                      }}
-                                    >
-                                      <HiOutlineX size={18} />
-                                    </span>
-                                  </div>
-                                </>
-                              ) : (
-                                <>
-                                  <div>{lesson.title}</div>
-                                  <div className="flex gap-2 pr-5">
-                                    <span
-                                      className={commonClassName.acction}
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        setLessonIdEdit(lesson._id);
-                                      }}
-                                    >
-                                      <FiEdit size={18} />
-                                    </span>
-                                    <span
-                                      className={commonClassName.acction}
-                                      // onClick={(e) =>
-                                      //   handleDeleteLesson(e, lesson._id)
-                                      // }
-                                    >
-                                      <MdDelete size={18} />
-                                    </span>
-                                  </div>
-                                </>
-                              )}
-                            </div>
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <LessonItemUpdate lesson={lesson}/>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    ))}
-                  </div>
-                </AccordionContent>
+                <div className="mt-3 ml-8">
+                  <OutlineDraggableContent
+                    courseSlug={course.slug}
+                    lecture={lecture as any}
+                    lessonEdit={lessonEdit}
+                    lessonIdEdit={lessonIdEdit}
+                    setLessonEdit={setLessonEdit}
+                    setLessonIdEdit={setLessonIdEdit}
+                  />
+                </div>
               </AccordionItem>
             </Accordion>
 

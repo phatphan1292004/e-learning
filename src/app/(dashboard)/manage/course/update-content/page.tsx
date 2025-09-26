@@ -1,6 +1,6 @@
 import { CourseUpdateContent } from "@/modules/course/components";
 import { getCourseBySlug } from "@/modules/course/services/course.action";
-import { Heading } from "lucide-react";
+import { Heading } from "@/shared/components";
 import React from "react";
 
 const page = async ({ searchParams }: { searchParams: { slug: string } }) => {

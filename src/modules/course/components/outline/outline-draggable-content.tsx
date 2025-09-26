@@ -1,0 +1,184 @@
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import OutlineAction from "./outline-action";
+import { HiCheck, HiOutlineX } from "react-icons/hi";
+import { FiEdit } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
+import OutlineDraggableItem from "./outline-draggable-item";
+import OutlineDraggableHandle from "./outline-draggable-handle";
+import OutlineItem from "./outline-item";
+import { LectureItemData } from "@/shared/types/lecture.type";
+import { LessonItemData } from "@/shared/types/lesson.type";
+import {
+  Dispatch,
+  MouseEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import { toast } from "react-toastify";
+import slugify from "slugify";
+import {
+  updateLesson,
+  updateLessonOrder,
+} from "@/modules/lesson/services/lesson.action";
+
+export interface OutlineDraggableContentProps {
+  lecture: LectureItemData;
+  lessonEdit: string;
+  setLessonEdit: (value: string) => void;
+  lessonIdEdit: string;
+  setLessonIdEdit: Dispatch<SetStateAction<string>>;
+  courseSlug: string;
+}
+
+export default function OutlineDraggableContent({
+  courseSlug,
+  lecture,
+  lessonEdit,
+  lessonIdEdit,
+  setLessonEdit,
+  setLessonIdEdit,
+}: OutlineDraggableContentProps) {
+  const [lessonList, setLessonList] = useState<LessonItemData[]>([]);
+
+  useEffect(() => {
+    setLessonList(lecture.lessons || []);
+  }, [lecture.lessons]);
+
+  const handleDragEnd = async ({ active, over }: DragEndEvent) => {
+    if (over && active.id !== over?.id) {
+      const activeIndex = lessonList.findIndex(({ _id }) => _id === active.id);
+      const overIndex = lessonList.findIndex(({ _id }) => _id === over.id);
+
+      const newLessons = arrayMove(lessonList, activeIndex, overIndex);
+      for (const [index, lesson] of newLessons.entries()) {
+        await updateLessonOrder({
+          lessonId: lesson._id,
+          order: index + 1,
+          path: `/manage/course/outline?slug=${courseSlug}`,
+        });
+      }
+      toast.success("Thay đổi thứ tự bài học thành công!");
+
+      setLessonList(newLessons);
+    }
+  };
+  useEffect(() => {
+    setLessonList(lecture.lessons || []);
+  }, [lecture.lessons]);
+
+  const handleUpdateLesson = async (
+    event: MouseEvent<HTMLSpanElement>,
+    lessonId: string
+  ) => {
+    event.stopPropagation();
+    try {
+      const response = await updateLesson({
+        lessonId,
+        path: `/manage/course/update-content?slug=${courseSlug}`,
+        updateData: {
+          title: lessonEdit,
+          slug: slugify(lessonEdit, {
+            lower: true,
+            locale: "vi",
+            remove: /[*+~.()'"!:@]/g,
+          }),
+        },
+      });
+
+      if (response?.success) {
+        toast.success("Cập nhật bài học thành công!");
+        setLessonEdit("");
+        setLessonIdEdit("");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <DndContext onDragEnd={handleDragEnd}>
+      <AccordionContent className="border-none !bg-transparent">
+        <SortableContext items={lessonList.map((lesson) => lesson._id)}>
+          <div className="flex flex-col gap-3">
+            {lessonList.map((lesson) => (
+              <OutlineDraggableItem key={lesson._id} id={lesson._id}>
+                <Accordion collapsible={!lessonIdEdit} type="single">
+                  <AccordionItem value={lesson._id}>
+                    <AccordionTrigger>
+                      <div className="flex w-full items-center justify-between gap-3 pr-5">
+                        {lesson._id === lessonIdEdit ? (
+                          <>
+                            <div className="w-full">
+                              <Input
+                                defaultValue={lesson.title}
+                                placeholder="Tên bài học"
+                                onChange={(event) =>
+                                  setLessonEdit(event.target.value)
+                                }
+                              />
+                            </div>
+                            <div className="flex gap-2">
+                              <OutlineAction
+                                variant="success"
+                                onClick={(event) =>
+                                  handleUpdateLesson(event, lesson._id)
+                                }
+                              >
+                                <HiCheck size={18} />
+                              </OutlineAction>
+                              <OutlineAction
+                                variant="danger"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  setLessonIdEdit("");
+                                }}
+                              >
+                                <HiOutlineX size={18} />
+                              </OutlineAction>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div>{lesson.title}</div>
+                            <div className="flex gap-2">
+                              <OutlineAction
+                                variant="info"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  setLessonIdEdit(lesson._id);
+                                }}
+                              >
+                                <FiEdit size={18} />
+                              </OutlineAction>
+                              <OutlineAction variant="danger">
+                                <MdDelete size={18} />
+                              </OutlineAction>
+                              <OutlineDraggableHandle />
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <OutlineItem lesson={lesson} />
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </OutlineDraggableItem>
+            ))}
+          </div>
+        </SortableContext>
+      </AccordionContent>
+    </DndContext>
+  );
+}

@@ -1,5 +1,19 @@
 import { LessonType } from "@/types/enums";
 import { Schema, model, models } from "mongoose";
+export interface LessonModelProps extends Document {
+  _id: string;
+  title: string;
+  slug: string;
+  lecture: Schema.Types.ObjectId;
+  course: Schema.Types.ObjectId;
+  order: number;
+  duration: number;
+  video_url: string;
+  content: string;
+  type: LessonType;
+  _destroy: boolean;
+  created_at: Date;
+}
 
 export interface ILesson extends Document {
   _id: string;

@@ -82,6 +82,11 @@ export async function getCourseBySlug({
           model: Lesson,
           match: { _destroy: false },
         },
+        options: {
+          sort: {
+            order: 1,
+          },
+        },
       })
       .populate({
         path: "rating",

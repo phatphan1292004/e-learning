@@ -81,3 +81,29 @@ export async function countLessonByCourseId({
     console.log(error);
   }
 }
+
+
+export async function updateLessonOrder({
+  lessonId,
+  order,
+  path,
+}: {
+  lessonId: string;
+  order: number;
+  path: string;
+}) {
+  try {
+    connectDB();
+    const findLesson = await Lesson.findById(lessonId);
+
+    console.log('findLesson:', findLesson);
+
+    if (!findLesson) return;
+    findLesson.order = order;
+    findLesson.save();
+
+    revalidatePath(path || '/');
+  } catch (error) {
+    console.log(error);
+  }
+}
