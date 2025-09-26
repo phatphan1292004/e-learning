@@ -62,7 +62,7 @@ export function MenuItem({
     <li className="flex items-center w-full h-12 transition-all duration-300">
       <ActiveLink url={url}>
         <span className="inline-block text-lg">{icon}</span>
-        {!collapsed && <span className="ml-3">{title}</span>}
+        {!collapsed && <span className="ml-2">{title}</span>}
       </ActiveLink>
     </li>
   );

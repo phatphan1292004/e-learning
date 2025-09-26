@@ -27,22 +27,18 @@ const CourseItem = ({
   }, [data.slug]);
   const courseInfo = [
     {
-      title: formatViewstoK(data.views),
+      title: `${formatViewstoK(data.views)} views`,
       icon: <FaEye className="text-gray-500" />,
     },
     {
-      title: 5,
-      icon: <FaRegStar className="text-gray-500" />,
-    },
-    {
       title: formatMinutesToHours(duration),
-      icon: <CiTimer className="text-gray-500" />,
+      icon: <CiTimer className="text-gray-600" />,
     },
   ];
   const courseUrl = url || `/course/${data.slug}`;
   return (
-    <div className="bg-white dark:bg-grayDarker dark:border-opacity-10 border border-gray-200 rounded-2xl p-5 flex flex-col">
-      <Link href={courseUrl} className="block h-[180px] relative">
+    <div className="bg-white dark:bg-grayDarker dark:border-opacity-10 border border-gray-200 rounded-lg p-5 flex flex-col">
+      <Link href={courseUrl} className="block h-[220px] relative">
         <Image
           src={data.image}
           alt="Course Image"
@@ -57,9 +53,18 @@ const CourseItem = ({
       </Link>
 
       <div className="mt-4 flex flex-col flex-1">
-        <h3 className="font-bold text-lg mb-3">{data.title}</h3>
+        <div className="flex items-center justify-between mb-2 text-xs">
+          <span className="py-1 px-2 rounded-md bg-primary/20 text-primary font-semibold dark:text-grayDark">
+            Developments
+          </span>
+          <div className=" text-gray-500 dark:text-grayDark flex items-center gap-1">
+            <FaRegStar className="text-gray-500" />5
+          </div>
+        </div>
+        <h3 className="font-bold text-base mb-3">{data.title}</h3>
 
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-2 gap-x-5 mb-5">
+        <div className="border-b border-gray-200 mt-2" />
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-2 gap-x-5 mt-5">
           <div className="flex gap-3 text-xs font-semibold">
             {courseInfo.map((item, index) => (
               <div
@@ -81,12 +86,14 @@ const CourseItem = ({
             </span>
           </div>
         </div>
-        <Link
-          href={courseUrl}
-          className="w-full flex items-center justify-center rounded-lg text-white font-bold h-12 mt-10 bg-primary"
-        >
-          {cta || "Xem chi tiết"}
-        </Link>
+        {cta && (
+          <Link
+            href={courseUrl}
+            className="w-full flex items-center justify-center rounded-lg text-white font-bold h-12 mt-3 bg-primary"
+          >
+            {cta || "Xem chi tiết"}
+          </Link>
+        )}
       </div>
     </div>
   );

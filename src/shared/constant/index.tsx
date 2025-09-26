@@ -19,45 +19,45 @@ import z from "zod";
 export const menuItems: TMenuItem[] = [
   {
     url: "/",
-    title: "Khám phá",
+    title: "Dashboard",
     icon: <IconPlay className="size-5" />,
   },
   {
     url: "/study",
-    title: "Khu vực học tập",
+    title: "Study",
     icon: <IconExplore className="size-5" />,
   },
   {
     url: "/manage/course",
-    title: "Quản lý khóa học",
+    title: "Course Management",
     icon: <IconStudy className="size-5" />,
   },
 
   {
     url: "/manage/user",
-    title: "Quản lý thành viên",
+    title: "User Management",
     icon: <IconUsers className="size-5" />,
   },
 
   {
     url: "/manage/comment",
-    title: "Quản lý bình luận",
+    title: "Comment Management",
     icon: <IconComment className="size-5" />,
   },
   {
     url: "/manage/order",
-    title: "Quản lý đơn hàng",
+    title: "Order Management",
     icon: <IconOrder className="size-5" />,
   },
   {
     url: "/manage/coupon",
-    title: "Quản lý mã giảm giá",
+    title: "Coupon Management",
     icon: <IconTicket className="size-5" />,
   },
 
   {
     url: "/manage/rating",
-    title: "Quản lý đánh giá",
+    title: "Rating Management",
     icon: <IconTicket className="size-5" />,
   },
 ];
