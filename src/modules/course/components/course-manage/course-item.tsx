@@ -57,13 +57,13 @@ const CourseItem = ({
           <span className="py-1 px-2 rounded-md bg-primary/20 text-primary font-semibold dark:text-grayDark">
             Developments
           </span>
-          <div className=" text-gray-500 dark:text-grayDark flex items-center gap-1">
+          <div className="font-semibold text-gray-500 dark:text-grayDark flex items-center gap-1">
             <FaRegStar className="text-gray-500" />5
           </div>
         </div>
         <h3 className="font-bold text-base mb-3">{data.title}</h3>
 
-        <div className="border-b border-gray-200 mt-2" />
+        <div className="border-b borderDarkMode bg-DarkMode mt-2" />
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-2 gap-x-5 mt-5">
           <div className="flex gap-3 text-xs font-semibold">
             {courseInfo.map((item, index) => (

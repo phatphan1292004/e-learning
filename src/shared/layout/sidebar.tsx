@@ -3,13 +3,14 @@ import { menuItems } from "@/shared/constant";
 import { ActiveLink } from "@/shared/common";
 import { TMenuItem } from "@/types";
 
-
 const Sidebar = ({
   collapsed,
   setCollapsed,
+  role = "user",
 }: {
   collapsed: boolean;
   setCollapsed: (v: boolean) => void;
+  role?: string;
 }) => {
   return (
     <div
@@ -38,15 +39,22 @@ const Sidebar = ({
         </button>
       </div>
       <ul className="flex flex-col gap-2">
-        {menuItems.map((item, index) => (
-          <MenuItem
-            key={index}
-            url={item.url}
-            title={item.title}
-            icon={item.icon}
-            collapsed={collapsed}
-          />
-        ))}
+        {menuItems
+          .filter(
+            (item) =>
+              role === "ADMIN"
+                ? true 
+                : item.role === "ALL" 
+          )
+          .map((item, index) => (
+            <MenuItem
+              key={index}
+              url={item.url}
+              title={item.title}
+              icon={item.icon}
+              collapsed={collapsed}
+            />
+          ))}
       </ul>
     </div>
   );

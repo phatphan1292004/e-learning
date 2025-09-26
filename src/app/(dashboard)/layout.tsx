@@ -1,26 +1,14 @@
-"use client";
-import Header from "@/shared/layout/header";
-import Sidebar from "@/shared/layout/sidebar";
-import React, { useState } from "react";
+import { getUserInfo } from "@/modules/user/services/user.actions";
+import { auth } from "@clerk/nextjs/server";
+import React from "react";
+import LayoutClient from "@/shared/layout/layout-root";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  const [collapsed, setCollapsed] = useState(false);
-  
-  return (
-    <div className="wrapper flex h-screen w-full">
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
-      <div className="flex-1 transition-all duration-300">
-        <Header />
-        <main
-          className={`p-5 mt-20 transition-all duration-300 ${
-            collapsed ? "lg:ml-[70px]" : "lg:ml-[300px]"
-          }`}
-        >
-          {children}
-        </main>
-      </div>
-    </div>
-  );
-};
-
-export default Layout;
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  const { userId } = auth();
+  let role = "user";
+  if (userId) {
+    const user = await getUserInfo({ userId });
+    role = user?.role || "user";
+  }
+  return <LayoutClient role={role}>{children}</LayoutClient>;
+}

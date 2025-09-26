@@ -21,44 +21,52 @@ export const menuItems: TMenuItem[] = [
     url: "/",
     title: "Dashboard",
     icon: <IconPlay className="size-5" />,
+    role: "ALL",
   },
   {
     url: "/study",
     title: "Study",
     icon: <IconExplore className="size-5" />,
+    role: "ALL",
   },
   {
     url: "/manage/course",
     title: "Course Management",
     icon: <IconStudy className="size-5" />,
+    role: "ADMIN",
   },
 
   {
     url: "/manage/user",
     title: "User Management",
     icon: <IconUsers className="size-5" />,
+    role: "ADMIN",
   },
 
   {
     url: "/manage/comment",
     title: "Comment Management",
     icon: <IconComment className="size-5" />,
+    role: "ADMIN",
   },
   {
     url: "/manage/order",
     title: "Order Management",
     icon: <IconOrder className="size-5" />,
+    role: "ADMIN",
   },
   {
     url: "/manage/coupon",
     title: "Coupon Management",
     icon: <IconTicket className="size-5" />,
+    role: "ADMIN",
   },
 
   {
     url: "/manage/rating",
     title: "Rating Management",
     icon: <IconTicket className="size-5" />,
+    role: "ADMIN",
   },
 ];
 

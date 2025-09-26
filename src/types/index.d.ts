@@ -10,6 +10,7 @@ export type TMenuItem = {
   url: string;
   title: string;
   icon: React.ReactNode;
+  role?: string;
 };
 // User
 export type TCreateUserParams = {
