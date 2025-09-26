@@ -7,14 +7,15 @@ import {
   TGetAllCourseParams,
   TUpdateCourseParams,
 } from "@/types";
-import { connectDB } from "../mongoose";
-import Lecture from "@/database/lecture.model";
-import Course, { ICourse } from "@/database/course.model";
+
+import Lecture from "@/modules/lecture/services/lecture.model";
 import { revalidatePath } from "next/cache";
-import Lesson from "@/database/lesson.model";
+import Lesson from "@/modules/lesson/services/lesson.model";
 import { FilterQuery } from "mongoose";
 import { CourseStatus, RatingStatus } from "@/types/enums";
-import Rating from "@/database/rating.model";
+import Rating from "@/modules/rating/services/rating.model";
+import { connectDB } from "@/shared/lib/mongoose";
+import Course, { ICourse } from "./course.schema";
 
 export async function getAllCourses(
   params: TFilterData

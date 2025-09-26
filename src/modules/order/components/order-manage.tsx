@@ -23,7 +23,6 @@ import { cn } from "@/shared/lib/utils";
 import { OrderStatus } from "@/types/enums";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import Swal from "sweetalert2";
-import { updateOrder } from "@/shared/lib/actions/order.action";
 import { toast } from "react-toastify";
 
 import { IOrderManageProps } from "../types/order.type";
@@ -31,6 +30,7 @@ import { Heading } from "@/shared/components";
 import EmptyData from "@/shared/common/empty-data";
 import { StatusBadge } from "@/shared/common";
 import Pagination from "@/shared/common/pagination";
+import { updateOrder } from "../services/order.action";
 
 
 const OrderManage = ({

@@ -1,5 +1,5 @@
-import { getCourseBySlug } from "@/shared/lib/actions/course.action";
 import { CourseUpdate } from "@/modules/course/components";
+import { getCourseBySlug } from "@/modules/course/services/course.action";
 import { Heading } from "@/shared/components";
 import React from "react";
 

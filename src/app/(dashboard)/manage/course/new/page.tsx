@@ -1,8 +1,8 @@
-import { getUserInfo } from "@/shared/lib/actions/user.actions";
-import { CourseAddNew } from "@/modules/course/components";
 import { Heading } from "@/shared/components";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
+import { CourseAddNew } from "@/modules/course/components";
+import { getUserInfo } from "@/modules/user/services/user.actions";
 
 const page = async () => {
   const { userId } = auth();

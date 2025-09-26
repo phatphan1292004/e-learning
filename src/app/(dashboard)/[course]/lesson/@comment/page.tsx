@@ -1,9 +1,13 @@
-import { getCourseBySlug } from "@/shared/lib/actions/course.action";
-import { getLessonBySlug } from "@/shared/lib/actions/lesson.action";
+import { getLessonBySlug } from "@/modules/lesson/services/lesson.action";
 import { auth } from "@clerk/nextjs/server";
-import { getUserInfo } from "@/shared/lib/actions/user.actions";
 import { getCommentsByLesson } from "@/modules/comment/services/comment.action";
-import { CommentForm, CommentItem, CommentSorting } from "@/modules/comment/components";
+import {
+  CommentForm,
+  CommentItem,
+  CommentSorting,
+} from "@/modules/comment/components";
+import { getCourseBySlug } from "@/modules/course/services/course.action";
+import { getUserInfo } from "@/modules/user/services/user.actions";
 
 const page = async ({
   params,

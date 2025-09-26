@@ -1,11 +1,10 @@
 "use server";
 
 import { TCreateLectureParams, TUpdateLectureParams } from "@/types";
-import { connectDB } from "../mongoose";
-import Course from "@/database/course.model";
-import Lecture from "@/database/lecture.model";
+import Lecture from "@/modules/lecture/services/lecture.model";
 import { revalidatePath } from "next/cache";
-import Lesson from "@/database/lesson.model";
+import { connectDB } from "@/shared/lib/mongoose";
+import Course from "@/modules/course/services/course.schema";
 
 export async function createLecture(params: TCreateLectureParams) {
   try {

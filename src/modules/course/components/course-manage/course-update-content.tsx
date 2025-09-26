@@ -9,17 +9,18 @@ import {
 import { commonClassName } from "@/shared/constant";
 import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
-import { Input } from "../../../components/ui/input";
-import { Button } from "../../../components/ui/button";
-import { createLecture, updateLecture } from "@/shared/lib/actions/lecture.action";
+import { Input } from "../../../../components/ui/input";
+import { Button } from "../../../../components/ui/button";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { TCourseUpdateParams, TUpdateCourseLecture } from "@/types";
 import { HiCheck, HiOutlineX } from "react-icons/hi";
 import { cn } from "@/shared/lib/utils";
-import { createLesson, updateLesson } from "@/shared/lib/actions/lesson.action";
+import { createLesson, updateLesson } from "@/modules/lesson/services/lesson.action";
 import slugify from "slugify";
-import LessonItemUpdate from "@/modules/lesson/components/lesson-item-update";
+import { LessonItemUpdate } from "@/modules/lesson/components";
+import { createLecture, updateLecture } from "@/modules/lecture/services/lecture.action";
+
 
 
 const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {

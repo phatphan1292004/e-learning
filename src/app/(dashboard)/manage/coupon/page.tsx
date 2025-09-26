@@ -1,4 +1,5 @@
-import { getCoupons } from "@/shared/lib/actions/coupon.action";
+
+import { getCoupons } from "@/modules/coupon/services/coupon.action";
 import CouponManage from "./CouponManage";
 import { ITEM_PER_PAGE } from "@/shared/constant";
 

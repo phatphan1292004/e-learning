@@ -6,9 +6,9 @@ import { FaRegStar, FaEye } from "react-icons/fa";
 import { CiTimer } from "react-icons/ci";
 import { StudyCourseProps } from "@/types";
 import { formatMinutesToHours, formatViewstoK } from "@/utils";
-import { getCourseLessonsInfo } from "@/shared/lib/actions/course.action";
+import { getCourseLessonsInfo } from "../../services/course.action";
 
-const CourseItem =  ({
+const CourseItem = ({
   data,
   cta,
   url,
@@ -18,13 +18,13 @@ const CourseItem =  ({
   url?: string;
 }) => {
   const [duration, setDuration] = useState(0);
-  useEffect( () => {
+  useEffect(() => {
     async function getDuration() {
-      const res = await getCourseLessonsInfo({slug: data.slug});
+      const res = await getCourseLessonsInfo({ slug: data.slug });
       setDuration(res?.duration || 0);
     }
     getDuration();
-  },[data.slug])
+  }, [data.slug]);
   const courseInfo = [
     {
       title: formatViewstoK(data.views),

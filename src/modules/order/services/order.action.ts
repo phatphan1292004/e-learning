@@ -1,14 +1,13 @@
 "use server";
-import Order from "@/database/order.model";
-import { connectDB } from "../mongoose";
+import Order from "@/modules/order/services/order.model";
 import { TCreateOrderParams } from "@/types";
 import { FilterQuery } from "mongoose";
-import Course from "@/database/course.model";
-import User from "@/database/user.model";
+import User from "@/modules/user/services/user.model";
 import { OrderStatus } from "@/types/enums";
 import { revalidatePath } from "next/cache";
-import { find } from "lodash";
-import Coupon from "@/database/coupon.model";
+import Coupon from "@/modules/coupon/services/coupon.model";
+import { connectDB } from "@/shared/lib/mongoose";
+import Course from "@/modules/course/services/course.schema";
 
 export async function fetchOrders(params: any) {
   try {
@@ -32,13 +31,15 @@ export async function fetchOrders(params: any) {
         path: "user",
         model: User,
         select: "name",
-      }).populate({
+      })
+      .populate({
         path: "coupon",
         select: "code",
-      }).sort({ created_at: -1 })
+      })
+      .sort({ created_at: -1 })
       .skip(skip)
       .limit(limit);
-      const total = await Order.countDocuments(query);
+    const total = await Order.countDocuments(query);
     return {
       orders: JSON.parse(JSON.stringify(orders)),
       total,
@@ -49,17 +50,17 @@ export async function fetchOrders(params: any) {
 export async function createOrder(params: TCreateOrderParams) {
   try {
     connectDB();
-    if(!params.coupon) delete params.coupon;
+    if (!params.coupon) delete params.coupon;
     const newOrder = await Order.create(params);
     if (params.coupon) {
       await Coupon.findByIdAndUpdate(params.coupon, {
-        $inc: { used: 1 }
+        $inc: { used: 1 },
       });
     }
     return JSON.parse(JSON.stringify(newOrder));
   } catch (error) {
     console.error("Create order error:", error);
-    return null; 
+    return null;
   }
 }
 
@@ -72,15 +73,17 @@ export async function updateOrder({
 }) {
   try {
     connectDB();
-    const findOrder = await Order.findById(orderId).populate({
-      path: "course",
-      model: Course,
-      select:"_id",
-    }).populate({
-      path: "user",
-      model: User,
-      select:"_id",
-    })
+    const findOrder = await Order.findById(orderId)
+      .populate({
+        path: "course",
+        model: Course,
+        select: "_id",
+      })
+      .populate({
+        path: "user",
+        model: User,
+        select: "_id",
+      });
     if (!findOrder) return;
     if (findOrder.status === OrderStatus.CANCELLED) return;
     const findUser = await User.findById(findOrder.user._id);
@@ -98,7 +101,9 @@ export async function updateOrder({
       status === OrderStatus.CANCELLED &&
       findOrder.status === OrderStatus.COMPLETED
     ) {
-      findUser.courses = findUser?.courses.filter((el: any) => el.toString() !== findOrder.course._id.toString());
+      findUser.courses = findUser?.courses.filter(
+        (el: any) => el.toString() !== findOrder.course._id.toString()
+      );
       await findUser.save();
     }
 

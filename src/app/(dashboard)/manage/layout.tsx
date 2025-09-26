@@ -1,5 +1,5 @@
 import PageNotFound from "@/app/not-found";
-import { getUserInfo } from "@/shared/lib/actions/user.actions";
+import { getUserInfo } from "@/modules/user/services/user.actions";
 import { UserRole } from "@/types/enums";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
@@ -10,12 +10,8 @@ const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
 
   if (!userId) return redirect("/sign-in");
   const user = await getUserInfo({ userId });
-  if (user && user.role !== UserRole.ADMIN) return <PageNotFound/>;
-  return (
-    <div>
-      {children}
-    </div>
-  );
+  if (user && user.role !== UserRole.ADMIN) return <PageNotFound />;
+  return <div>{children}</div>;
 };
 
 export default AdminLayout;

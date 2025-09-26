@@ -1,9 +1,9 @@
 "use client";
 import useGlobalStore from "@/app/store";
 import React from "react";
-import LessonNavigation from "../LessonNavigation";
 import { Button } from "@/components/ui/button";
 import RatingButton from "./RatingButton";
+import { LessonNavigation } from "@/modules/lesson/components";
 
 const VideoPlayer = ({
   videoId,

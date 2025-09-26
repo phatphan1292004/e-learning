@@ -1,10 +1,10 @@
 "use server";
 import { TCreateLessonParams, TUpdateLessonParams } from "@/types";
-import { connectDB } from "../mongoose";
-import Course from "@/database/course.model";
-import Lecture from "@/database/lecture.model";
-import Lesson, { ILesson } from "@/database/lesson.model";
+import { connectDB } from "../../../shared/lib/mongoose";
+import Lecture from "@/modules/lecture/services/lecture.model";
+import Lesson, { ILesson } from "@/modules/lesson/services/lesson.model";
 import { revalidatePath } from "next/cache";
+import Course from "@/modules/course/services/course.schema";
 
 export async function createLesson(params: TCreateLessonParams) {
   try {

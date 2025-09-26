@@ -1,6 +1,6 @@
 import { RatingStatus } from "@/types/enums";
-import RatingManage from "./RatingManage";
-import { getRatings } from "@/shared/lib/actions/rating.action";
+import RatingManage from "@/modules/rating/components/rating-manage";
+import { getRatings } from "@/modules/rating/services/rating.action";
 
 const page = async (
   {

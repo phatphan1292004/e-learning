@@ -1,18 +1,23 @@
 import PageNotFound from "@/app/not-found";
-import { getOrderDetails } from "@/shared/lib/actions/order.action";
+import { getOrderDetails } from "@/modules/order/services/order.action";
 
 const OrderDetails = async ({ params }: { params: { code: string } }) => {
   const orderDetails = await getOrderDetails({ code: params.code });
-  if(!orderDetails) {
+  if (!orderDetails) {
     return <PageNotFound />;
   }
   return (
     <div className="flex flex-col gap-5">
       <p>
         Cám ơn bạn đã mua khóa học{" "}
-        <strong className="text-primary">{orderDetails?.course?.title}</strong> với số tiền là <strong className="text-primary">{orderDetails?.total}</strong>
+        <strong className="text-primary">{orderDetails?.course?.title}</strong>{" "}
+        với số tiền là{" "}
+        <strong className="text-primary">{orderDetails?.total}</strong>
       </p>
-      <p>Bạn vui lòng thanh toán theo thông tin dưới đây: <strong className="text-primary">{orderDetails.code}</strong></p>
+      <p>
+        Bạn vui lòng thanh toán theo thông tin dưới đây:{" "}
+        <strong className="text-primary">{orderDetails.code}</strong>
+      </p>
     </div>
   );
 };

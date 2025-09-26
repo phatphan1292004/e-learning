@@ -18,19 +18,15 @@ import {
 } from "@/components/ui/table";
 import { allValue, ratingList, ratingStatus } from "@/shared/constant";
 import useQueryString from "@/shared/hooks/useQueryString";
-import { deleteRating, updateRating } from "@/shared/lib/actions/rating.action";
 import { StatusBadge, TableAction, TableActionItem } from "@/shared/common";
 import { Heading } from "@/shared/components";
 import { TRatingItem } from "@/types";
 import { RatingStatus } from "@/types/enums";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  HiOutlineArrowNarrowLeft,
-  HiOutlineArrowNarrowRight,
-} from "react-icons/hi";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { deleteRating, updateRating } from "../services/rating.action";
 
 const RatingManage = ({ ratings }: { ratings: any }) => {
   const { handleSearchData, handleChangePage, handleSelectStatus } = useQueryString();

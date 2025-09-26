@@ -1,6 +1,6 @@
 import { ICourse } from "@/database/course.model";
-import { ILecture } from "@/database/lecture.model";
-import { ILesson } from "@/database/lesson.model";
+import { ILecture } from "@/modules/lecture/services/lecture.model";
+import { ILesson } from "@/modules/lesson/services/lesson.model";
 
 export type TActiveLinkProps = {
   url: string;

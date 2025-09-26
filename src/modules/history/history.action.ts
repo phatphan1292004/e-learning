@@ -1,10 +1,10 @@
 "use server";
-import User from "@/database/user.model";
-import { connectDB } from "../mongoose";
+import User from "@/modules/user/services/user.model";
 import { auth } from "@clerk/nextjs/server";
-import History, { IHistory } from "@/database/history.model";
+import History, { IHistory } from "@/modules/history/history.model";
 import { TCreateHistoryParams } from "@/types";
 import { revalidatePath } from "next/cache";
+import { connectDB } from "@/shared/lib/mongoose";
 
 export async function createHistory(params: TCreateHistoryParams) {
   try {

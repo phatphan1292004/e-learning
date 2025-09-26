@@ -17,10 +17,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { createCourse } from "@/shared/lib/actions/course.action";
+
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { IUser } from "@/database/user.model";
+import { IUser } from "@/modules/user/services/user.model";
+import { createCourse } from "../../services/course.action";
 
 const formSchema = z.object({
   title: z.string().min(10, "Tên khóa học phải có ít nhất 10 ký tự"),

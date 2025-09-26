@@ -1,11 +1,11 @@
 "use server";
-import Rating from "@/database/rating.model";
-import { connectDB } from "../mongoose";
+import Rating from "@/modules/rating/services/rating.model";
 import { TCreateRatingParams, TFilterData, TRatingItem } from "@/types";
-import Course from "@/database/course.model";
 import { revalidatePath } from "next/cache";
 import { RatingStatus } from "@/types/enums";
 import { FilterQuery } from "mongoose";
+import { connectDB } from "@/shared/lib/mongoose";
+import Course from "@/modules/course/services/course.schema";
 
 export async function createRating(
   params: TCreateRatingParams

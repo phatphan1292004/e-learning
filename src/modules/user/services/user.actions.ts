@@ -1,12 +1,12 @@
 "use server";
 
-import User, { IUser } from "@/database/user.model";
-import { connectDB } from "../mongoose";
+import User, { IUser } from "@/modules/user/services/user.model";
 import { TCreateUserParams } from "@/types";
-import { ICourse } from "@/database/course.model";
 import { CourseStatus } from "@/types/enums";
-import Lecture from "@/database/lecture.model";
-import Lesson from "@/database/lesson.model";
+import Lecture from "@/modules/lecture/services/lecture.model";
+import Lesson from "@/modules/lesson/services/lesson.model";
+import { connectDB } from "@/shared/lib/mongoose";
+import { ICourse } from "@/modules/course/services/course.schema";
 
 export async function createUser(params: TCreateUserParams) {
   try {
@@ -54,7 +54,8 @@ export async function getUserCourse(
       },
     });
     if (!findUser) return null;
-    return findUser.courses;
+    const course = JSON.parse(JSON.stringify(findUser.courses));
+    return course;
   } catch (error) {
     console.log(error);
   }

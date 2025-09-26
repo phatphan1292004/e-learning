@@ -1,5 +1,5 @@
-import { getCourseBySlug } from "@/shared/lib/actions/course.action";
 import { CourseUpdateContent } from "@/modules/course/components";
+import { getCourseBySlug } from "@/modules/course/services/course.action";
 import { Heading } from "lucide-react";
 import React from "react";
 

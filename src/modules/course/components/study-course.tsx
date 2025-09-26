@@ -1,6 +1,6 @@
 "use client"
 
-import CourseItem from "@/modules/course/components/course-item";
+import CourseItem from "@/modules/course/components/course-manage/course-item";
 import { CourseGrid } from "@/shared/common";
 import { StudyCourseProps } from "@/types";
 import React, { useEffect, useState } from "react";

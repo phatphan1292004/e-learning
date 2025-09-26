@@ -1,6 +1,6 @@
 import { Heading } from "lucide-react";
 import UpdateCouponForm from "./UpdateCouponForm";
-import { getCouponByCode } from "@/shared/lib/actions/coupon.action";
+import { getCouponByCode } from "@/modules/coupon/services/coupon.action";
 
 const page = async ({
   searchParams,

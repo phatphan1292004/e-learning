@@ -1,6 +1,5 @@
 "use server";
-import Coupon, { ICoupon } from "@/database/coupon.model";
-import { connectDB } from "../mongoose";
+import Coupon from "@/modules/coupon/services/coupon.model";
 import { revalidatePath } from "next/cache";
 import {
   TCouponItem,
@@ -10,6 +9,7 @@ import {
   TUpdateCouponParams,
 } from "@/types";
 import { FilterQuery } from "mongoose";
+import { connectDB } from "@/shared/lib/mongoose";
 
 export async function createCoupon(params: TCreateCouponParams) {
   try {

@@ -1,7 +1,7 @@
 "use server";
 
 
-import User from "@/database/user.model";
+import User from "@/modules/user/services/user.model";
 import { connectDB } from "@/shared/lib/mongoose";
 import { ICommentItem } from "@/types";
 import { revalidatePath } from "next/cache";

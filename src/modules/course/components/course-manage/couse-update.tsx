@@ -13,13 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ICourse } from "@/database/course.model";
 import { CourseLevel, CourseStatus } from "@/types/enums";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Textarea } from "../../../components/ui/textarea";
-import { updateCourse } from "@/shared/lib/actions/course.action";
+import { Textarea } from "../../../../components/ui/textarea";
+
 import { useImmer } from "use-immer";
 import { MdAdd } from "react-icons/md";
 import {
@@ -32,6 +31,8 @@ import {
 import { courseLevels, courseStatus } from "@/shared/constant";
 import { UploadButton } from "@/utils/uploadthing";
 import Image from "next/image";
+import { updateCourse } from "../../services/course.action";
+import { ICourse } from "../../services/course.schema";
 
 const formSchema = z.object({
   title: z.string().min(10, "Tên khóa học phải có ít nhất 10 ký tự"),

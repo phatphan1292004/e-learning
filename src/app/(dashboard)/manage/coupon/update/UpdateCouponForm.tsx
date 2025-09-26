@@ -33,9 +33,9 @@ import { format } from "date-fns";
 import { debounce } from "lodash";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { updateCoupon } from "@/shared/lib/actions/coupon.action";
-import { getAllCourses } from "@/shared/lib/actions/course.action";
 import { HiOutlineCalendar, HiOutlineX } from "react-icons/hi";
+import { getAllCourses } from "@/modules/course/services/course.action";
+import { updateCoupon } from "@/modules/coupon/services/coupon.action";
 
 const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
   const [findCourse, setFindCourse] = useState<any[] | undefined>([]);

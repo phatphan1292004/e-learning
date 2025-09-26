@@ -1,7 +1,8 @@
-import { getCourseBySlug } from "@/shared/lib/actions/course.action";
-import { getHistory } from "@/shared/lib/actions/history.action";
-import { getAllLessons } from "@/shared/lib/actions/lesson.action";
-import LessonContent from "@/modules/lesson/components/lesson-content";
+import { getCourseBySlug } from "@/modules/course/services/course.action";
+import { getHistory } from "@/modules/history/history.action";
+import { LessonContent } from "@/modules/lesson/components";
+import { getAllLessons } from "@/modules/lesson/services/lesson.action";
+
 import React from "react";
 
 const page = async ({

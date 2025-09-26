@@ -1,5 +1,5 @@
 "use client";
-import { ILesson } from "@/database/lesson.model";
+import { ILesson } from "@/modules/lesson/services/lesson.model";
 import React, { use, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +15,7 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { updateLesson } from "@/shared/lib/actions/lesson.action";
+import { updateLesson } from "@/modules/lesson/services/lesson.action";
 import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
 import { editorOptions } from "@/shared/constant";

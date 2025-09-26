@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -12,18 +12,12 @@ import {
 import Image from "next/image";
 import { allValue, commonClassName, courseStatus } from "@/shared/constant";
 import { cn } from "@/shared/lib/utils";
-import {
-  HiOutlineArrowNarrowLeft,
-  HiOutlineArrowNarrowRight,
-  HiOutlinePlusSm,
-} from "react-icons/hi";
+import { HiOutlinePlusSm } from "react-icons/hi";
 import Link from "next/link";
-import { ICourse } from "@/database/course.model";
 import Swal from "sweetalert2";
-import { updateCourse } from "@/shared/lib/actions/course.action";
 import { CourseStatus } from "@/types/enums";
 import { toast } from "react-toastify";
-import { Input } from "../../../components/ui/input";
+import { Input } from "../../../../components/ui/input";
 import {
   Select,
   SelectContent,
@@ -37,13 +31,13 @@ import { useRouter } from "next/navigation";
 import useQueryString from "@/shared/hooks/useQueryString";
 import { Heading } from "@/shared/components";
 import { TableAction, TableActionItem } from "@/shared/common";
-
+import { updateCourse } from "../../services/course.action";
+import { ICourse } from "../../services/course.schema";
 
 const CourseManage = ({ course }: { course: ICourse[] }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { handleSearchData, handleSelectStatus } =
-    useQueryString();
+  const { handleSearchData, handleSelectStatus } = useQueryString();
   const handleChangeStatus = async (
     slug: string,
     currentStatus: CourseStatus

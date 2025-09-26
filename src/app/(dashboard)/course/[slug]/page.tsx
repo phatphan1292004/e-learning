@@ -1,8 +1,3 @@
-import {
-  getCourseBySlug,
-  getCourseLessonsInfo,
-  updateCourseView,
-} from "@/shared/lib/actions/course.action";
 import { FaCheck } from "react-icons/fa6";
 import Image from "next/image";
 import { courseLevelTitle } from "@/shared/constant";
@@ -15,11 +10,17 @@ import {
 } from "@/components/ui/accordion";
 
 import { auth } from "@clerk/nextjs/server";
-import { getUserInfo } from "@/shared/lib/actions/user.actions";
-import CourseWidget from "./CourseWidget";
-import AlreadyBuy from "./AlreadyBuy";
+
 import { formatMinutesToHours } from "@/utils";
 import LessonContent from "@/modules/lesson/components/lesson-content";
+import { AlreadyBuy, CourseWidget } from "@/modules/course/components";
+import {
+  getCourseBySlug,
+  getCourseLessonsInfo,
+  updateCourseView,
+} from "@/modules/course/services/course.action";
+import { getUserInfo } from "@/modules/user/services/user.actions";
+import { CourseLevel } from "@/types/enums";
 
 const page = async ({
   params,
@@ -92,7 +93,7 @@ const page = async ({
           <div className="grid grid-cols-4 gap-5 mb-10">
             <BoxInfo title="Bài học">{lessons}</BoxInfo>
             <BoxInfo title="Lượt xem">{data.views}</BoxInfo>
-            <BoxInfo title="Trình độ">{courseLevelTitle[data.level]}</BoxInfo>
+            <BoxInfo title="Trình độ">{courseLevelTitle[data.level as CourseLevel]}</BoxInfo>
             <BoxInfo title="Thời lượng">
               {formatMinutesToHours(duration)}
             </BoxInfo>
@@ -102,7 +103,7 @@ const page = async ({
           <LessonContent lectures={lectures} course="" slug="" />
         </BoxSection>
         <BoxSection title="Yêu cầu">
-          {data.info.requirements.map((r, index) => (
+          {data.info.requirements.map((r: string, index: number) => (
             <div
               className="mb-3 flex items-center gap-2 text-sm font-semibold"
               key={index}
@@ -115,7 +116,7 @@ const page = async ({
           ))}
         </BoxSection>
         <BoxSection title="Lợi ích">
-          {data.info.benefits.map((r, index) => (
+          {data.info.benefits.map((r: string, index: number) => (
             <div
               className="mb-3 flex items-center gap-2 text-sm font-semibold"
               key={index}
@@ -128,7 +129,7 @@ const page = async ({
           ))}
         </BoxSection>
         <BoxSection title="Q.A">
-          {data.info.qa.map((qa, index) => (
+          {data.info.qa.map((qa: { question: string; answer: string }, index: number) => (
             <Accordion type="single" collapsible key={index}>
               <AccordionItem value={qa.question}>
                 <AccordionTrigger>{qa.question}</AccordionTrigger>
@@ -161,7 +162,7 @@ function BoxInfo({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-lg p-5">
+    <div className="bgDarkMode border borderDarkMode rounded-lg p-5">
       <h4 className="text-sm text-slate-400 font-normal">{title}</h4>
       <h3 className="font-bold">{children}</h3>
     </div>

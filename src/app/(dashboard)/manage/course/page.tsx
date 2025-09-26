@@ -1,5 +1,5 @@
-import { getAllCourses } from "@/shared/lib/actions/course.action";
 import { CourseManage } from "@/modules/course/components";
+import { getAllCourses } from "@/modules/course/services/course.action";
 import { CourseStatus } from "@/types/enums";
 import React from "react";
 

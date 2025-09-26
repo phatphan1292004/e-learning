@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import React from "react";
 
-import { IHistory } from "@/database/history.model";
+import { IHistory } from "@/modules/history/history.model";
 import LessonItem from "./lesson-item";
 
 const LessonContent = ({

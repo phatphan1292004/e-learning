@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import { getValidateCoupon } from "@/shared/lib/actions/coupon.action";
+import { getValidateCoupon } from "@/modules/coupon/services/coupon.action";
 
 import { CouponType } from "@/types/enums";
 import { debounce } from "lodash";
@@ -55,9 +55,12 @@ const CouponForm = ({
     }
   };
 
-  const handleChangeCoupon = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
-    setCouponCode(e.target.value);
-  }, 500);
+  const handleChangeCoupon = debounce(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCouponCode(e.target.value);
+    },
+    500
+  );
 
   return (
     <div className="mt-5 relative">

@@ -13,8 +13,8 @@ import Image from "next/image";
 import { cn } from "@/shared/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { createRating, getRatingByUserId } from "@/shared/lib/actions/rating.action";
 import { toast } from "react-toastify";
+import { createRating, getRatingByUserId } from "@/modules/rating/services/rating.action";
 const RatingButton = ({
   courseId,
   userId,

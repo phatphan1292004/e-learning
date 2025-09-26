@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { IUser } from "@/database/user.model";
-import { createOrder } from "@/shared/lib/actions/order.action";
+import { IUser } from "@/modules/user/services/user.model";
+import { createOrder } from "@/modules/order/services/order.action";
 import { createOrderCode } from "@/utils";
 import { useRouter } from "next/navigation";
 import React from "react";
