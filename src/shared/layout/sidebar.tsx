@@ -2,6 +2,8 @@
 import { menuItems } from "@/shared/constant";
 import { ActiveLink } from "@/shared/common";
 import { TMenuItem } from "@/types";
+import Image from "next/image";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 
 const Sidebar = ({
   collapsed,
@@ -21,31 +23,34 @@ const Sidebar = ({
       <div className="flex justify-between items-center">
         <a
           href="/"
-          className={`font-bold text-3xl inline-block mb-5 transition-all duration-300 ${
+          className={`flex items-center font-bold gap-2 mb-5 transition-all duration-300 ${
             collapsed ? "text-xl" : ""
           }`}
         >
-          <span className="text-primary">U</span>
-          {!collapsed && "cademy"}
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={collapsed ? 32 : 48}
+            height={collapsed ? 32 : 48}
+            className={`inline-block transition-all duration-300`}
+          />
+          {!collapsed && <span className="text-xl">Procademy</span>}
         </a>
         <button
-          className={`mb-5 p-2 rounded hover:bg-primary/10 transition self-end ${
-            collapsed ? "self-center" : ""
-          }`}
+          className={`absolute right-[-16px] top-[14px] z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-primary/10 transition border borderDarkMode bgDarkMode shadow`}
           onClick={() => setCollapsed(!collapsed)}
           aria-label="Toggle sidebar"
         >
-          {collapsed ? "»" : "«"}
+          {collapsed ? (
+            <ChevronRightIcon className="w-5 h-5" />
+          ) : (
+            <ChevronLeftIcon className="w-5 h-5" />
+          )}
         </button>
       </div>
       <ul className="flex flex-col gap-2">
         {menuItems
-          .filter(
-            (item) =>
-              role === "ADMIN"
-                ? true 
-                : item.role === "ALL" 
-          )
+          .filter((item) => (role === "ADMIN" ? true : item.role === "ALL"))
           .map((item, index) => (
             <MenuItem
               key={index}
