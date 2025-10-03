@@ -1,10 +1,10 @@
 import { ICommentItem } from "@/types";
 import { ObjectId } from "mongoose";
-import { Manrope } from "next/font/google";
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
+import { Inter } from "next/font/google";
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const createOrderCode = () => `DH-${new Date().getTime().toString().slice(-6)}`;
-export { manrope };
+export { inter };
 
 export const formatViewstoK = (views: number) => {
   if (views < 1000) return views.toString();

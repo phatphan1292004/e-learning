@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.scss";
-import { manrope } from "@/utils";
+import { inter } from "@/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import React from "react";
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning={true}>
-        <body className={manrope.className}>
+        <body className={inter.className}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

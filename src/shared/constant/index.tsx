@@ -14,8 +14,22 @@ import {
   CourseStatus,
   OrderStatus,
   RatingStatus,
+  UserRole,
 } from "@/types/enums";
 import z from "zod";
+
+// Thêm userRoles constant
+export const userRoles = [
+  {
+    title: "Admin",
+    value: UserRole.ADMIN,
+  },
+  {
+    title: "User",
+    value: UserRole.USER,
+  },
+];
+
 export const menuItems: TMenuItem[] = [
   {
     url: "/",

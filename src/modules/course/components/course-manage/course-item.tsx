@@ -63,7 +63,7 @@ const CourseItem = ({
         </div>
         <h3 className="font-bold text-base mb-3">{data.title}</h3>
 
-        <div className="border-b borderDarkMode bg-DarkMode mt-2" />
+        <div className="border-b borderDarkMode bg-DarkMode mt-6" />
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-2 gap-x-5 mt-5">
           <div className="flex gap-3 text-xs font-semibold">
             {courseInfo.map((item, index) => (

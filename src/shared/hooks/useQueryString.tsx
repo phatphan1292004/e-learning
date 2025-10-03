@@ -29,6 +29,11 @@ export default function useQueryString() {
   const handleSelectStatus = <T extends string>(status: T | string) => {
     createQueryString("status", status);
   };
+
+  const handleSelectRole = <T extends string>(role: T | string) => {
+    createQueryString("role", role);
+  };
+
   const handleChangePage = (page: number) => {
     createQueryString("page", `${page}`);
   };
@@ -42,6 +47,7 @@ export default function useQueryString() {
     router,
     pathname,
     handleSearchData,
+    handleSelectRole,
     handleSelectStatus,
     handleChangePage,
     currentPage,

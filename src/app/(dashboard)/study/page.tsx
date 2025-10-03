@@ -9,10 +9,10 @@ const page = async () => {
   if (!userId) return null;
   const courses = (await getUserCourse(userId)) || [];
   return (
-    <div>
+    <>
       <Heading>Khu vực học tập</Heading>
       <StudyCourse courses={JSON.parse(JSON.stringify(courses))} />
-    </div>
+    </>
   );
 };
 
