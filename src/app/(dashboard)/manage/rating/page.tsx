@@ -20,9 +20,9 @@ const page = async (
     status: searchParams.status,
   });
   return (
-    <div>
+    <>
       <RatingManage ratings={ratings} />
-    </div>
+    </>
   );
 };
 

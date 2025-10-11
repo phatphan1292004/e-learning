@@ -52,7 +52,7 @@ const page = async ({
 
   return (
     <div className="grid lg:grid-cols-[2fr,1fr] gap-10 min-h-screen">
-      <div>
+      <>
         <div className="relative aspect-video mb-5">
           {data.intro_url ? (
             <>
@@ -138,7 +138,7 @@ const page = async ({
             </Accordion>
           ))}
         </BoxSection>
-      </div>
+      </>
       <div>
         {userCourses?.includes(data._id.toString()) ? (
           <AlreadyBuy />

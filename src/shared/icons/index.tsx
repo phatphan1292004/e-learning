@@ -5,3 +5,4 @@ export { default as IconStudy } from "./IconStudy";
 export { default as IconUsers } from "./IconUser";
 export { default as IconOrder } from "./IconOrder";
 export { default as IconTicket } from "./IconTicket";
+export { default as IconAI } from "./IconAI"; 

@@ -1,4 +1,5 @@
 import {
+  IconAI,
   IconComment,
   IconExplore,
   IconOrder,
@@ -41,6 +42,12 @@ export const menuItems: TMenuItem[] = [
     url: "/study",
     title: "Study",
     icon: <IconExplore className="size-5" />,
+    role: "ALL",
+  },
+  {
+    url: "/ai-chat",
+    title: "AI Assistant",
+    icon: <IconAI className="size-5" />,
     role: "ALL",
   },
   {
